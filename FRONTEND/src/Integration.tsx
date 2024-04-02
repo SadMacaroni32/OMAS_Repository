@@ -1,10 +1,10 @@
-
+import Dashboard from "./pages/DashboardPage";
 
 function App() {
 
   return (
     <>
-      TEST
+      <Dashboard />
     </>
   )
 }
