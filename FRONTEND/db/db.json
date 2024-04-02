@@ -1,0 +1,76 @@
+{
+    "user-table": [
+        {
+            "emp_id": "101",
+            "username": "rgalpo",
+            "fname": "Ricky",
+            "lname": "Galpo",
+            "position_sh_name": "DE1",
+            "email": "rickygalpo@gmail.com",
+            "section_name": "SSS Business Unit",
+            "dept_name": "1ST Dept",
+            "reg_date": "2024-03-05T23:42:05.000+00:00",
+            "del_flag": 0
+        },
+        {
+            "emp_id": "102",
+            "username": "afabre",
+            "fname": "Allona",
+            "lname": "Fabre",
+            "position_sh_name": "DE2",
+            "email": "allonafabre@gmail.com",
+            "section_name": "VSBU",
+            "dept_name": "2ND Dept",
+            "reg_date": "2024-03-05T23:42:05.000+00:00",
+            "del_flag": 0
+        },
+        {
+            "emp_id": "103",
+            "username": "cespanol",
+            "fname": "Charlene",
+            "lname": "Espanol",
+            "position_sh_name": "SDE",
+            "email": "charleneespanol@gmail.com",
+            "section_name": "1st and 2nd SSS Business Unit",
+            "dept_name": "3RD Dept",
+            "reg_date": "2024-03-05T23:42:05.000+00:00",
+            "del_flag": 0
+        },
+        {
+            "emp_id": "104",
+            "username": "adiego",
+            "fname": "Ariel",
+            "lname": "Diego",
+            "position_sh_name": "JES",
+            "email": "arieldiego@gmail.com",
+            "section_name": "SSS Business Unit",
+            "dept_name": "1ST Dept",
+            "reg_date": "2024-03-05T23:42:05.000+00:00",
+            "del_flag": 0
+        },
+        {
+            "emp_id": "105",
+            "username": "smateo",
+            "fname": "Shernan",
+            "lname": "Mateo",
+            "position_sh_name": "ES",
+            "email": "shernanmateo@gmail.com",
+            "section_name": "SSS Business Unit",
+            "dept_name": "1ST Dept",
+            "reg_date": "2024-03-05T23:42:05.000+00:00",
+            "del_flag": 0
+        },
+        {
+            "emp_id": "106",
+            "username": "cjacinto",
+            "fname": "Christian",
+            "lname": "Jacinto",
+            "position_sh_name": "EM",
+            "email": "christianjacinto@gmail.com",
+            "section_name": "SSS Business Unit",
+            "dept_name": "1ST Dept",
+            "reg_date": "2024-03-05T23:42:05.000+00:00",
+            "del_flag": 0
+        }
+    ]
+}
