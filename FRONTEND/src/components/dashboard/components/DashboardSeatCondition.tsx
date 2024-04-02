@@ -3,24 +3,19 @@ import Grid from "@mui/material/Grid/Grid";
 import { BarChart } from "@mui/x-charts/BarChart";
 
 export default function dashboardSeatCondition() {
+    
   return (
     <>
       <Grid item xs={3}>
         <BarChart
-        xAxis=
-        {
-            [
-                { 
-                    scaleType: "band", data: ["Data1", "Data2", "Data3"] 
-                }
-            ]
-        }
-          series=
-          {
-            [
-                { data: [4] }, { data: [1] }, { data: [2] }
-            ]
-        }
+          xAxis={[
+            { scaleType: "band", data: ["DataGathered"] }
+          ]}
+          series={[
+            { data: [4], label: "Occupied" },
+            { data: [1], label: "Available" },
+            { data: [2], label: "Unader Repair" }
+          ]}
           width={500}
           height={300}
         />

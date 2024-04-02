@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 
 export default function dashboard() {
+    
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container sx={{ m: 1 }}>
