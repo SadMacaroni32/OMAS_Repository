@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Login from "../login/Login";
+import Login from "../loginComponents/Login";
 
 const Landing: React.FC = () => {
   //state for login
