@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
 import { useEffect, useState } from "react";
 import { getUsersFetch, setUserField } from "../../../redux/state/userState";
-import SampleDashboard from "../SampleDashboard";
+
 import { useNavigate } from "react-router-dom";
 // import axios from "axios";
 
@@ -77,7 +77,7 @@ const Login: React.FC = () => {
           Login
         </Button>
       </form>
-      {isLoggedIn && <SampleDashboard />}
+     
     </div>
   );
 };
