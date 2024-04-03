@@ -2,6 +2,7 @@
 import { Navigate, Route, Routes } from "react-router-dom"
 import LandingPage from "./components/login/Index"
 import Dashboard from "./pages/DashboardPage";
+import SeatingPlanPage from "./pages/SeatingPlanPage";
 
 
 export default function App() {
@@ -12,6 +13,7 @@ export default function App() {
         <Route path="/" element={<Navigate to={"/landingpage"} />} />
         <Route path="/landingpage" element={<LandingPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/seatplan" element={<SeatingPlanPage />} />
       </Routes>
     </>
   );
