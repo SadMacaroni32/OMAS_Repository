@@ -3,7 +3,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 const seatSlice = createSlice({
   name: "seats",
   initialState: {
-    users: [],
+    seating: [],
     seatInfo: {
       seat_id: "",
       del_flag: "",
@@ -18,7 +18,7 @@ const seatSlice = createSlice({
       state.isLoading = true;
     },
     getSeatsSuccess: (state, action) => {
-      state.users = action.payload;
+      state.seating = action.payload;
       state.isLoading = false;
     },
     

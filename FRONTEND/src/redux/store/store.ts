@@ -17,7 +17,10 @@ export const store = configureStore({
 
     //seatPlan state
     seatPlanReducer: seatPlanReducer,
+
+    //seat state
     seatReducer: seatReducer,
+    
     // add more reducers here
   },
   middleware: [saga],
