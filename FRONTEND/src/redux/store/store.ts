@@ -3,6 +3,7 @@ import createSagaMiddleware from "redux-saga";
 import { configureStore } from "@reduxjs/toolkit";
 import rootSaga from "../saga/rootSaga";
 import { InputReducer, userReducer } from "../state/userState";
+import {seatReducer } from "../state/seatState";
 
 
 
@@ -12,6 +13,7 @@ export const store = configureStore({
     //user state
     userReducer: userReducer,
     InputReducer: InputReducer,
+    seatReducer: seatReducer,
     // add more reducers here
   },
   middleware: [saga],

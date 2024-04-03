@@ -6,6 +6,10 @@ import ChairAltIcon from "@mui/icons-material/ChairAlt";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../redux/store/store";
+import { useEffect } from "react";
+import { getSeatsSaga } from "../../../redux/saga/loginSaga";
 
 export default function dashboardStatusBoxed() {
   const shadowStyle = { boxShadow: "0px 4px 10px #25476A" };
@@ -13,6 +17,12 @@ export default function dashboardStatusBoxed() {
   const paperStyle = { width: "100%", height: "10.5vw" };
   const numberStyle = { fontSize: "2vw"};
   const textStyle = { fontSize: "0.6vw", fontWeight: "bold" };
+
+  const dispatch = useDispatch();
+  const seatData = useSelector((state: RootState) => state.userReducer.users);
+
+
+
 
   return (
     <Grid container spacing={1} >

@@ -3,18 +3,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
 import { useEffect, useState } from "react";
 import { getUsersFetch, setUserField } from "../../../redux/state/userState";
-import SampleDashboard from "../SampleDashboard";
-import { useNavigate } from "react-router-dom";
+import Dashboard from "../../dashboard/Dashboard";
+import { useLocation, useNavigate } from "react-router-dom";
 // import axios from "axios";
 
 
 const Login: React.FC = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const location = useLocation(); //ADDED JE
+  const  userId  = location.state; //ADDED JE
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   useEffect(() => {
     dispatch(getUsersFetch());
   }, [dispatch]);
+
 
   const userData = useSelector((state: RootState) => state.userReducer.users);
   const userInput = useSelector((state: RootState) => state.InputReducer);
@@ -32,11 +36,11 @@ const Login: React.FC = () => {
     const matchedUser = userData.find(
       (user: any) => user.username === username && user.password === password
     );
-
+      console.log(matchedUser);
     // If a user with matching credentials is found, log in
     if (matchedUser) {
       console.log("Successfully logged in!");
-      navigate("/dashboard");
+      navigate(`/dashboard/${matchedUser.emp_id}`, { state: { matchedUser } });
     } else {
       console.log("Invalid username or password");
     }
@@ -77,7 +81,7 @@ const Login: React.FC = () => {
           Login
         </Button>
       </form>
-      {isLoggedIn && <SampleDashboard />}
+      {isLoggedIn && <Dashboard />}
     </div>
   );
 };

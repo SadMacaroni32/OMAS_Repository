@@ -16,7 +16,7 @@ export default function dashboard() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={1} sx={{ m: 1 }}>
+      <Grid container spacing={1} sx={{ m: 1, mt: 6 }}>
         <Grid item xs={4}>
           {/* 1ST ROW */}
           <DashboardUserProfile />
