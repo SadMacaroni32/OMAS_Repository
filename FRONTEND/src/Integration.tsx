@@ -1,12 +1,17 @@
-import Dashboard from "./pages/DashboardPage";
+
+import { Route, Routes } from "react-router-dom"
+import LandingPage from "./components/login/Index"
+
 
 function App() {
 
   return (
     <>
-      <Dashboard />
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+      </Routes>
     </>
-  )
+  );
 }
 
 export default App
