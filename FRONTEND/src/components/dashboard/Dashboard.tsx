@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { useState } from "react";
 
-export default function Dashboard() {
+export default function dashboard() {
   // Initialize seatData with default values
   const [data, setData] = useState({
     occupied: 100,

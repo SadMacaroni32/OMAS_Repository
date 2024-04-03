@@ -1,17 +1,14 @@
-
+import Dashboard from "../src/pages/DashboardPage";
 import { Route, Routes } from "react-router-dom"
 import LandingPage from "./components/login/Index"
 
 
-function App() {
+export default function App() {
 
   return (
     <>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-      </Routes>
+      <Dashboard />
     </>
   );
-}
 
-export default App
+}
