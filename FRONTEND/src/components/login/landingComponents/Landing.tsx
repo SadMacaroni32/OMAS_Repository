@@ -1,7 +1,12 @@
 import { useState } from "react";
-import Login from "../login/Login";
+import Login from "../loginComponents/Login";
+import { useNavigate } from "react-router";
 
 const Landing: React.FC = () => {
+  const navigate = useNavigate()
+  const navigateSeatPlanHandle = () => {
+    navigate("/seatplan")
+  }
   //state for login
   const [loginShow, setLoginShow] = useState(false);
   return (
@@ -32,7 +37,9 @@ const Landing: React.FC = () => {
                 ? ""
                 : "rounded-full shadow-sm drop-shadow-lg border-[.1rem] py-3 px-12 text-[1.5rem] "
             }>
-            {!loginShow && <button>View Seatplan</button>}
+            {!loginShow && (
+              <button onClick={navigateSeatPlanHandle}>View Seatplan</button>
+            )}
           </div>
         </div>
         <div
