@@ -1,9 +1,11 @@
+
+import Dashboard from "../src/pages/DashboardPage";
 import { Navigate, Route, Routes } from "react-router-dom"
 import LandingPage from "./components/login/Index"
 import SampleDashboard from "./components/login/SampleDashboard";
 
 
-function App() {
+export default function App() {
 
   return (
     <>
@@ -14,6 +16,5 @@ function App() {
       </Routes>
     </>
   );
-}
 
-export default App
+}
