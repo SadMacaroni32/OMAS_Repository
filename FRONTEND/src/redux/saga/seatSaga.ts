@@ -18,3 +18,4 @@ function* fetchSeats(): any {
   export function* getSeatsSaga() {
     yield takeEvery("seats/getSeatsFetch", fetchSeats);
   }
+

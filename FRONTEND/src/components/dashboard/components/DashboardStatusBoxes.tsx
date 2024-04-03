@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
 import { useEffect, useState } from "react";
 import { getSeatsFetch } from "../../../redux/state/seatState";
+import { getSeatsReservedFetch } from "../../../redux/state/seatReservedState";
 
 interface dataFormat {
   seat_id: number;
@@ -23,14 +24,25 @@ export default function dashboardStatusBoxed() {
 
   const dispatch = useDispatch();
   const seatData = useSelector((state: RootState) => state.seatReducer.seating);
+  const seatReservedData = useSelector((state: RootState) => state.seatReservedReducer.seatingReserved);
   const [dataState, setDataState] = useState<dataFormat | null>(null);
 
   useEffect (() => {
     dispatch(getSeatsFetch());
   }, [dispatch]);
 
+  useEffect (() => {
+    dispatch(getSeatsReservedFetch());
+  }, [dispatch]);
 
-  console.log(seatData);
+  {/* FOR CHECKING API DATA CONSOLE */}
+  // console.log(seatData);
+  console.log(seatReservedData);
+
+  {/* MOCK DATA FOR TESTING ONLY */}
+  let totalAssoc = 100;
+  let totalSeats = 100;
+
   return (
     
     <Grid container spacing={1} >
@@ -50,7 +62,7 @@ export default function dashboardStatusBoxed() {
         >
           <EventSeatIcon sx={iconStyle} />
           <Typography variant="h6" gutterBottom m={1} sx={{...numberStyle}}>
-            {seatData.length}
+            {totalSeats}
           </Typography>
           <Typography variant="subtitle1" gutterBottom sx={{...textStyle}}>
             TOTAL SEATS
@@ -71,7 +83,7 @@ export default function dashboardStatusBoxed() {
         >
           <AccountBoxIcon sx={{ ...iconStyle }} />
           <Typography variant="h6" gutterBottom m={1} sx={{...numberStyle}}>
-            99
+            {totalAssoc}  {/* MOCK DATA */}
           </Typography>
           <Typography variant="subtitle1" gutterBottom sx={{...textStyle}}>
             TOTAL ASSOCIATES
@@ -94,7 +106,7 @@ export default function dashboardStatusBoxed() {
         >
           <AirlineSeatReclineNormalIcon sx={{ ...iconStyle }} />
           <Typography variant="h6" gutterBottom m={1} sx={{...numberStyle}}>
-            99
+          {seatReservedData.length}
           </Typography>
           <Typography variant="subtitle1" gutterBottom sx={{...textStyle}}>
             OCCUPIED SEATS
@@ -115,7 +127,7 @@ export default function dashboardStatusBoxed() {
         >
           <InsertEmoticonIcon sx={{ ...iconStyle }} />
           <Typography variant="h6" gutterBottom m={1} sx={{...numberStyle}}>
-            99
+            {seatReservedData.length}
           </Typography>
           <Typography variant="subtitle1" gutterBottom sx={{...textStyle}}>
             WITH SEATS ASSIGNED
@@ -138,7 +150,7 @@ export default function dashboardStatusBoxed() {
         >
           <ChairAltIcon sx={{ ...iconStyle }} />
           <Typography variant="h6" gutterBottom m={1} sx={{...numberStyle}}>
-            99
+            {totalSeats - seatReservedData.length}  {/* MOCK DATA */}
           </Typography>
           <Typography variant="subtitle1" gutterBottom sx={{...textStyle}}>
             AVAILABLE SEATS
@@ -159,7 +171,7 @@ export default function dashboardStatusBoxed() {
         >
           <SentimentVeryDissatisfiedIcon sx={{ ...iconStyle }} />
           <Typography variant="h6" gutterBottom m={1} sx={{...numberStyle}}>
-            99
+            {totalAssoc - seatReservedData.length}  {/* MOCK DATA */}
           </Typography>
           <Typography variant="subtitle1" gutterBottom sx={{...textStyle}}>
             WITHOUT ASSIGNED SEATS

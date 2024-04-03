@@ -1,12 +1,10 @@
-
 import createSagaMiddleware from "redux-saga";
 import { configureStore } from "@reduxjs/toolkit";
 import rootSaga from "../saga/rootSaga";
 import { InputReducer, userReducer } from "../state/userState";
 import { seatPlanReducer } from "../state/seatPlanState";
-import {seatReducer } from "../state/seatState";
-
-
+import { seatReducer } from "../state/seatState";
+import { seatReservedReducer } from "../state/seatReservedState";
 
 const saga = createSagaMiddleware();
 export const store = configureStore({
@@ -20,7 +18,8 @@ export const store = configureStore({
 
     //seat state
     seatReducer: seatReducer,
-    
+    seatReservedReducer: seatReservedReducer,
+
     // add more reducers here
   },
   middleware: [saga],
