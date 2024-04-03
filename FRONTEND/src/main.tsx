@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 
 import { Provider } from "react-redux";
 import store from "./redux/store/store";
+
 import { Global, css } from "@emotion/react";
 import Integration from "./Integration";
 
