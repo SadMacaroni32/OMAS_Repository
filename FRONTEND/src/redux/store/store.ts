@@ -3,7 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import rootSaga from "../saga/rootSaga";
 import { InputReducer, userReducer } from "../state/userState";
 import { seatPlanReducer } from "../state/seatPlanState";
-import { reservationReducer } from "../state/reservationState";
+import { reservationReducer, reservationsReducer } from "../state/reservationState";
 import { seatReducer } from "../state/seatState";
 import { seatReservedReducer } from "../state/seatReservedState";
 
@@ -24,7 +24,11 @@ export const store = configureStore({
 
     //reservation state
     reservationReducer: reservationReducer,
+    reservationsReducer: reservationsReducer,
+
     // add more reducers here
+    
+
   },
   middleware: [saga],
 });
