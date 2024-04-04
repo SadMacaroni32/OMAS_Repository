@@ -1,5 +1,4 @@
 import * as React from "react";
-import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -9,44 +8,27 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
-import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import { visuallyHidden } from "@mui/utils";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../redux/store/store";
+import { useEffect } from "react";
+import { getUsersFetch } from "../../../redux/state/userState";
 
 interface Data {
-  id: number;
-  calories: number;
-  name: string;
+  emp_id: number;
+  dept_name: string;
+  seats: number;
 }
 
-function createData(
-  id: number,
-  name: string,
-  calories: number,
-): Data {
+function createData(emp_id: number, dept_name: string, seats: number): Data {
   return {
-    id,
-    name,
-    calories,
+    emp_id,
+    dept_name,
+    seats,
   };
 }
-
-const rows = [
-  createData(1, "Cupcake", 305),
-  createData(2, "Donut", 452),
-  createData(3, "Eclair", 262),
-  createData(4, "Frozen yoghurt", 159),
-  createData(5, "Gingerbread", 356),
-  createData(6, "Honeycomb", 408),
-  createData(7, "Ice cream sandwich", 237),
-  createData(8, "Jelly Bean", 375),
-  createData(9, "KitKat", 518),
-  createData(10, "Lollipop", 392),
-  createData(11, "Marshmallow", 318),
-  createData(12, "Nougat", 360),
-  createData(13, "Oreo", 437),
-];
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -89,10 +71,36 @@ function stableSort<T>(
 
 export default function EnhancedTable() {
   const [order, setOrder] = React.useState<Order>("asc");
-  const [orderBy, setOrderBy] = React.useState<keyof Data>("calories");
+  const [orderBy, setOrderBy] = React.useState<keyof Data>("dept_name");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const shadowStyle = { boxShadow: "0px 4px 10px #25476A" };
+
+  {
+    /* Start - API data retrieval and mapping to rows */
+  }
+  const dispatch = useDispatch();
+  const seatData: Data[] = useSelector(
+    (state: RootState) => state.userReducer.users
+  );
+
+  useEffect(() => {
+    dispatch(getUsersFetch());
+  }, [dispatch]);
+    // Data filtered rows to avoid duplicates
+  const deptNamesSet = new Set<string>();
+
+  const rows = seatData.reduce((acc: Data[], item: Data) => {
+    if (!deptNamesSet.has(item.dept_name)) {
+      deptNamesSet.add(item.dept_name);
+      acc.push(createData(item.emp_id, item.dept_name, item.seats));
+    }
+    return acc;
+  }, []);
+
+  {
+    /* End - API data retrieval and mapping to rows */
+  }
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
@@ -127,11 +135,11 @@ export default function EnhancedTable() {
   );
 
   return (
-    <Box sx={{ width: "100%", ...shadowStyle}}>
+    <Box sx={{ width: "100%", ...shadowStyle }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
         <TableContainer>
           <Table
-            sx={{ minWidth: 750 }}
+            sx={{ minWidth: 400 }}
             aria-labelledby="tableTitle"
             size="medium"
           >
@@ -147,12 +155,12 @@ export default function EnhancedTable() {
               <TableRow>
                 <TableCell>
                   <TableSortLabel
-                    active={orderBy === "name"}
-                    direction={orderBy === "name" ? order : "asc"}
-                    onClick={(event) => handleRequestSort(event, "name")}
+                    active={orderBy === "dept_name"}
+                    direction={orderBy === "dept_name" ? order : "asc"}
+                    onClick={(event) => handleRequestSort(event, "dept_name")}
                   >
                     Project Name
-                    {orderBy === "name" ? (
+                    {orderBy === "dept_name" ? (
                       <Box component="span" sx={visuallyHidden}>
                         {order === "desc"
                           ? "sorted descending"
@@ -163,12 +171,12 @@ export default function EnhancedTable() {
                 </TableCell>
                 <TableCell>
                   <TableSortLabel
-                    active={orderBy === "calories"}
-                    direction={orderBy === "calories" ? order : "asc"}
-                    onClick={(event) => handleRequestSort(event, "calories")}
+                    active={orderBy === "seats"}
+                    direction={orderBy === "seats" ? order : "asc"}
+                    onClick={(event) => handleRequestSort(event, "seats")}
                   >
                     Seats
-                    {orderBy === "calories" ? (
+                    {orderBy === "seats" ? (
                       <Box component="span" sx={visuallyHidden}>
                         {order === "desc"
                           ? "sorted descending"
@@ -181,11 +189,11 @@ export default function EnhancedTable() {
             </TableHead>
             <TableBody>
               {visibleRows.map((row) => (
-                <TableRow key={row.id}>
+                <TableRow key={row.emp_id}>
                   <TableCell component="th" scope="row">
-                    {row.name}
+                    {row.dept_name}
                   </TableCell>
-                  <TableCell>{row.calories}</TableCell>
+                  <TableCell>{row.seats}</TableCell>
                 </TableRow>
               ))}
               {emptyRows > 0 && (
