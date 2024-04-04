@@ -1,8 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getSeatsFetch } from "../../../redux/state/seatPlanState";
 import { getReservationsFetch } from "../../../redux/state/reservationState";
+import TimeTablePage from "../../../pages/TimeTablePage";
 
 const SeatPlan: React.FC = () => {
   const dispatch = useDispatch();
@@ -17,13 +18,14 @@ const SeatPlan: React.FC = () => {
     (state: RootState) => state.reservationReducer.reservationValue
   );
 
-  
   useEffect(() => {
     dispatch(getSeatsFetch());
     dispatch(getReservationsFetch());
   }, [dispatch]);
-  
+
   console.log(reservationsData);
+  const [seatId, setSeatId] = useState(null);
+  const [showTimeTablePage, setShowTimeTablePage] = useState(false);
   return (
     <div className="w-full h-[100vh] flex  justify-center">
       <div className="flex gap-x-10 h-[55rem] mt-[100px]">
@@ -37,7 +39,8 @@ const SeatPlan: React.FC = () => {
                   <div
                     key={idx}
                     onClick={() => {
-                      console.log(`"seat id clicked:" ${seat_id}`);
+                      setShowTimeTablePage(true);
+                      setSeatId(seat_id);
                     }}
                     className="w-[5rem] h-[5rem] border-[.1rem] drop-shadow-sm shadow-sm p-1 cursor-pointer">
                     <span className="border-[.1rem] px-2 py-[.1rem]">
@@ -54,7 +57,8 @@ const SeatPlan: React.FC = () => {
                   <div
                     key={idx}
                     onClick={() => {
-                      console.log(`"seat id clicked:" ${seat_id}`);
+                      setShowTimeTablePage(true);
+                      setSeatId(seat_id);
                     }}
                     className="w-[5rem] h-[5rem] border-[.1rem] drop-shadow-sm shadow-sm p-1 cursor-pointer">
                     <span className="border-[.1rem] px-2 py-[.1rem]">
@@ -70,7 +74,8 @@ const SeatPlan: React.FC = () => {
                   <div
                     key={idx}
                     onClick={() => {
-                      console.log(`"seat id clicked:" ${seat_id}`);
+                      setShowTimeTablePage(true);
+                      setSeatId(seat_id);
                     }}
                     className="w-[5rem] h-[5rem] border-[.1rem] drop-shadow-sm shadow-sm p-1 cursor-pointer">
                     <span className="border-[.1rem] px-2 py-[.1rem]">
@@ -89,7 +94,8 @@ const SeatPlan: React.FC = () => {
                 <div
                   key={idx}
                   onClick={() => {
-                    console.log(`"seat id clicked:" ${seat_id}`);
+                    setShowTimeTablePage(true);
+                    setSeatId(seat_id);
                   }}
                   className="w-[5rem] h-[5rem] border-[.1rem] drop-shadow-sm shadow-sm p-1 cursor-pointer">
                   <span className="border-[.1rem] px-2 py-[.1rem]">
@@ -109,7 +115,8 @@ const SeatPlan: React.FC = () => {
                 <div
                   key={idx}
                   onClick={() => {
-                    console.log(`"seat id clicked:" ${seat_id}`);
+                    setShowTimeTablePage(true);
+                    setSeatId(seat_id);
                   }}
                   className="w-[5rem] h-[5rem] border-[.1rem] drop-shadow-sm shadow-sm p-1 cursor-pointer">
                   <span className="border-[.1rem] px-2 py-[.1rem]">
@@ -127,7 +134,8 @@ const SeatPlan: React.FC = () => {
                 <div
                   key={idx}
                   onClick={() => {
-                    console.log(`"seat id clicked:" ${seat_id}`);
+                    setShowTimeTablePage(true);
+                    setSeatId(seat_id);
                   }}
                   className="w-[5rem] h-[5rem] border-[.1rem] drop-shadow-sm shadow-sm p-1 cursor-pointer">
                   <span className="border-[.1rem] px-2 py-[.1rem]">
@@ -148,7 +156,8 @@ const SeatPlan: React.FC = () => {
                 <div
                   key={idx}
                   onClick={() => {
-                    console.log(`"seat id clicked:" ${seat_id}`);
+                    setShowTimeTablePage(true);
+                    setSeatId(seat_id);
                   }}
                   className="w-[5rem] h-[5rem] border-[.1rem] drop-shadow-sm shadow-sm p-1 cursor-pointer">
                   <span className="border-[.1rem] px-2 py-[.1rem]">
@@ -166,7 +175,8 @@ const SeatPlan: React.FC = () => {
                 <div
                   key={idx}
                   onClick={() => {
-                    console.log(`"seat id clicked:" ${seat_id}`);
+                    setShowTimeTablePage(true);
+                    setSeatId(seat_id);
                   }}
                   className="w-[5rem] h-[5rem] border-[.1rem] drop-shadow-sm shadow-sm p-1 cursor-pointer">
                   <span className="border-[.1rem] px-2 py-[.1rem]">
@@ -187,7 +197,8 @@ const SeatPlan: React.FC = () => {
                 <div
                   key={idx}
                   onClick={() => {
-                    console.log(`"seat id clicked:" ${seat_id}`);
+                    setShowTimeTablePage(true);
+                    setSeatId(seat_id);
                   }}
                   className="w-[5rem] h-[5rem] border-[.1rem] drop-shadow-sm shadow-sm p-1 cursor-pointer">
                   <span className="border-[.1rem] px-2 py-[.1rem]">
@@ -205,7 +216,8 @@ const SeatPlan: React.FC = () => {
                 <div
                   key={idx}
                   onClick={() => {
-                    console.log(`"seat id clicked:" ${seat_id}`);
+                    setShowTimeTablePage(true);
+                    setSeatId(seat_id);
                   }}
                   className="w-[5rem] h-[5rem] border-[.1rem] drop-shadow-sm shadow-sm p-1 cursor-pointer">
                   <span className="border-[.1rem] px-2 py-[.1rem]">
@@ -226,7 +238,8 @@ const SeatPlan: React.FC = () => {
                 <div
                   key={idx}
                   onClick={() => {
-                    console.log(`"seat id clicked:" ${seat_id}`);
+                    setShowTimeTablePage(true);
+                    setSeatId(seat_id);
                   }}
                   className="w-[5rem] h-[5rem] border-[.1rem] drop-shadow-sm shadow-sm p-1 cursor-pointer">
                   <span className="border-[.1rem] px-2 py-[.1rem]">
@@ -244,7 +257,8 @@ const SeatPlan: React.FC = () => {
                 <div
                   key={idx}
                   onClick={() => {
-                    console.log(`"seat id clicked:" ${seat_id}`);
+                    setShowTimeTablePage(true);
+                    setSeatId(seat_id);
                   }}
                   className="w-[5rem] h-[5rem] border-[.1rem] drop-shadow-sm shadow-sm p-1 cursor-pointer">
                   <span className="border-[.1rem] px-2 py-[.1rem]">
@@ -265,7 +279,8 @@ const SeatPlan: React.FC = () => {
                 <div
                   key={idx}
                   onClick={() => {
-                    console.log(`"seat id clicked:" ${seat_id}`);
+                    setShowTimeTablePage(true);
+                    setSeatId(seat_id);
                   }}
                   className="w-[5rem] h-[5rem] border-[.1rem] drop-shadow-sm shadow-sm p-1 cursor-pointer">
                   <span className="border-[.1rem] px-2 py-[.1rem]">
@@ -283,7 +298,8 @@ const SeatPlan: React.FC = () => {
                 <div
                   key={idx}
                   onClick={() => {
-                    console.log(`"seat id clicked:" ${seat_id}`);
+                    setShowTimeTablePage(true);
+                    setSeatId(seat_id);
                   }}
                   className="w-[5rem] h-[5rem] border-[.1rem] drop-shadow-sm shadow-sm p-1 cursor-pointer">
                   <span className="border-[.1rem] px-2 py-[.1rem]">
@@ -304,7 +320,8 @@ const SeatPlan: React.FC = () => {
                 <div
                   key={idx}
                   onClick={() => {
-                    console.log(`"seat id clicked:" ${seat_id}`);
+                    setShowTimeTablePage(true);
+                    setSeatId(seat_id);
                   }}
                   className="w-[5rem] h-[5rem] border-[.1rem] drop-shadow-sm shadow-sm p-1 cursor-pointer">
                   <span className="border-[.1rem] px-2 py-[.1rem]">
@@ -322,7 +339,8 @@ const SeatPlan: React.FC = () => {
                 <div
                   key={idx}
                   onClick={() => {
-                    console.log(`"seat id clicked:" ${seat_id}`);
+                    setShowTimeTablePage(true);
+                    setSeatId(seat_id);
                   }}
                   className="w-[5rem] h-[5rem] border-[.1rem] drop-shadow-sm shadow-sm p-1 cursor-pointer">
                   <span className="border-[.1rem] px-2 py-[.1rem]">
@@ -334,6 +352,17 @@ const SeatPlan: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {seatPlan.map((s, idx) => {
+        const { seat_id } = s;
+        return (
+          <div key={idx}>
+            {showTimeTablePage && seatId === seat_id && (
+              <TimeTablePage seat_id={seat_id} />
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 };

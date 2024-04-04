@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from "react";
 import {
   Grid,
@@ -30,7 +31,7 @@ const monthsOfYear = [
   "Dec",
 ];
 
-const Calendar = () => {
+const Calendar = ({ seat_id }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -72,8 +73,7 @@ const Calendar = () => {
             sx={{ border: 1, background: "#EEEEEE", borderColor: "#D6D6D6" }}
             item
             key={`${i}-${j}`}
-            xs={1}
-          ></Grid>
+            xs={1}></Grid>
         );
       } else {
         const date = new Date(currentYear, currentMonth, dayCounter);
@@ -91,8 +91,7 @@ const Calendar = () => {
             item
             key={`${i}-${j}`}
             xs={1}
-            onClick={() => handleDateClick(date)}
-          >
+            onClick={() => handleDateClick(date)}>
             {dayCounter}
           </Grid>
         );
@@ -154,8 +153,7 @@ const Calendar = () => {
         borderRadius: 5,
         justifyContent: "center", // Center the content horizontally
         alignItems: "center", // Center the content vertically
-      }}
-    >
+      }}>
       <Grid item xs={12}>
         <Typography variant="h4">
           <Button onClick={handlePrevMonth}>
@@ -171,8 +169,7 @@ const Calendar = () => {
           <Select
             sx={{ marginLeft: 2 }}
             value={currentYear}
-            onChange={handleChangeYear}
-          >
+            onChange={handleChangeYear}>
             {Array.from(
               { length: 10 },
               (_, index) => currentYear - 5 + index
@@ -200,8 +197,7 @@ const Calendar = () => {
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
+        aria-describedby="modal-modal-description">
         <Box
           sx={{
             width: "90%",
@@ -213,8 +209,7 @@ const Calendar = () => {
             boxShadow: 24,
             p: 4,
             borderRadius: 5,
-          }}
-        >
+          }}>
           <Box>
             {weekInfo && (
               <WeekDisplay
@@ -232,6 +227,7 @@ const Calendar = () => {
           )}
         </Box>
       </Modal>
+      <p className="text-[3rem] font-bold">ETO YUNG SEAT ID: {seat_id}</p>
     </Grid>
   );
 };
