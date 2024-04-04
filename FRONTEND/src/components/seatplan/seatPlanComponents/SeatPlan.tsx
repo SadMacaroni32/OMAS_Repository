@@ -60,7 +60,7 @@ const SeatPlan: React.FC = () => {
   console.log(todayReservations);
 
   return (
-    <div className="w-full h-[100vh] flex overflow-auto   justify-center">
+    <div className="w-full h-[100vh] flex justify-center">
       <div className="flex gap-x-10 h-full mt-[100px] ">
         {/* FIRST ROW */}
         <div className="flex gap-x-1 h-[90%]">
