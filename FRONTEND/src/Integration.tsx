@@ -16,7 +16,7 @@ export default function App() {
         <Route path="/dashboard/*" element={<Dashboard />} />
         <Route path="/seatplan" element={<SeatingPlanPage />} />
         <Route path="/timetable" element={<Navigate to={"/timetable"}/>}/>
-        <Route path="/timetable" element={<TimeTablePage/>}/>
+        <Route path="/timetable/*" element={<TimeTablePage/>}/>
       </Routes>
     </>
   );
