@@ -36,7 +36,7 @@ const Login: React.FC = () => {
     // If a user with matching credentials is found, log in
     if (matchedUser) {
       console.log("Successfully logged in!");
-      navigate("/dashboard");
+      navigate(`/dashboard/${matchedUser.emp_id}`, { state: { matchedUser } });
     } else {
       console.log("Invalid username or password");
     }
@@ -83,3 +83,4 @@ const Login: React.FC = () => {
 };
 
 export default Login;
+
