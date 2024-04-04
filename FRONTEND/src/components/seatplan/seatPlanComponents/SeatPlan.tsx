@@ -32,6 +32,7 @@ const SeatPlan: React.FC = () => {
   const [seatId, setSeatId] = useState(null);
   const [showTimeTablePage, setShowTimeTablePage] = useState(false);
 
+
   // Filter reservations for today
   const todayReservations = reservationsData.filter((reservation: any) => {
     const reservationDate = new Date(reservation.created_at);
@@ -57,6 +58,7 @@ const SeatPlan: React.FC = () => {
   };
 
   console.log(todayReservations);
+
   return (
     <div className="w-full h-[100vh] flex overflow-auto   justify-center">
       <div className="flex gap-x-10 h-full mt-[100px] ">
@@ -882,7 +884,7 @@ const SeatPlan: React.FC = () => {
         return (
           <div key={idx}>
             {showTimeTablePage && seatId === seat_id && (
-              <TimeTablePage seat_id={seat_id} />
+              <TimeTablePage seat_id={seat_id} setShowTimeTablePage={setShowTimeTablePage}/>
             )}
           </div>
         );
