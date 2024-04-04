@@ -14,6 +14,7 @@ import WeekDisplay from "./WeekDisplay";
 import WeekDatesGrid from "./WeekDatesGrid";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ReservationList from "./ReservationList";
 
 const daysOfWeek = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Frid", "Sat"];
 const monthsOfYear = [
@@ -135,6 +136,7 @@ const Calendar = ({ seat_id }) => {
       }}
     >
       <Grid item xs={12}>
+        
         <Typography variant="h4">
           <Button onClick={handlePrevMonth}>
             <ArrowBackIcon />
@@ -164,7 +166,22 @@ const Calendar = ({ seat_id }) => {
             <ArrowForwardIcon />
           </Button>
         </Typography>
+
+
       </Grid>
+
+      <Button onClick={handleOpen}>Reservation List</Button>
+
+      {/* Modal to display the ReservationList */}
+      <Modal open={open} onClose={handleClose}>
+        <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', bgcolor: 'white', p: 4 }}>
+          <Typography variant="h6" gutterBottom>
+            Reservation List
+          </Typography>
+          <ReservationList /> {/* Display the ReservationList component */}
+        </Box>
+      </Modal>
+
       <Grid container item xs={12} spacing={1} justifyContent="center">
         {daysOfWeek.map((day) => (
           <Grid item key={day} xs={1} marginLeft={1}>
@@ -203,12 +220,12 @@ const Calendar = ({ seat_id }) => {
           ))}
         </Grid>
       ))}
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
+        {/* <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
         <Box
           sx={{
             width: "90%",
@@ -238,7 +255,7 @@ const Calendar = ({ seat_id }) => {
             />
           )}
         </Box>
-      </Modal>
+      </Modal> */}
       <Typography className="text-[3rem] font-bold">
         ETO YUNG SEAT ID: {seat_id}
       </Typography>
