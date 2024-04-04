@@ -4,6 +4,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import rootSaga from "../saga/rootSaga";
 import { InputReducer, userReducer } from "../state/userState";
 import { seatPlanReducer } from "../state/seatPlanState";
+import { reservationReducer } from "../state/reservationState";
 
 
 
@@ -16,6 +17,9 @@ export const store = configureStore({
 
     //seatPlan state
     seatPlanReducer: seatPlanReducer,
+
+    //reservation state
+    reservationReducer: reservationReducer,
     // add more reducers here
   },
   middleware: [saga],
