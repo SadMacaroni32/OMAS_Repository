@@ -1,0 +1,21 @@
+.week-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+  }
+  
+  .week-navigation .MuiIconButton-root {
+    transition: all 0.3s ease;
+  }
+  
+  .table-cell-animation {
+    transition: all 0.3s ease;
+  }
+  
+  /* Define animation styles */
+  .table-cell-animation:hover {
+    background-color: #ccc; /* Change background color on hover */
+    color: #fff; /* Change text color on hover */
+  }
+  
