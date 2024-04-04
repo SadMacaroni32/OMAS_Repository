@@ -5,7 +5,6 @@ import Navbar from "../components/navbar/Navbar";
 export default function dashboardPage() {
   return (
     <>
-    <Navbar />
       <Container maxWidth="xl">
         <Dashboard />
       </Container>
