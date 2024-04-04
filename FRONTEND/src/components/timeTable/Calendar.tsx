@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from "react";
 import {
   Grid,
@@ -9,6 +8,7 @@ import {
   Paper,
   Modal,
   Box,
+  TextField,
 } from "@mui/material";
 import WeekDisplay from "./WeekDisplay";
 import WeekDatesGrid from "./WeekDatesGrid";
@@ -49,16 +49,23 @@ const Calendar = ({ seat_id }) => {
   const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
 
   // Function to handle date click
-  const handleDateClick = (date: Date) => {
+  const handleDateClick = (date) => {
+    if (!date || date.getMonth() !== currentMonth) {
+      // Date clicked is either null or not in the current month, return without opening the modal
+      return;
+    }
     setOpen(true);
     const clickedDate = new Date(date);
     const dayOfWeek = clickedDate.getDay();
-    const diff = clickedDate.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1); // Adjust if the day is Sunday
+    const diff =
+      clickedDate.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1); // Adjust if the day is Sunday
     const startOfWeek = new Date(clickedDate.setDate(diff));
     const endOfWeek = new Date(startOfWeek);
     endOfWeek.setDate(startOfWeek.getDate() + 5);
     setWeekInfo({ startOfWeek, endOfWeek });
   };
+  
+  
 
   // Generate calendar grid
   const calendarGrid = [];
@@ -68,50 +75,22 @@ const Calendar = ({ seat_id }) => {
     const week = [];
     for (let j = 0; j < 7; j++) {
       if ((i === 0 && j < firstDayOfMonth) || dayCounter > daysInMonth) {
-        week.push(
-          <Grid
-            sx={{ border: 1, background: "#EEEEEE", borderColor: "#D6D6D6" }}
-            item
-            key={`${i}-${j}`}
-            xs={1}></Grid>
-        );
+        week.push({ date: null, dayOfMonth: null });
       } else {
         const date = new Date(currentYear, currentMonth, dayCounter);
-        week.push(
-          <Grid
-            sx={{
-              border: 1,
-              borderColor: "#D6D6D6",
-              cursor: "pointer",
-              width: 120,
-              "&:hover": {
-                backgroundColor: "#caf0f8",
-              },
-            }}
-            item
-            key={`${i}-${j}`}
-            xs={1}
-            onClick={() => handleDateClick(date)}>
-            {dayCounter}
-          </Grid>
-        );
+        week.push({ date, dayOfMonth: dayCounter });
         dayCounter++;
       }
     }
-
-    calendarGrid.push(
-      <Grid container item key={i} spacing={2} sx={{ height: 120 }}>
-        {week}
-      </Grid>
-    );
+    calendarGrid.push(week);
     if (dayCounter > daysInMonth) break;
   }
 
-  const handleChangeMonth = (event: any) => {
+  const handleChangeMonth = (event: { target: { value: any; }; }) => {
     setCurrentMonth(event.target.value);
   };
 
-  const handleChangeYear = (event: any) => {
+  const handleChangeYear = (event: { target: { value: any; }; }) => {
     setCurrentYear(event.target.value);
   };
 
@@ -139,10 +118,10 @@ const Calendar = ({ seat_id }) => {
   return (
     <Grid
       container
-      spacing={2}
+      spacing={1}
       sx={{
         width: "95%",
-        height: "90%",
+        height: "100%",
         position: "absolute",
         top: "50%",
         left: "50%",
@@ -153,7 +132,8 @@ const Calendar = ({ seat_id }) => {
         borderRadius: 5,
         justifyContent: "center", // Center the content horizontally
         alignItems: "center", // Center the content vertically
-      }}>
+      }}
+    >
       <Grid item xs={12}>
         <Typography variant="h4">
           <Button onClick={handlePrevMonth}>
@@ -169,7 +149,8 @@ const Calendar = ({ seat_id }) => {
           <Select
             sx={{ marginLeft: 2 }}
             value={currentYear}
-            onChange={handleChangeYear}>
+            onChange={handleChangeYear}
+          >
             {Array.from(
               { length: 10 },
               (_, index) => currentYear - 5 + index
@@ -184,20 +165,50 @@ const Calendar = ({ seat_id }) => {
           </Button>
         </Typography>
       </Grid>
-      <Grid container item xs={12} spacing={1}>
+      <Grid container item xs={12} spacing={1} justifyContent="center">
         {daysOfWeek.map((day) => (
-          <Grid item key={day} xs={1}>
-            <Typography>{day}</Typography>
+          <Grid item key={day} xs={1} marginLeft={1}>
+            <Typography align="center">{day}</Typography>
           </Grid>
         ))}
       </Grid>
-      {calendarGrid}
-
+      {calendarGrid.map((week, i) => (
+        <Grid 
+        container 
+        item key={i} 
+        spacing={1} 
+        sx={{ height: 120 }} 
+        justifyContent="center"
+        >
+          {week.map((day, index) => (
+            <Grid
+            sx={{
+              marginLeft: 1,
+              border: 1,
+              borderColor: "#25476A",
+              cursor: "pointer",
+              width: `${100 / 7}%`, // Distribute equally across 7 days
+              backgroundColor: day.date && day.date.getMonth() !== currentMonth ? "#EEEEEE" : "transparent", // Gray background for dates not in current month
+              "&:hover": {
+                backgroundColor: "#caf0f8",
+              },
+            }}
+            item
+            key={`${i}-${index}`}
+            xs={1}
+            onClick={() => handleDateClick(day.date)}
+          >
+              {day.dayOfMonth}
+            </Grid>
+          ))}
+        </Grid>
+      ))}
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description">
+        aria-describedby="modal-modal-description"
+      >
         <Box
           sx={{
             width: "90%",
@@ -209,7 +220,8 @@ const Calendar = ({ seat_id }) => {
             boxShadow: 24,
             p: 4,
             borderRadius: 5,
-          }}>
+          }}
+        >
           <Box>
             {weekInfo && (
               <WeekDisplay
@@ -227,7 +239,9 @@ const Calendar = ({ seat_id }) => {
           )}
         </Box>
       </Modal>
-      <p className="text-[3rem] font-bold">ETO YUNG SEAT ID: {seat_id}</p>
+      <Typography className="text-[3rem] font-bold">
+        ETO YUNG SEAT ID: {seat_id}
+      </Typography>
     </Grid>
   );
 };

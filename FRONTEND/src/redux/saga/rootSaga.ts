@@ -5,9 +5,13 @@ import { seatPlanSaga } from "./seatPlanSaga";
 import { getSeatsSaga } from "./seatSaga";
 import { getReservedSeatsSaga } from "./seatReserved";
 import { reservationSaga } from "./reservationSaga";
+import  reservationsSaga  from "./reservationsSaga"
 
 export default function* rootSaga() {
   yield all([loginSaga(), seatPlanSaga(),
    getSeatsSaga(),
-   getReservedSeatsSaga(), reservationSaga()]);
+   getReservedSeatsSaga(), reservationSaga(),
+  reservationsSaga(),
+  ]);
+
 }
