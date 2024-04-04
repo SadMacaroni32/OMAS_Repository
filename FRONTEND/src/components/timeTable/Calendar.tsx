@@ -9,7 +9,9 @@ import {
   Modal,
   Box,
   TextField,
+  IconButton,
 } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
 import WeekDisplay from "./WeekDisplay";
 import WeekDatesGrid from "./WeekDatesGrid";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -32,10 +34,13 @@ const monthsOfYear = [
   "Dec",
 ];
 
-const Calendar = ({ seat_id }) => {
+const Calendar = ({ seat_id, setShowTimeTablePage }) => {
+  const [openList, setOpenList]= useState(false);
+  const handleOpenList = () => setOpenList(true);
+  const handleCloseList = () => setOpenList(false);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => setShowTimeTablePage(false);
 
   // Get current date
   const currentDate = new Date();
@@ -120,6 +125,7 @@ const Calendar = ({ seat_id }) => {
     <Grid
       container
       spacing={1}
+      m={1}
       sx={{
         width: "95%",
         height: "100%",
@@ -135,7 +141,19 @@ const Calendar = ({ seat_id }) => {
         alignItems: "center", // Center the content vertically
       }}
     >
-      <Grid item xs={12}>
+
+       {/* "X" button to close modal */}
+       <IconButton
+          sx={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+          }}
+          onClick={handleClose}
+        >
+          <CloseIcon width={150} />
+          </IconButton>
+      <Grid item xs={10}>
         
         <Typography variant="h4">
           <Button onClick={handlePrevMonth}>
@@ -148,6 +166,7 @@ const Calendar = ({ seat_id }) => {
               </MenuItem>
             ))}
           </Select>
+
           <Select
             sx={{ marginLeft: 2 }}
             value={currentYear}
@@ -167,18 +186,26 @@ const Calendar = ({ seat_id }) => {
           </Button>
         </Typography>
 
-
+        
       </Grid>
+      <Grid item xs={2}>
+      <Button onClick={handleOpenList}>
+    Reservation List
+  </Button>
+        </Grid>
 
-      <Button onClick={handleOpen}>Reservation List</Button>
+  <Typography variant="h3" ml={2}>
+    {monthsOfYear[currentMonth]} {currentYear}
+  </Typography>
+
 
       {/* Modal to display the ReservationList */}
-      <Modal open={open} onClose={handleClose}>
+      <Modal open={openList} onClose={handleCloseList}>
         <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', bgcolor: 'white', p: 4 }}>
           <Typography variant="h6" gutterBottom>
             Reservation List
           </Typography>
-          <ReservationList /> {/* Display the ReservationList component */}
+          <ReservationList /> 
         </Box>
       </Modal>
 
@@ -220,7 +247,7 @@ const Calendar = ({ seat_id }) => {
           ))}
         </Grid>
       ))}
-        {/* <Modal
+        <Modal
           open={open}
           onClose={handleClose}
           aria-labelledby="modal-modal-title"
@@ -255,7 +282,8 @@ const Calendar = ({ seat_id }) => {
             />
           )}
         </Box>
-      </Modal> */}
+      </Modal>
+      
       <Typography className="text-[3rem] font-bold">
         ETO YUNG SEAT ID: {seat_id}
       </Typography>

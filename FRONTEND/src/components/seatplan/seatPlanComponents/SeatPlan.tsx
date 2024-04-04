@@ -26,6 +26,7 @@ const SeatPlan: React.FC = () => {
   console.log(reservationsData);
   const [seatId, setSeatId] = useState(null);
   const [showTimeTablePage, setShowTimeTablePage] = useState(false);
+  
   return (
     <div className="w-full h-[100vh] flex  justify-center">
       <div className="flex gap-x-10 h-[55rem] mt-[100px]">
@@ -358,7 +359,7 @@ const SeatPlan: React.FC = () => {
         return (
           <div key={idx}>
             {showTimeTablePage && seatId === seat_id && (
-              <TimeTablePage seat_id={seat_id} />
+              <TimeTablePage seat_id={seat_id} setShowTimeTablePage={setShowTimeTablePage}/>
             )}
           </div>
         );

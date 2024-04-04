@@ -4,7 +4,7 @@ import { Box, Paper } from "@mui/material";
 import Calendar from "../components/timeTable/Calendar";
 
 
-export default function TimeTablePage({ seat_id }) {
+export default function TimeTablePage({ seat_id, setShowTimeTablePage }) {
   return (
     <>
       <Box
@@ -14,7 +14,7 @@ export default function TimeTablePage({ seat_id }) {
           alignContent: "center",
           alignItems: "center",
         }}>
-        <Calendar seat_id={seat_id} />
+        <Calendar seat_id={seat_id} setShowTimeTablePage={setShowTimeTablePage} />
       </Box>
     </>
   );
