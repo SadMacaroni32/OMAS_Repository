@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea, Paper } from '@mui/material';
-import ProfilePicture from "../../../assets/profile_pic.jpg";
+import ProfilePicture from "../../../assets/profile_null.avif";
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store/store';
 import { getUsersSuccess } from '../../../redux/state/userState';
