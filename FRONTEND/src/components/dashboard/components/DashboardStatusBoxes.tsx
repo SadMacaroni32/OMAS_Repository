@@ -37,7 +37,7 @@ export default function dashboardStatusBoxed() {
 
   {/* FOR CHECKING API DATA CONSOLE */}
   // console.log(seatData);
-  console.log(seatReservedData);
+  // console.log(seatReservedData);
 
   {/* MOCK DATA FOR TESTING ONLY */}
   let totalAssoc = 100;

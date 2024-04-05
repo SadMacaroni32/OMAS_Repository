@@ -43,7 +43,8 @@ export default function DashboardUserProfile() {
     emp_id
   } = dataState ?? {};
 
-  console.log(fname, position);
+  {/* FOR CHECKING API DATA CONSOLE */}
+  // console.log(fname, position);
 
   return (
     <Paper elevation={6} sx={{ m: 1, ...shadowStyle }}>
