@@ -77,7 +77,7 @@ const SeatPlan: React.FC = () => {
           <div className="flex flex-col justify-between ">
             <div className="flex flex-col gap-y-1">
               {seatPlan.slice(0, 3).map((sp, idx) => {
-                const { seat_id } = sp;
+                const { seat_id, dept_name } = sp;
                 // Find reservation for this seat for today AM
                 const reservationAM: any = reservationsAM.find(
                   (res: any) => res.seat_id === seat_id
@@ -138,7 +138,7 @@ const SeatPlan: React.FC = () => {
                                 {userInfoToDisplay.fname}{" "}
                                 {userInfoToDisplay.lname}
                               </div>
-                              <div>{userInfoToDisplay.deptName}</div>
+                              <div className="h-[1rem]"></div>
                             </div>
                           ) : (
                             "Unknown User"
@@ -154,7 +154,7 @@ const SeatPlan: React.FC = () => {
                                   <div>
                                     {userInfoAM.fname} {userInfoAM.lname}
                                   </div>
-                                  <div>{userInfoAM.deptName}</div>
+                                  <div className="h-[1rem]"></div>
                                 </div>
                               ) : (
                                 "Unknown User"
@@ -170,7 +170,7 @@ const SeatPlan: React.FC = () => {
                                       <div>
                                         {userInfoPM.fname} {userInfoPM.lname}
                                       </div>
-                                      <div>{userInfoPM.deptName}</div>
+                                      <div className="h-[1rem]"></div>
                                     </div>
                                   ) : (
                                     "Unknown User"
@@ -185,6 +185,9 @@ const SeatPlan: React.FC = () => {
                           )}
                         </>
                       )}
+                    </span>
+                    <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
+                      {dept_name}
                     </span>
                   </div>
                 );
@@ -192,7 +195,7 @@ const SeatPlan: React.FC = () => {
             </div>
             <div className="flex flex-col gap-y-1">
               {seatPlan.slice(3, 4).map((sp, idx) => {
-                const { seat_id } = sp;
+                const { seat_id, dept_name } = sp;
                 // Find reservation for this seat for today AM
                 const reservationAM: any = reservationsAM.find(
                   (res: any) => res.seat_id === seat_id
@@ -252,7 +255,7 @@ const SeatPlan: React.FC = () => {
                                 {userInfoToDisplay.fname}{" "}
                                 {userInfoToDisplay.lname}
                               </div>
-                              <div>{userInfoToDisplay.deptName}</div>
+                              <div className="h-[1rem]"></div>
                             </div>
                           ) : (
                             "Unknown User"
@@ -268,7 +271,7 @@ const SeatPlan: React.FC = () => {
                                   <div>
                                     {userInfoAM.fname} {userInfoAM.lname}
                                   </div>
-                                  <div>{userInfoAM.deptName}</div>
+                                  <div className="h-[1rem]"></div>
                                 </div>
                               ) : (
                                 "Unknown User"
@@ -284,7 +287,7 @@ const SeatPlan: React.FC = () => {
                                       <div>
                                         {userInfoPM.fname} {userInfoPM.lname}
                                       </div>
-                                      <div>{userInfoPM.deptName}</div>
+                                      <div className="h-[1rem]"></div>
                                     </div>
                                   ) : (
                                     "Unknown User"
@@ -299,13 +302,16 @@ const SeatPlan: React.FC = () => {
                           )}
                         </>
                       )}
+                    </span>
+                    <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
+                      {dept_name}
                     </span>
                   </div>
                 );
               })}
 
               {seatPlan.slice(4, 6).map((sp, idx) => {
-                const { seat_id } = sp;
+                const { seat_id, dept_name } = sp;
                 // Find reservation for this seat for today AM
                 const reservationAM: any = reservationsAM.find(
                   (res: any) => res.seat_id === seat_id
@@ -365,7 +371,7 @@ const SeatPlan: React.FC = () => {
                                 {userInfoToDisplay.fname}{" "}
                                 {userInfoToDisplay.lname}
                               </div>
-                              <div>{userInfoToDisplay.deptName}</div>
+                              <div className="h-[1rem]"></div>
                             </div>
                           ) : (
                             "Unknown User"
@@ -381,7 +387,7 @@ const SeatPlan: React.FC = () => {
                                   <div>
                                     {userInfoAM.fname} {userInfoAM.lname}
                                   </div>
-                                  <div>{userInfoAM.deptName}</div>
+                                  <div className="h-[1rem]"></div>
                                 </div>
                               ) : (
                                 "Unknown User"
@@ -397,7 +403,7 @@ const SeatPlan: React.FC = () => {
                                       <div>
                                         {userInfoPM.fname} {userInfoPM.lname}
                                       </div>
-                                      <div>{userInfoPM.deptName}</div>
+                                      <div className="h-[1rem]"></div>
                                     </div>
                                   ) : (
                                     "Unknown User"
@@ -412,6 +418,9 @@ const SeatPlan: React.FC = () => {
                           )}
                         </>
                       )}
+                    </span>
+                    <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
+                      {dept_name}
                     </span>
                   </div>
                 );
@@ -421,7 +430,7 @@ const SeatPlan: React.FC = () => {
           <div className="border-[.2rem] border-black h-[18.5rem]"></div>
           <div className="flex flex-col gap-y-1">
             {seatPlan.slice(6, 9).map((sp, idx) => {
-              const { seat_id } = sp;
+              const { seat_id, dept_name } = sp;
               // Find reservation for this seat for today AM
               const reservationAM: any = reservationsAM.find(
                 (res: any) => res.seat_id === seat_id
@@ -481,7 +490,7 @@ const SeatPlan: React.FC = () => {
                               {userInfoToDisplay.fname}{" "}
                               {userInfoToDisplay.lname}
                             </div>
-                            <div>{userInfoToDisplay.deptName}</div>
+                            <div className="h-[1rem]"></div>
                           </div>
                         ) : (
                           "Unknown User"
@@ -497,7 +506,7 @@ const SeatPlan: React.FC = () => {
                                 <div>
                                   {userInfoAM.fname} {userInfoAM.lname}
                                 </div>
-                                <div>{userInfoAM.deptName}</div>
+                                <div className="h-[1rem]"></div>
                               </div>
                             ) : (
                               "Unknown User"
@@ -513,7 +522,7 @@ const SeatPlan: React.FC = () => {
                                     <div>
                                       {userInfoPM.fname} {userInfoPM.lname}
                                     </div>
-                                    <div>{userInfoPM.deptName}</div>
+                                    <div className="h-[1rem]"></div>
                                   </div>
                                 ) : (
                                   "Unknown User"
@@ -529,6 +538,9 @@ const SeatPlan: React.FC = () => {
                       </>
                     )}
                   </span>
+                  <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
+                    {dept_name}
+                  </span>
                 </div>
               );
             })}
@@ -539,7 +551,7 @@ const SeatPlan: React.FC = () => {
         <div className="flex gap-x-1">
           <div className="flex flex-col gap-y-1">
             {seatPlan.slice(9, 12).map((sp, idx) => {
-              const { seat_id } = sp;
+              const { seat_id, dept_name } = sp;
               // Find reservation for this seat for today AM
               const reservationAM: any = reservationsAM.find(
                 (res: any) => res.seat_id === seat_id
@@ -600,7 +612,7 @@ const SeatPlan: React.FC = () => {
                               {userInfoToDisplay.fname}{" "}
                               {userInfoToDisplay.lname}
                             </div>
-                            <div>{userInfoToDisplay.deptName}</div>
+                            <div className="h-[1rem]"></div>
                           </div>
                         ) : (
                           "Unknown User"
@@ -616,7 +628,7 @@ const SeatPlan: React.FC = () => {
                                 <div>
                                   {userInfoAM.fname} {userInfoAM.lname}
                                 </div>
-                                <div>{userInfoAM.deptName}</div>
+                                <div className="h-[1rem]"></div>
                               </div>
                             ) : (
                               "Unknown User"
@@ -632,7 +644,7 @@ const SeatPlan: React.FC = () => {
                                     <div>
                                       {userInfoPM.fname} {userInfoPM.lname}
                                     </div>
-                                    <div>{userInfoPM.deptName}</div>
+                                    <div className="h-[1rem]"></div>
                                   </div>
                                 ) : (
                                   "Unknown User"
@@ -648,6 +660,9 @@ const SeatPlan: React.FC = () => {
                       </>
                     )}
                   </span>
+                  <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
+                    {dept_name}
+                  </span>
                 </div>
               );
             })}
@@ -655,7 +670,7 @@ const SeatPlan: React.FC = () => {
           <div className="border-[.2rem] border-black h-[43.5rem]"></div>
           <div className="flex flex-col gap-y-1">
             {seatPlan.slice(12, 19).map((sp, idx) => {
-              const { seat_id } = sp;
+              const { seat_id, dept_name } = sp;
               // Find reservation for this seat for today AM
               const reservationAM: any = reservationsAM.find(
                 (res: any) => res.seat_id === seat_id
@@ -715,7 +730,7 @@ const SeatPlan: React.FC = () => {
                               {userInfoToDisplay.fname}{" "}
                               {userInfoToDisplay.lname}
                             </div>
-                            <div>{userInfoToDisplay.deptName}</div>
+                            <div className="h-[1rem]"></div>
                           </div>
                         ) : (
                           "Unknown User"
@@ -731,7 +746,7 @@ const SeatPlan: React.FC = () => {
                                 <div>
                                   {userInfoAM.fname} {userInfoAM.lname}
                                 </div>
-                                <div>{userInfoAM.deptName}</div>
+                                <div className="h-[1rem]"></div>
                               </div>
                             ) : (
                               "Unknown User"
@@ -747,7 +762,7 @@ const SeatPlan: React.FC = () => {
                                     <div>
                                       {userInfoPM.fname} {userInfoPM.lname}
                                     </div>
-                                    <div>{userInfoPM.deptName}</div>
+                                    <div className="h-[1rem]"></div>
                                   </div>
                                 ) : (
                                   "Unknown User"
@@ -762,6 +777,9 @@ const SeatPlan: React.FC = () => {
                         )}
                       </>
                     )}
+                  </span>
+                  <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
+                    {dept_name}
                   </span>
                 </div>
               );
@@ -773,7 +791,7 @@ const SeatPlan: React.FC = () => {
         <div className="flex gap-x-1">
           <div className="flex flex-col gap-y-1">
             {seatPlan.slice(19, 27).map((sp, idx) => {
-              const { seat_id } = sp;
+              const { seat_id, dept_name } = sp;
               // Find reservation for this seat for today AM
               const reservationAM: any = reservationsAM.find(
                 (res: any) => res.seat_id === seat_id
@@ -834,7 +852,7 @@ const SeatPlan: React.FC = () => {
                               {userInfoToDisplay.fname}{" "}
                               {userInfoToDisplay.lname}
                             </div>
-                            <div>{userInfoToDisplay.deptName}</div>
+                            <div className="h-[1rem]"></div>
                           </div>
                         ) : (
                           "Unknown User"
@@ -850,7 +868,7 @@ const SeatPlan: React.FC = () => {
                                 <div>
                                   {userInfoAM.fname} {userInfoAM.lname}
                                 </div>
-                                <div>{userInfoAM.deptName}</div>
+                                <div className="h-[1rem]"></div>
                               </div>
                             ) : (
                               "Unknown User"
@@ -866,7 +884,7 @@ const SeatPlan: React.FC = () => {
                                     <div>
                                       {userInfoPM.fname} {userInfoPM.lname}
                                     </div>
-                                    <div>{userInfoPM.deptName}</div>
+                                    <div className="h-[1rem]"></div>
                                   </div>
                                 ) : (
                                   "Unknown User"
@@ -881,6 +899,9 @@ const SeatPlan: React.FC = () => {
                         )}
                       </>
                     )}
+                  </span>
+                  <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
+                    {dept_name}
                   </span>
                 </div>
               );
@@ -889,7 +910,7 @@ const SeatPlan: React.FC = () => {
           <div className="border-[.2rem] border-black h-[56rem]"></div>
           <div className="flex flex-col gap-y-1">
             {seatPlan.slice(27, 36).map((sp, idx) => {
-              const { seat_id } = sp;
+              const { seat_id, dept_name } = sp;
               // Find reservation for this seat for today AM
               const reservationAM: any = reservationsAM.find(
                 (res: any) => res.seat_id === seat_id
@@ -950,7 +971,7 @@ const SeatPlan: React.FC = () => {
                               {userInfoToDisplay.fname}{" "}
                               {userInfoToDisplay.lname}
                             </div>
-                            <div>{userInfoToDisplay.deptName}</div>
+                            <div className="h-[1rem]"></div>
                           </div>
                         ) : (
                           "Unknown User"
@@ -966,7 +987,7 @@ const SeatPlan: React.FC = () => {
                                 <div>
                                   {userInfoAM.fname} {userInfoAM.lname}
                                 </div>
-                                <div>{userInfoAM.deptName}</div>
+                                <div className="h-[1rem]"></div>
                               </div>
                             ) : (
                               "Unknown User"
@@ -982,7 +1003,7 @@ const SeatPlan: React.FC = () => {
                                     <div>
                                       {userInfoPM.fname} {userInfoPM.lname}
                                     </div>
-                                    <div>{userInfoPM.deptName}</div>
+                                    <div className="h-[1rem]"></div>
                                   </div>
                                 ) : (
                                   "Unknown User"
@@ -997,6 +1018,9 @@ const SeatPlan: React.FC = () => {
                         )}
                       </>
                     )}
+                  </span>
+                  <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
+                    {dept_name}
                   </span>
                 </div>
               );
@@ -1008,7 +1032,7 @@ const SeatPlan: React.FC = () => {
         <div className="flex gap-x-1">
           <div className="flex flex-col gap-y-1">
             {seatPlan.slice(36, 44).map((sp, idx) => {
-              const { seat_id } = sp;
+              const { seat_id, dept_name } = sp;
               // Find reservation for this seat for today AM
               const reservationAM: any = reservationsAM.find(
                 (res: any) => res.seat_id === seat_id
@@ -1069,7 +1093,7 @@ const SeatPlan: React.FC = () => {
                               {userInfoToDisplay.fname}{" "}
                               {userInfoToDisplay.lname}
                             </div>
-                            <div>{userInfoToDisplay.deptName}</div>
+                            <div className="h-[1rem]"></div>
                           </div>
                         ) : (
                           "Unknown User"
@@ -1085,7 +1109,7 @@ const SeatPlan: React.FC = () => {
                                 <div>
                                   {userInfoAM.fname} {userInfoAM.lname}
                                 </div>
-                                <div>{userInfoAM.deptName}</div>
+                                <div className="h-[1rem]"></div>
                               </div>
                             ) : (
                               "Unknown User"
@@ -1101,7 +1125,7 @@ const SeatPlan: React.FC = () => {
                                     <div>
                                       {userInfoPM.fname} {userInfoPM.lname}
                                     </div>
-                                    <div>{userInfoPM.deptName}</div>
+                                    <div className="h-[1rem]"></div>
                                   </div>
                                 ) : (
                                   "Unknown User"
@@ -1117,6 +1141,9 @@ const SeatPlan: React.FC = () => {
                       </>
                     )}
                   </span>
+                  <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
+                    {dept_name}
+                  </span>
                 </div>
               );
             })}
@@ -1124,7 +1151,7 @@ const SeatPlan: React.FC = () => {
           <div className="border-[.2rem] border-black h-[49.8rem]"></div>
           <div className="flex flex-col gap-y-1">
             {seatPlan.slice(44, 52).map((sp, idx) => {
-              const { seat_id } = sp;
+              const { seat_id, dept_name } = sp;
               // Find reservation for this seat for today AM
               const reservationAM: any = reservationsAM.find(
                 (res: any) => res.seat_id === seat_id
@@ -1185,7 +1212,7 @@ const SeatPlan: React.FC = () => {
                               {userInfoToDisplay.fname}{" "}
                               {userInfoToDisplay.lname}
                             </div>
-                            <div>{userInfoToDisplay.deptName}</div>
+                            <div className="h-[1rem]"></div>
                           </div>
                         ) : (
                           "Unknown User"
@@ -1201,7 +1228,7 @@ const SeatPlan: React.FC = () => {
                                 <div>
                                   {userInfoAM.fname} {userInfoAM.lname}
                                 </div>
-                                <div>{userInfoAM.deptName}</div>
+                                <div className="h-[1rem]"></div>
                               </div>
                             ) : (
                               "Unknown User"
@@ -1217,7 +1244,7 @@ const SeatPlan: React.FC = () => {
                                     <div>
                                       {userInfoPM.fname} {userInfoPM.lname}
                                     </div>
-                                    <div>{userInfoPM.deptName}</div>
+                                    <div className="h-[1rem]"></div>
                                   </div>
                                 ) : (
                                   "Unknown User"
@@ -1233,6 +1260,9 @@ const SeatPlan: React.FC = () => {
                       </>
                     )}
                   </span>
+                  <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
+                    {dept_name}
+                  </span>
                 </div>
               );
             })}
@@ -1243,7 +1273,7 @@ const SeatPlan: React.FC = () => {
         <div className="flex gap-x-1">
           <div className="flex flex-col gap-y-1">
             {seatPlan.slice(52, 58).map((sp, idx) => {
-              const { seat_id } = sp;
+              const { seat_id, dept_name } = sp;
               // Find reservation for this seat for today AM
               const reservationAM: any = reservationsAM.find(
                 (res: any) => res.seat_id === seat_id
@@ -1304,7 +1334,7 @@ const SeatPlan: React.FC = () => {
                               {userInfoToDisplay.fname}{" "}
                               {userInfoToDisplay.lname}
                             </div>
-                            <div>{userInfoToDisplay.deptName}</div>
+                            <div className="h-[1rem]"></div>
                           </div>
                         ) : (
                           "Unknown User"
@@ -1320,7 +1350,7 @@ const SeatPlan: React.FC = () => {
                                 <div>
                                   {userInfoAM.fname} {userInfoAM.lname}
                                 </div>
-                                <div>{userInfoAM.deptName}</div>
+                                <div className="h-[1rem]"></div>
                               </div>
                             ) : (
                               "Unknown User"
@@ -1336,7 +1366,7 @@ const SeatPlan: React.FC = () => {
                                     <div>
                                       {userInfoPM.fname} {userInfoPM.lname}
                                     </div>
-                                    <div>{userInfoPM.deptName}</div>
+                                    <div className="h-[1rem]"></div>
                                   </div>
                                 ) : (
                                   "Unknown User"
@@ -1352,6 +1382,9 @@ const SeatPlan: React.FC = () => {
                       </>
                     )}
                   </span>
+                  <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
+                    {dept_name}
+                  </span>
                 </div>
               );
             })}
@@ -1359,7 +1392,7 @@ const SeatPlan: React.FC = () => {
           <div className="border-[.2rem] border-black h-[37.3rem]"></div>
           <div className="flex flex-col gap-y-1">
             {seatPlan.slice(58, 64).map((sp, idx) => {
-              const { seat_id } = sp;
+              const { seat_id, dept_name } = sp;
               // Find reservation for this seat for today AM
               const reservationAM: any = reservationsAM.find(
                 (res: any) => res.seat_id === seat_id
@@ -1420,7 +1453,7 @@ const SeatPlan: React.FC = () => {
                               {userInfoToDisplay.fname}{" "}
                               {userInfoToDisplay.lname}
                             </div>
-                            <div>{userInfoToDisplay.deptName}</div>
+                            <div className="h-[1rem]"></div>
                           </div>
                         ) : (
                           "Unknown User"
@@ -1436,7 +1469,7 @@ const SeatPlan: React.FC = () => {
                                 <div>
                                   {userInfoAM.fname} {userInfoAM.lname}
                                 </div>
-                                <div>{userInfoAM.deptName}</div>
+                                <div className="h-[1rem]"></div>
                               </div>
                             ) : (
                               "Unknown User"
@@ -1452,7 +1485,7 @@ const SeatPlan: React.FC = () => {
                                     <div>
                                       {userInfoPM.fname} {userInfoPM.lname}
                                     </div>
-                                    <div>{userInfoPM.deptName}</div>
+                                    <div className="h-[1rem]"></div>
                                   </div>
                                 ) : (
                                   "Unknown User"
@@ -1467,6 +1500,9 @@ const SeatPlan: React.FC = () => {
                         )}
                       </>
                     )}
+                  </span>
+                  <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
+                    {dept_name}
                   </span>
                 </div>
               );
@@ -1478,7 +1514,7 @@ const SeatPlan: React.FC = () => {
         <div className="flex gap-x-1">
           <div className="flex flex-col gap-y-1">
             {seatPlan.slice(64, 69).map((sp, idx) => {
-              const { seat_id } = sp;
+              const { seat_id, dept_name } = sp;
               // Find reservation for this seat for today AM
               const reservationAM: any = reservationsAM.find(
                 (res: any) => res.seat_id === seat_id
@@ -1539,7 +1575,7 @@ const SeatPlan: React.FC = () => {
                               {userInfoToDisplay.fname}{" "}
                               {userInfoToDisplay.lname}
                             </div>
-                            <div>{userInfoToDisplay.deptName}</div>
+                            <div className="h-[1rem]"></div>
                           </div>
                         ) : (
                           "Unknown User"
@@ -1555,7 +1591,7 @@ const SeatPlan: React.FC = () => {
                                 <div>
                                   {userInfoAM.fname} {userInfoAM.lname}
                                 </div>
-                                <div>{userInfoAM.deptName}</div>
+                                <div className="h-[1rem]"></div>
                               </div>
                             ) : (
                               "Unknown User"
@@ -1571,7 +1607,7 @@ const SeatPlan: React.FC = () => {
                                     <div>
                                       {userInfoPM.fname} {userInfoPM.lname}
                                     </div>
-                                    <div>{userInfoPM.deptName}</div>
+                                    <div className="h-[1rem]"></div>
                                   </div>
                                 ) : (
                                   "Unknown User"
@@ -1587,6 +1623,9 @@ const SeatPlan: React.FC = () => {
                       </>
                     )}
                   </span>
+                  <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
+                    {dept_name}
+                  </span>
                 </div>
               );
             })}
@@ -1594,7 +1633,7 @@ const SeatPlan: React.FC = () => {
           <div className="border-[.2rem] border-black h-[31rem]"></div>
           <div className="flex flex-col gap-y-1">
             {seatPlan.slice(69, 74).map((sp, idx) => {
-              const { seat_id } = sp;
+              const { seat_id, dept_name } = sp;
               // Find reservation for this seat for today AM
               const reservationAM: any = reservationsAM.find(
                 (res: any) => res.seat_id === seat_id
@@ -1655,7 +1694,7 @@ const SeatPlan: React.FC = () => {
                               {userInfoToDisplay.fname}{" "}
                               {userInfoToDisplay.lname}
                             </div>
-                            <div>{userInfoToDisplay.deptName}</div>
+                            <div className="h-[1rem]"></div>
                           </div>
                         ) : (
                           "Unknown User"
@@ -1671,7 +1710,7 @@ const SeatPlan: React.FC = () => {
                                 <div>
                                   {userInfoAM.fname} {userInfoAM.lname}
                                 </div>
-                                <div>{userInfoAM.deptName}</div>
+                                <div className="h-[1rem]"></div>
                               </div>
                             ) : (
                               "Unknown User"
@@ -1687,7 +1726,7 @@ const SeatPlan: React.FC = () => {
                                     <div>
                                       {userInfoPM.fname} {userInfoPM.lname}
                                     </div>
-                                    <div>{userInfoPM.deptName}</div>
+                                    <div className="h-[1rem]"></div>
                                   </div>
                                 ) : (
                                   "Unknown User"
@@ -1702,6 +1741,9 @@ const SeatPlan: React.FC = () => {
                         )}
                       </>
                     )}
+                  </span>
+                  <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
+                    {dept_name}
                   </span>
                 </div>
               );
@@ -1713,7 +1755,7 @@ const SeatPlan: React.FC = () => {
         <div className="flex gap-x-1">
           <div className="flex flex-col gap-y-1">
             {seatPlan.slice(74, 78).map((sp, idx) => {
-              const { seat_id } = sp;
+              const { seat_id, dept_name } = sp;
               // Find reservation for this seat for today AM
               const reservationAM: any = reservationsAM.find(
                 (res: any) => res.seat_id === seat_id
@@ -1774,7 +1816,7 @@ const SeatPlan: React.FC = () => {
                               {userInfoToDisplay.fname}{" "}
                               {userInfoToDisplay.lname}
                             </div>
-                            <div>{userInfoToDisplay.deptName}</div>
+                            <div className="h-[1rem]"></div>
                           </div>
                         ) : (
                           "Unknown User"
@@ -1790,7 +1832,7 @@ const SeatPlan: React.FC = () => {
                                 <div>
                                   {userInfoAM.fname} {userInfoAM.lname}
                                 </div>
-                                <div>{userInfoAM.deptName}</div>
+                                <div className="h-[1rem]"></div>
                               </div>
                             ) : (
                               "Unknown User"
@@ -1806,7 +1848,7 @@ const SeatPlan: React.FC = () => {
                                     <div>
                                       {userInfoPM.fname} {userInfoPM.lname}
                                     </div>
-                                    <div>{userInfoPM.deptName}</div>
+                                    <div className="h-[1rem]"></div>
                                   </div>
                                 ) : (
                                   "Unknown User"
@@ -1821,6 +1863,9 @@ const SeatPlan: React.FC = () => {
                         )}
                       </>
                     )}
+                  </span>
+                  <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
+                    {dept_name}
                   </span>
                 </div>
               );
@@ -1829,7 +1874,7 @@ const SeatPlan: React.FC = () => {
           <div className="border-[.2rem] border-black h-[24.8rem]"></div>
           <div className="flex flex-col gap-y-1">
             {seatPlan.slice(78, 82).map((sp, idx) => {
-              const { seat_id } = sp;
+              const { seat_id, dept_name } = sp;
               // Find reservation for this seat for today AM
               const reservationAM: any = reservationsAM.find(
                 (res: any) => res.seat_id === seat_id
@@ -1889,7 +1934,7 @@ const SeatPlan: React.FC = () => {
                               {userInfoToDisplay.fname}{" "}
                               {userInfoToDisplay.lname}
                             </div>
-                            <div>{userInfoToDisplay.deptName}</div>
+                            <div className="h-[1rem]"></div>
                           </div>
                         ) : (
                           "Unknown User"
@@ -1905,7 +1950,7 @@ const SeatPlan: React.FC = () => {
                                 <div>
                                   {userInfoAM.fname} {userInfoAM.lname}
                                 </div>
-                                <div>{userInfoAM.deptName}</div>
+                                <div className="h-[1rem]"></div>
                               </div>
                             ) : (
                               "Unknown User"
@@ -1921,7 +1966,7 @@ const SeatPlan: React.FC = () => {
                                     <div>
                                       {userInfoPM.fname} {userInfoPM.lname}
                                     </div>
-                                    <div>{userInfoPM.deptName}</div>
+                                    <div className="h-[1rem]"></div>
                                   </div>
                                 ) : (
                                   "Unknown User"
@@ -1936,6 +1981,9 @@ const SeatPlan: React.FC = () => {
                         )}
                       </>
                     )}
+                  </span>
+                  <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
+                    {dept_name}
                   </span>
                 </div>
               );
