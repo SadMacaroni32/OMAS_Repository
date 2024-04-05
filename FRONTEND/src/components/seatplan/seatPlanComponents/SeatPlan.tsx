@@ -88,27 +88,17 @@ const SeatPlan: React.FC = () => {
                   (res: any) => res.seat_id === seat_id
                 );
 
-                // Fetch user information reserved at AM using emp_id
-                const userInfoAM = reservationAM
-                  ? getUserInfo(reservationAM.emp_id)
-                  : null;
-
-                // Fetch user information reserved at PM using emp_id
-                const userInfoPM = reservationPM
-                  ? getUserInfo(reservationPM.emp_id)
-                  : null;
-
                 // Determine which reservation to display based on current time
                 let displayReservation;
                 if (
-                  currentTime.getHours() === 6 &&
-                  currentTime.getMinutes() === 0
+                  currentTime.getHours() < 12 ||
+                  (currentTime.getHours() === 12 &&
+                    currentTime.getMinutes() < 30)
                 ) {
+                  // Display AM reservation if current time is before 12:30
                   displayReservation = reservationAM;
-                } else if (
-                  currentTime.getHours() === 12 &&
-                  currentTime.getMinutes() === 30
-                ) {
+                } else {
+                  // Display PM reservation if current time is 12:30 or later
                   displayReservation = reservationPM;
                 }
 
@@ -116,6 +106,8 @@ const SeatPlan: React.FC = () => {
                 const userInfoToDisplay = displayReservation
                   ? getUserInfo(displayReservation.emp_id)
                   : null;
+
+                // console.log(displayReservation);
 
                 return (
                   <div
@@ -141,48 +133,14 @@ const SeatPlan: React.FC = () => {
                               <div className="h-[1rem]"></div>
                             </div>
                           ) : (
-                            "Unknown User"
+                            <div></div>
                           )}
                         </>
                       ) : (
                         <>
-                          {reservationAM ? (
-                            <>
-                              {userInfoAM ? (
-                                <div className="h-full flex flex-col justify-between py-1">
-                                  <div>{userInfoAM.position}</div>
-                                  <div>
-                                    {userInfoAM.fname} {userInfoAM.lname}
-                                  </div>
-                                  <div className="h-[1rem]"></div>
-                                </div>
-                              ) : (
-                                "Unknown User"
-                              )}
-                            </>
-                          ) : (
-                            <>
-                              {reservationPM ? (
-                                <>
-                                  {userInfoPM ? (
-                                    <div className="h-full flex flex-col justify-between py-1">
-                                      <div>{userInfoPM.position}</div>
-                                      <div>
-                                        {userInfoPM.fname} {userInfoPM.lname}
-                                      </div>
-                                      <div className="h-[1rem]"></div>
-                                    </div>
-                                  ) : (
-                                    "Unknown User"
-                                  )}
-                                </>
-                              ) : (
-                                <div className="flex flex-col items-center justify-center h-full">
-                                  Available
-                                </div>
-                              )}
-                            </>
-                          )}
+                          <div className="flex flex-col items-center justify-center h-full">
+                            Available
+                          </div>
                         </>
                       )}
                     </span>
@@ -206,27 +164,17 @@ const SeatPlan: React.FC = () => {
                   (res: any) => res.seat_id === seat_id
                 );
 
-                // Fetch user information reserved at AM using emp_id
-                const userInfoAM = reservationAM
-                  ? getUserInfo(reservationAM.emp_id)
-                  : null;
-
-                // Fetch user information reserved at PM using emp_id
-                const userInfoPM = reservationPM
-                  ? getUserInfo(reservationPM.emp_id)
-                  : null;
-
                 // Determine which reservation to display based on current time
                 let displayReservation;
                 if (
-                  currentTime.getHours() === 6 &&
-                  currentTime.getMinutes() === 0
+                  currentTime.getHours() < 12 ||
+                  (currentTime.getHours() === 12 &&
+                    currentTime.getMinutes() < 30)
                 ) {
+                  // Display AM reservation if current time is before 12:30
                   displayReservation = reservationAM;
-                } else if (
-                  currentTime.getHours() === 12 &&
-                  currentTime.getMinutes() === 30
-                ) {
+                } else {
+                  // Display PM reservation if current time is 12:30 or later
                   displayReservation = reservationPM;
                 }
 
@@ -234,6 +182,7 @@ const SeatPlan: React.FC = () => {
                 const userInfoToDisplay = displayReservation
                   ? getUserInfo(displayReservation.emp_id)
                   : null;
+
                 return (
                   <div
                     key={idx}
@@ -258,48 +207,14 @@ const SeatPlan: React.FC = () => {
                               <div className="h-[1rem]"></div>
                             </div>
                           ) : (
-                            "Unknown User"
+                            <div></div>
                           )}
                         </>
                       ) : (
                         <>
-                          {reservationAM ? (
-                            <>
-                              {userInfoAM ? (
-                                <div className="h-full flex flex-col justify-between py-1">
-                                  <div>{userInfoAM.position}</div>
-                                  <div>
-                                    {userInfoAM.fname} {userInfoAM.lname}
-                                  </div>
-                                  <div className="h-[1rem]"></div>
-                                </div>
-                              ) : (
-                                "Unknown User"
-                              )}
-                            </>
-                          ) : (
-                            <>
-                              {reservationPM ? (
-                                <>
-                                  {userInfoPM ? (
-                                    <div className="h-full flex flex-col justify-between py-1">
-                                      <div>{userInfoPM.position}</div>
-                                      <div>
-                                        {userInfoPM.fname} {userInfoPM.lname}
-                                      </div>
-                                      <div className="h-[1rem]"></div>
-                                    </div>
-                                  ) : (
-                                    "Unknown User"
-                                  )}
-                                </>
-                              ) : (
-                                <div className="flex flex-col items-center justify-center h-full">
-                                  Available
-                                </div>
-                              )}
-                            </>
-                          )}
+                          <div className="flex flex-col items-center justify-center h-full">
+                            Available
+                          </div>
                         </>
                       )}
                     </span>
@@ -322,27 +237,17 @@ const SeatPlan: React.FC = () => {
                   (res: any) => res.seat_id === seat_id
                 );
 
-                // Fetch user information reserved at AM using emp_id
-                const userInfoAM = reservationAM
-                  ? getUserInfo(reservationAM.emp_id)
-                  : null;
-
-                // Fetch user information reserved at PM using emp_id
-                const userInfoPM = reservationPM
-                  ? getUserInfo(reservationPM.emp_id)
-                  : null;
-
                 // Determine which reservation to display based on current time
                 let displayReservation;
                 if (
-                  currentTime.getHours() === 6 &&
-                  currentTime.getMinutes() === 0
+                  currentTime.getHours() < 12 ||
+                  (currentTime.getHours() === 12 &&
+                    currentTime.getMinutes() < 30)
                 ) {
+                  // Display AM reservation if current time is before 12:30
                   displayReservation = reservationAM;
-                } else if (
-                  currentTime.getHours() === 12 &&
-                  currentTime.getMinutes() === 30
-                ) {
+                } else {
+                  // Display PM reservation if current time is 12:30 or later
                   displayReservation = reservationPM;
                 }
 
@@ -350,6 +255,7 @@ const SeatPlan: React.FC = () => {
                 const userInfoToDisplay = displayReservation
                   ? getUserInfo(displayReservation.emp_id)
                   : null;
+
                 return (
                   <div
                     key={idx}
@@ -374,48 +280,14 @@ const SeatPlan: React.FC = () => {
                               <div className="h-[1rem]"></div>
                             </div>
                           ) : (
-                            "Unknown User"
+                            <div></div>
                           )}
                         </>
                       ) : (
                         <>
-                          {reservationAM ? (
-                            <>
-                              {userInfoAM ? (
-                                <div className="h-full flex flex-col justify-between py-1">
-                                  <div>{userInfoAM.position}</div>
-                                  <div>
-                                    {userInfoAM.fname} {userInfoAM.lname}
-                                  </div>
-                                  <div className="h-[1rem]"></div>
-                                </div>
-                              ) : (
-                                "Unknown User"
-                              )}
-                            </>
-                          ) : (
-                            <>
-                              {reservationPM ? (
-                                <>
-                                  {userInfoPM ? (
-                                    <div className="h-full flex flex-col justify-between py-1">
-                                      <div>{userInfoPM.position}</div>
-                                      <div>
-                                        {userInfoPM.fname} {userInfoPM.lname}
-                                      </div>
-                                      <div className="h-[1rem]"></div>
-                                    </div>
-                                  ) : (
-                                    "Unknown User"
-                                  )}
-                                </>
-                              ) : (
-                                <div className="flex flex-col items-center justify-center h-full">
-                                  Available
-                                </div>
-                              )}
-                            </>
-                          )}
+                          <div className="flex flex-col items-center justify-center h-full">
+                            Available
+                          </div>
                         </>
                       )}
                     </span>
@@ -441,27 +313,16 @@ const SeatPlan: React.FC = () => {
                 (res: any) => res.seat_id === seat_id
               );
 
-              // Fetch user information reserved at AM using emp_id
-              const userInfoAM = reservationAM
-                ? getUserInfo(reservationAM.emp_id)
-                : null;
-
-              // Fetch user information reserved at PM using emp_id
-              const userInfoPM = reservationPM
-                ? getUserInfo(reservationPM.emp_id)
-                : null;
-
               // Determine which reservation to display based on current time
               let displayReservation;
               if (
-                currentTime.getHours() === 6 &&
-                currentTime.getMinutes() === 0
+                currentTime.getHours() < 12 ||
+                (currentTime.getHours() === 12 && currentTime.getMinutes() < 30)
               ) {
+                // Display AM reservation if current time is before 12:30
                 displayReservation = reservationAM;
-              } else if (
-                currentTime.getHours() === 12 &&
-                currentTime.getMinutes() === 30
-              ) {
+              } else {
+                // Display PM reservation if current time is 12:30 or later
                 displayReservation = reservationPM;
               }
 
@@ -469,6 +330,7 @@ const SeatPlan: React.FC = () => {
               const userInfoToDisplay = displayReservation
                 ? getUserInfo(displayReservation.emp_id)
                 : null;
+
               return (
                 <div
                   key={idx}
@@ -493,48 +355,14 @@ const SeatPlan: React.FC = () => {
                             <div className="h-[1rem]"></div>
                           </div>
                         ) : (
-                          "Unknown User"
+                          <div></div>
                         )}
                       </>
                     ) : (
                       <>
-                        {reservationAM ? (
-                          <>
-                            {userInfoAM ? (
-                              <div className="h-full flex flex-col justify-between py-1">
-                                <div>{userInfoAM.position}</div>
-                                <div>
-                                  {userInfoAM.fname} {userInfoAM.lname}
-                                </div>
-                                <div className="h-[1rem]"></div>
-                              </div>
-                            ) : (
-                              "Unknown User"
-                            )}
-                          </>
-                        ) : (
-                          <>
-                            {reservationPM ? (
-                              <>
-                                {userInfoPM ? (
-                                  <div className="h-full flex flex-col justify-between py-1">
-                                    <div>{userInfoPM.position}</div>
-                                    <div>
-                                      {userInfoPM.fname} {userInfoPM.lname}
-                                    </div>
-                                    <div className="h-[1rem]"></div>
-                                  </div>
-                                ) : (
-                                  "Unknown User"
-                                )}
-                              </>
-                            ) : (
-                              <div className="flex flex-col items-center justify-center h-full">
-                                Available
-                              </div>
-                            )}
-                          </>
-                        )}
+                        <div className="flex flex-col items-center justify-center h-full">
+                          Available
+                        </div>
                       </>
                     )}
                   </span>
@@ -562,27 +390,16 @@ const SeatPlan: React.FC = () => {
                 (res: any) => res.seat_id === seat_id
               );
 
-              // Fetch user information reserved at AM using emp_id
-              const userInfoAM = reservationAM
-                ? getUserInfo(reservationAM.emp_id)
-                : null;
-
-              // Fetch user information reserved at PM using emp_id
-              const userInfoPM = reservationPM
-                ? getUserInfo(reservationPM.emp_id)
-                : null;
-
               // Determine which reservation to display based on current time
               let displayReservation;
               if (
-                currentTime.getHours() === 6 &&
-                currentTime.getMinutes() === 0
+                currentTime.getHours() < 12 ||
+                (currentTime.getHours() === 12 && currentTime.getMinutes() < 30)
               ) {
+                // Display AM reservation if current time is before 12:30
                 displayReservation = reservationAM;
-              } else if (
-                currentTime.getHours() === 12 &&
-                currentTime.getMinutes() === 30
-              ) {
+              } else {
+                // Display PM reservation if current time is 12:30 or later
                 displayReservation = reservationPM;
               }
 
@@ -615,48 +432,14 @@ const SeatPlan: React.FC = () => {
                             <div className="h-[1rem]"></div>
                           </div>
                         ) : (
-                          "Unknown User"
+                          <div></div>
                         )}
                       </>
                     ) : (
                       <>
-                        {reservationAM ? (
-                          <>
-                            {userInfoAM ? (
-                              <div className="h-full flex flex-col justify-between py-1">
-                                <div>{userInfoAM.position}</div>
-                                <div>
-                                  {userInfoAM.fname} {userInfoAM.lname}
-                                </div>
-                                <div className="h-[1rem]"></div>
-                              </div>
-                            ) : (
-                              "Unknown User"
-                            )}
-                          </>
-                        ) : (
-                          <>
-                            {reservationPM ? (
-                              <>
-                                {userInfoPM ? (
-                                  <div className="h-full flex flex-col justify-between py-1">
-                                    <div>{userInfoPM.position}</div>
-                                    <div>
-                                      {userInfoPM.fname} {userInfoPM.lname}
-                                    </div>
-                                    <div className="h-[1rem]"></div>
-                                  </div>
-                                ) : (
-                                  "Unknown User"
-                                )}
-                              </>
-                            ) : (
-                              <div className="flex flex-col items-center justify-center h-full">
-                                Available
-                              </div>
-                            )}
-                          </>
-                        )}
+                        <div className="flex flex-col items-center justify-center h-full">
+                          Available
+                        </div>
                       </>
                     )}
                   </span>
@@ -681,27 +464,16 @@ const SeatPlan: React.FC = () => {
                 (res: any) => res.seat_id === seat_id
               );
 
-              // Fetch user information reserved at AM using emp_id
-              const userInfoAM = reservationAM
-                ? getUserInfo(reservationAM.emp_id)
-                : null;
-
-              // Fetch user information reserved at PM using emp_id
-              const userInfoPM = reservationPM
-                ? getUserInfo(reservationPM.emp_id)
-                : null;
-
               // Determine which reservation to display based on current time
               let displayReservation;
               if (
-                currentTime.getHours() === 6 &&
-                currentTime.getMinutes() === 0
+                currentTime.getHours() < 12 ||
+                (currentTime.getHours() === 12 && currentTime.getMinutes() < 30)
               ) {
+                // Display AM reservation if current time is before 12:30
                 displayReservation = reservationAM;
-              } else if (
-                currentTime.getHours() === 12 &&
-                currentTime.getMinutes() === 30
-              ) {
+              } else {
+                // Display PM reservation if current time is 12:30 or later
                 displayReservation = reservationPM;
               }
 
@@ -709,6 +481,7 @@ const SeatPlan: React.FC = () => {
               const userInfoToDisplay = displayReservation
                 ? getUserInfo(displayReservation.emp_id)
                 : null;
+
               return (
                 <div
                   key={idx}
@@ -733,48 +506,14 @@ const SeatPlan: React.FC = () => {
                             <div className="h-[1rem]"></div>
                           </div>
                         ) : (
-                          "Unknown User"
+                          <div></div>
                         )}
                       </>
                     ) : (
                       <>
-                        {reservationAM ? (
-                          <>
-                            {userInfoAM ? (
-                              <div className="h-full flex flex-col justify-between py-1">
-                                <div>{userInfoAM.position}</div>
-                                <div>
-                                  {userInfoAM.fname} {userInfoAM.lname}
-                                </div>
-                                <div className="h-[1rem]"></div>
-                              </div>
-                            ) : (
-                              "Unknown User"
-                            )}
-                          </>
-                        ) : (
-                          <>
-                            {reservationPM ? (
-                              <>
-                                {userInfoPM ? (
-                                  <div className="h-full flex flex-col justify-between py-1">
-                                    <div>{userInfoPM.position}</div>
-                                    <div>
-                                      {userInfoPM.fname} {userInfoPM.lname}
-                                    </div>
-                                    <div className="h-[1rem]"></div>
-                                  </div>
-                                ) : (
-                                  "Unknown User"
-                                )}
-                              </>
-                            ) : (
-                              <div className="flex flex-col items-center justify-center h-full">
-                                Available
-                              </div>
-                            )}
-                          </>
-                        )}
+                        <div className="flex flex-col items-center justify-center h-full">
+                          Available
+                        </div>
                       </>
                     )}
                   </span>
@@ -802,27 +541,16 @@ const SeatPlan: React.FC = () => {
                 (res: any) => res.seat_id === seat_id
               );
 
-              // Fetch user information reserved at AM using emp_id
-              const userInfoAM = reservationAM
-                ? getUserInfo(reservationAM.emp_id)
-                : null;
-
-              // Fetch user information reserved at PM using emp_id
-              const userInfoPM = reservationPM
-                ? getUserInfo(reservationPM.emp_id)
-                : null;
-
               // Determine which reservation to display based on current time
               let displayReservation;
               if (
-                currentTime.getHours() === 6 &&
-                currentTime.getMinutes() === 0
+                currentTime.getHours() < 12 ||
+                (currentTime.getHours() === 12 && currentTime.getMinutes() < 30)
               ) {
+                // Display AM reservation if current time is before 12:30
                 displayReservation = reservationAM;
-              } else if (
-                currentTime.getHours() === 12 &&
-                currentTime.getMinutes() === 30
-              ) {
+              } else {
+                // Display PM reservation if current time is 12:30 or later
                 displayReservation = reservationPM;
               }
 
@@ -855,48 +583,14 @@ const SeatPlan: React.FC = () => {
                             <div className="h-[1rem]"></div>
                           </div>
                         ) : (
-                          "Unknown User"
+                          <div></div>
                         )}
                       </>
                     ) : (
                       <>
-                        {reservationAM ? (
-                          <>
-                            {userInfoAM ? (
-                              <div className="h-full flex flex-col justify-between py-1">
-                                <div>{userInfoAM.position}</div>
-                                <div>
-                                  {userInfoAM.fname} {userInfoAM.lname}
-                                </div>
-                                <div className="h-[1rem]"></div>
-                              </div>
-                            ) : (
-                              "Unknown User"
-                            )}
-                          </>
-                        ) : (
-                          <>
-                            {reservationPM ? (
-                              <>
-                                {userInfoPM ? (
-                                  <div className="h-full flex flex-col justify-between py-1">
-                                    <div>{userInfoPM.position}</div>
-                                    <div>
-                                      {userInfoPM.fname} {userInfoPM.lname}
-                                    </div>
-                                    <div className="h-[1rem]"></div>
-                                  </div>
-                                ) : (
-                                  "Unknown User"
-                                )}
-                              </>
-                            ) : (
-                              <div className="flex flex-col items-center justify-center h-full">
-                                Available
-                              </div>
-                            )}
-                          </>
-                        )}
+                        <div className="flex flex-col items-center justify-center h-full">
+                          Available
+                        </div>
                       </>
                     )}
                   </span>
@@ -921,27 +615,16 @@ const SeatPlan: React.FC = () => {
                 (res: any) => res.seat_id === seat_id
               );
 
-              // Fetch user information reserved at AM using emp_id
-              const userInfoAM = reservationAM
-                ? getUserInfo(reservationAM.emp_id)
-                : null;
-
-              // Fetch user information reserved at PM using emp_id
-              const userInfoPM = reservationPM
-                ? getUserInfo(reservationPM.emp_id)
-                : null;
-
               // Determine which reservation to display based on current time
               let displayReservation;
               if (
-                currentTime.getHours() === 6 &&
-                currentTime.getMinutes() === 0
+                currentTime.getHours() < 12 ||
+                (currentTime.getHours() === 12 && currentTime.getMinutes() < 30)
               ) {
+                // Display AM reservation if current time is before 12:30
                 displayReservation = reservationAM;
-              } else if (
-                currentTime.getHours() === 12 &&
-                currentTime.getMinutes() === 30
-              ) {
+              } else {
+                // Display PM reservation if current time is 12:30 or later
                 displayReservation = reservationPM;
               }
 
@@ -974,48 +657,14 @@ const SeatPlan: React.FC = () => {
                             <div className="h-[1rem]"></div>
                           </div>
                         ) : (
-                          "Unknown User"
+                          <div></div>
                         )}
                       </>
                     ) : (
                       <>
-                        {reservationAM ? (
-                          <>
-                            {userInfoAM ? (
-                              <div className="h-full flex flex-col justify-between py-1">
-                                <div>{userInfoAM.position}</div>
-                                <div>
-                                  {userInfoAM.fname} {userInfoAM.lname}
-                                </div>
-                                <div className="h-[1rem]"></div>
-                              </div>
-                            ) : (
-                              "Unknown User"
-                            )}
-                          </>
-                        ) : (
-                          <>
-                            {reservationPM ? (
-                              <>
-                                {userInfoPM ? (
-                                  <div className="h-full flex flex-col justify-between py-1">
-                                    <div>{userInfoPM.position}</div>
-                                    <div>
-                                      {userInfoPM.fname} {userInfoPM.lname}
-                                    </div>
-                                    <div className="h-[1rem]"></div>
-                                  </div>
-                                ) : (
-                                  "Unknown User"
-                                )}
-                              </>
-                            ) : (
-                              <div className="flex flex-col items-center justify-center h-full">
-                                Available
-                              </div>
-                            )}
-                          </>
-                        )}
+                        <div className="flex flex-col items-center justify-center h-full">
+                          Available
+                        </div>
                       </>
                     )}
                   </span>
@@ -1043,27 +692,16 @@ const SeatPlan: React.FC = () => {
                 (res: any) => res.seat_id === seat_id
               );
 
-              // Fetch user information reserved at AM using emp_id
-              const userInfoAM = reservationAM
-                ? getUserInfo(reservationAM.emp_id)
-                : null;
-
-              // Fetch user information reserved at PM using emp_id
-              const userInfoPM = reservationPM
-                ? getUserInfo(reservationPM.emp_id)
-                : null;
-
               // Determine which reservation to display based on current time
               let displayReservation;
               if (
-                currentTime.getHours() === 6 &&
-                currentTime.getMinutes() === 0
+                currentTime.getHours() < 12 ||
+                (currentTime.getHours() === 12 && currentTime.getMinutes() < 30)
               ) {
+                // Display AM reservation if current time is before 12:30
                 displayReservation = reservationAM;
-              } else if (
-                currentTime.getHours() === 12 &&
-                currentTime.getMinutes() === 30
-              ) {
+              } else {
+                // Display PM reservation if current time is 12:30 or later
                 displayReservation = reservationPM;
               }
 
@@ -1096,48 +734,14 @@ const SeatPlan: React.FC = () => {
                             <div className="h-[1rem]"></div>
                           </div>
                         ) : (
-                          "Unknown User"
+                          <div></div>
                         )}
                       </>
                     ) : (
                       <>
-                        {reservationAM ? (
-                          <>
-                            {userInfoAM ? (
-                              <div className="h-full flex flex-col justify-between py-1">
-                                <div>{userInfoAM.position}</div>
-                                <div>
-                                  {userInfoAM.fname} {userInfoAM.lname}
-                                </div>
-                                <div className="h-[1rem]"></div>
-                              </div>
-                            ) : (
-                              "Unknown User"
-                            )}
-                          </>
-                        ) : (
-                          <>
-                            {reservationPM ? (
-                              <>
-                                {userInfoPM ? (
-                                  <div className="h-full flex flex-col justify-between py-1">
-                                    <div>{userInfoPM.position}</div>
-                                    <div>
-                                      {userInfoPM.fname} {userInfoPM.lname}
-                                    </div>
-                                    <div className="h-[1rem]"></div>
-                                  </div>
-                                ) : (
-                                  "Unknown User"
-                                )}
-                              </>
-                            ) : (
-                              <div className="flex flex-col items-center justify-center h-full">
-                                Available
-                              </div>
-                            )}
-                          </>
-                        )}
+                        <div className="flex flex-col items-center justify-center h-full">
+                          Available
+                        </div>
                       </>
                     )}
                   </span>
@@ -1162,27 +766,16 @@ const SeatPlan: React.FC = () => {
                 (res: any) => res.seat_id === seat_id
               );
 
-              // Fetch user information reserved at AM using emp_id
-              const userInfoAM = reservationAM
-                ? getUserInfo(reservationAM.emp_id)
-                : null;
-
-              // Fetch user information reserved at PM using emp_id
-              const userInfoPM = reservationPM
-                ? getUserInfo(reservationPM.emp_id)
-                : null;
-
               // Determine which reservation to display based on current time
               let displayReservation;
               if (
-                currentTime.getHours() === 6 &&
-                currentTime.getMinutes() === 0
+                currentTime.getHours() < 12 ||
+                (currentTime.getHours() === 12 && currentTime.getMinutes() < 30)
               ) {
+                // Display AM reservation if current time is before 12:30
                 displayReservation = reservationAM;
-              } else if (
-                currentTime.getHours() === 12 &&
-                currentTime.getMinutes() === 30
-              ) {
+              } else {
+                // Display PM reservation if current time is 12:30 or later
                 displayReservation = reservationPM;
               }
 
@@ -1215,48 +808,14 @@ const SeatPlan: React.FC = () => {
                             <div className="h-[1rem]"></div>
                           </div>
                         ) : (
-                          "Unknown User"
+                          <div></div>
                         )}
                       </>
                     ) : (
                       <>
-                        {reservationAM ? (
-                          <>
-                            {userInfoAM ? (
-                              <div className="h-full flex flex-col justify-between py-1">
-                                <div>{userInfoAM.position}</div>
-                                <div>
-                                  {userInfoAM.fname} {userInfoAM.lname}
-                                </div>
-                                <div className="h-[1rem]"></div>
-                              </div>
-                            ) : (
-                              "Unknown User"
-                            )}
-                          </>
-                        ) : (
-                          <>
-                            {reservationPM ? (
-                              <>
-                                {userInfoPM ? (
-                                  <div className="h-full flex flex-col justify-between py-1">
-                                    <div>{userInfoPM.position}</div>
-                                    <div>
-                                      {userInfoPM.fname} {userInfoPM.lname}
-                                    </div>
-                                    <div className="h-[1rem]"></div>
-                                  </div>
-                                ) : (
-                                  "Unknown User"
-                                )}
-                              </>
-                            ) : (
-                              <div className="flex flex-col items-center justify-center h-full">
-                                Available
-                              </div>
-                            )}
-                          </>
-                        )}
+                        <div className="flex flex-col items-center justify-center h-full">
+                          Available
+                        </div>
                       </>
                     )}
                   </span>
@@ -1284,27 +843,16 @@ const SeatPlan: React.FC = () => {
                 (res: any) => res.seat_id === seat_id
               );
 
-              // Fetch user information reserved at AM using emp_id
-              const userInfoAM = reservationAM
-                ? getUserInfo(reservationAM.emp_id)
-                : null;
-
-              // Fetch user information reserved at PM using emp_id
-              const userInfoPM = reservationPM
-                ? getUserInfo(reservationPM.emp_id)
-                : null;
-
               // Determine which reservation to display based on current time
               let displayReservation;
               if (
-                currentTime.getHours() === 6 &&
-                currentTime.getMinutes() === 0
+                currentTime.getHours() < 12 ||
+                (currentTime.getHours() === 12 && currentTime.getMinutes() < 30)
               ) {
+                // Display AM reservation if current time is before 12:30
                 displayReservation = reservationAM;
-              } else if (
-                currentTime.getHours() === 12 &&
-                currentTime.getMinutes() === 30
-              ) {
+              } else {
+                // Display PM reservation if current time is 12:30 or later
                 displayReservation = reservationPM;
               }
 
@@ -1337,48 +885,14 @@ const SeatPlan: React.FC = () => {
                             <div className="h-[1rem]"></div>
                           </div>
                         ) : (
-                          "Unknown User"
+                          <div></div>
                         )}
                       </>
                     ) : (
                       <>
-                        {reservationAM ? (
-                          <>
-                            {userInfoAM ? (
-                              <div className="h-full flex flex-col justify-between py-1">
-                                <div>{userInfoAM.position}</div>
-                                <div>
-                                  {userInfoAM.fname} {userInfoAM.lname}
-                                </div>
-                                <div className="h-[1rem]"></div>
-                              </div>
-                            ) : (
-                              "Unknown User"
-                            )}
-                          </>
-                        ) : (
-                          <>
-                            {reservationPM ? (
-                              <>
-                                {userInfoPM ? (
-                                  <div className="h-full flex flex-col justify-between py-1">
-                                    <div>{userInfoPM.position}</div>
-                                    <div>
-                                      {userInfoPM.fname} {userInfoPM.lname}
-                                    </div>
-                                    <div className="h-[1rem]"></div>
-                                  </div>
-                                ) : (
-                                  "Unknown User"
-                                )}
-                              </>
-                            ) : (
-                              <div className="flex flex-col items-center justify-center h-full">
-                                Available
-                              </div>
-                            )}
-                          </>
-                        )}
+                        <div className="flex flex-col items-center justify-center h-full">
+                          Available
+                        </div>
                       </>
                     )}
                   </span>
@@ -1403,27 +917,16 @@ const SeatPlan: React.FC = () => {
                 (res: any) => res.seat_id === seat_id
               );
 
-              // Fetch user information reserved at AM using emp_id
-              const userInfoAM = reservationAM
-                ? getUserInfo(reservationAM.emp_id)
-                : null;
-
-              // Fetch user information reserved at PM using emp_id
-              const userInfoPM = reservationPM
-                ? getUserInfo(reservationPM.emp_id)
-                : null;
-
               // Determine which reservation to display based on current time
               let displayReservation;
               if (
-                currentTime.getHours() === 6 &&
-                currentTime.getMinutes() === 0
+                currentTime.getHours() < 12 ||
+                (currentTime.getHours() === 12 && currentTime.getMinutes() < 30)
               ) {
+                // Display AM reservation if current time is before 12:30
                 displayReservation = reservationAM;
-              } else if (
-                currentTime.getHours() === 12 &&
-                currentTime.getMinutes() === 30
-              ) {
+              } else {
+                // Display PM reservation if current time is 12:30 or later
                 displayReservation = reservationPM;
               }
 
@@ -1456,48 +959,14 @@ const SeatPlan: React.FC = () => {
                             <div className="h-[1rem]"></div>
                           </div>
                         ) : (
-                          "Unknown User"
+                          <div></div>
                         )}
                       </>
                     ) : (
                       <>
-                        {reservationAM ? (
-                          <>
-                            {userInfoAM ? (
-                              <div className="h-full flex flex-col justify-between py-1">
-                                <div>{userInfoAM.position}</div>
-                                <div>
-                                  {userInfoAM.fname} {userInfoAM.lname}
-                                </div>
-                                <div className="h-[1rem]"></div>
-                              </div>
-                            ) : (
-                              "Unknown User"
-                            )}
-                          </>
-                        ) : (
-                          <>
-                            {reservationPM ? (
-                              <>
-                                {userInfoPM ? (
-                                  <div className="h-full flex flex-col justify-between py-1">
-                                    <div>{userInfoPM.position}</div>
-                                    <div>
-                                      {userInfoPM.fname} {userInfoPM.lname}
-                                    </div>
-                                    <div className="h-[1rem]"></div>
-                                  </div>
-                                ) : (
-                                  "Unknown User"
-                                )}
-                              </>
-                            ) : (
-                              <div className="flex flex-col items-center justify-center h-full">
-                                Available
-                              </div>
-                            )}
-                          </>
-                        )}
+                        <div className="flex flex-col items-center justify-center h-full">
+                          Available
+                        </div>
                       </>
                     )}
                   </span>
@@ -1525,27 +994,16 @@ const SeatPlan: React.FC = () => {
                 (res: any) => res.seat_id === seat_id
               );
 
-              // Fetch user information reserved at AM using emp_id
-              const userInfoAM = reservationAM
-                ? getUserInfo(reservationAM.emp_id)
-                : null;
-
-              // Fetch user information reserved at PM using emp_id
-              const userInfoPM = reservationPM
-                ? getUserInfo(reservationPM.emp_id)
-                : null;
-
               // Determine which reservation to display based on current time
               let displayReservation;
               if (
-                currentTime.getHours() === 6 &&
-                currentTime.getMinutes() === 0
+                currentTime.getHours() < 12 ||
+                (currentTime.getHours() === 12 && currentTime.getMinutes() < 30)
               ) {
+                // Display AM reservation if current time is before 12:30
                 displayReservation = reservationAM;
-              } else if (
-                currentTime.getHours() === 12 &&
-                currentTime.getMinutes() === 30
-              ) {
+              } else {
+                // Display PM reservation if current time is 12:30 or later
                 displayReservation = reservationPM;
               }
 
@@ -1578,48 +1036,14 @@ const SeatPlan: React.FC = () => {
                             <div className="h-[1rem]"></div>
                           </div>
                         ) : (
-                          "Unknown User"
+                          <div></div>
                         )}
                       </>
                     ) : (
                       <>
-                        {reservationAM ? (
-                          <>
-                            {userInfoAM ? (
-                              <div className="h-full flex flex-col justify-between py-1">
-                                <div>{userInfoAM.position}</div>
-                                <div>
-                                  {userInfoAM.fname} {userInfoAM.lname}
-                                </div>
-                                <div className="h-[1rem]"></div>
-                              </div>
-                            ) : (
-                              "Unknown User"
-                            )}
-                          </>
-                        ) : (
-                          <>
-                            {reservationPM ? (
-                              <>
-                                {userInfoPM ? (
-                                  <div className="h-full flex flex-col justify-between py-1">
-                                    <div>{userInfoPM.position}</div>
-                                    <div>
-                                      {userInfoPM.fname} {userInfoPM.lname}
-                                    </div>
-                                    <div className="h-[1rem]"></div>
-                                  </div>
-                                ) : (
-                                  "Unknown User"
-                                )}
-                              </>
-                            ) : (
-                              <div className="flex flex-col items-center justify-center h-full">
-                                Available
-                              </div>
-                            )}
-                          </>
-                        )}
+                        <div className="flex flex-col items-center justify-center h-full">
+                          Available
+                        </div>
                       </>
                     )}
                   </span>
@@ -1644,27 +1068,16 @@ const SeatPlan: React.FC = () => {
                 (res: any) => res.seat_id === seat_id
               );
 
-              // Fetch user information reserved at AM using emp_id
-              const userInfoAM = reservationAM
-                ? getUserInfo(reservationAM.emp_id)
-                : null;
-
-              // Fetch user information reserved at PM using emp_id
-              const userInfoPM = reservationPM
-                ? getUserInfo(reservationPM.emp_id)
-                : null;
-
               // Determine which reservation to display based on current time
               let displayReservation;
               if (
-                currentTime.getHours() === 6 &&
-                currentTime.getMinutes() === 0
+                currentTime.getHours() < 12 ||
+                (currentTime.getHours() === 12 && currentTime.getMinutes() < 30)
               ) {
+                // Display AM reservation if current time is before 12:30
                 displayReservation = reservationAM;
-              } else if (
-                currentTime.getHours() === 12 &&
-                currentTime.getMinutes() === 30
-              ) {
+              } else {
+                // Display PM reservation if current time is 12:30 or later
                 displayReservation = reservationPM;
               }
 
@@ -1697,48 +1110,14 @@ const SeatPlan: React.FC = () => {
                             <div className="h-[1rem]"></div>
                           </div>
                         ) : (
-                          "Unknown User"
+                          <div></div>
                         )}
                       </>
                     ) : (
                       <>
-                        {reservationAM ? (
-                          <>
-                            {userInfoAM ? (
-                              <div className="h-full flex flex-col justify-between py-1">
-                                <div>{userInfoAM.position}</div>
-                                <div>
-                                  {userInfoAM.fname} {userInfoAM.lname}
-                                </div>
-                                <div className="h-[1rem]"></div>
-                              </div>
-                            ) : (
-                              "Unknown User"
-                            )}
-                          </>
-                        ) : (
-                          <>
-                            {reservationPM ? (
-                              <>
-                                {userInfoPM ? (
-                                  <div className="h-full flex flex-col justify-between py-1">
-                                    <div>{userInfoPM.position}</div>
-                                    <div>
-                                      {userInfoPM.fname} {userInfoPM.lname}
-                                    </div>
-                                    <div className="h-[1rem]"></div>
-                                  </div>
-                                ) : (
-                                  "Unknown User"
-                                )}
-                              </>
-                            ) : (
-                              <div className="flex flex-col items-center justify-center h-full">
-                                Available
-                              </div>
-                            )}
-                          </>
-                        )}
+                        <div className="flex flex-col items-center justify-center h-full">
+                          Available
+                        </div>
                       </>
                     )}
                   </span>
@@ -1766,27 +1145,16 @@ const SeatPlan: React.FC = () => {
                 (res: any) => res.seat_id === seat_id
               );
 
-              // Fetch user information reserved at AM using emp_id
-              const userInfoAM = reservationAM
-                ? getUserInfo(reservationAM.emp_id)
-                : null;
-
-              // Fetch user information reserved at PM using emp_id
-              const userInfoPM = reservationPM
-                ? getUserInfo(reservationPM.emp_id)
-                : null;
-
               // Determine which reservation to display based on current time
               let displayReservation;
               if (
-                currentTime.getHours() === 6 &&
-                currentTime.getMinutes() === 0
+                currentTime.getHours() < 12 ||
+                (currentTime.getHours() === 12 && currentTime.getMinutes() < 30)
               ) {
+                // Display AM reservation if current time is before 12:30
                 displayReservation = reservationAM;
-              } else if (
-                currentTime.getHours() === 12 &&
-                currentTime.getMinutes() === 30
-              ) {
+              } else {
+                // Display PM reservation if current time is 12:30 or later
                 displayReservation = reservationPM;
               }
 
@@ -1819,48 +1187,14 @@ const SeatPlan: React.FC = () => {
                             <div className="h-[1rem]"></div>
                           </div>
                         ) : (
-                          "Unknown User"
+                          <div></div>
                         )}
                       </>
                     ) : (
                       <>
-                        {reservationAM ? (
-                          <>
-                            {userInfoAM ? (
-                              <div className="h-full flex flex-col justify-between py-1">
-                                <div>{userInfoAM.position}</div>
-                                <div>
-                                  {userInfoAM.fname} {userInfoAM.lname}
-                                </div>
-                                <div className="h-[1rem]"></div>
-                              </div>
-                            ) : (
-                              "Unknown User"
-                            )}
-                          </>
-                        ) : (
-                          <>
-                            {reservationPM ? (
-                              <>
-                                {userInfoPM ? (
-                                  <div className="h-full flex flex-col justify-between py-1">
-                                    <div>{userInfoPM.position}</div>
-                                    <div>
-                                      {userInfoPM.fname} {userInfoPM.lname}
-                                    </div>
-                                    <div className="h-[1rem]"></div>
-                                  </div>
-                                ) : (
-                                  "Unknown User"
-                                )}
-                              </>
-                            ) : (
-                              <div className="flex flex-col items-center justify-center h-full">
-                                Available
-                              </div>
-                            )}
-                          </>
-                        )}
+                        <div className="flex flex-col items-center justify-center h-full">
+                          Available
+                        </div>
                       </>
                     )}
                   </span>
@@ -1885,27 +1219,16 @@ const SeatPlan: React.FC = () => {
                 (res: any) => res.seat_id === seat_id
               );
 
-              // Fetch user information reserved at AM using emp_id
-              const userInfoAM = reservationAM
-                ? getUserInfo(reservationAM.emp_id)
-                : null;
-
-              // Fetch user information reserved at PM using emp_id
-              const userInfoPM = reservationPM
-                ? getUserInfo(reservationPM.emp_id)
-                : null;
-
               // Determine which reservation to display based on current time
               let displayReservation;
               if (
-                currentTime.getHours() === 6 &&
-                currentTime.getMinutes() === 0
+                currentTime.getHours() < 12 ||
+                (currentTime.getHours() === 12 && currentTime.getMinutes() < 30)
               ) {
+                // Display AM reservation if current time is before 12:30
                 displayReservation = reservationAM;
-              } else if (
-                currentTime.getHours() === 12 &&
-                currentTime.getMinutes() === 30
-              ) {
+              } else {
+                // Display PM reservation if current time is 12:30 or later
                 displayReservation = reservationPM;
               }
 
@@ -1913,6 +1236,7 @@ const SeatPlan: React.FC = () => {
               const userInfoToDisplay = displayReservation
                 ? getUserInfo(displayReservation.emp_id)
                 : null;
+
               return (
                 <div
                   key={idx}
@@ -1937,48 +1261,14 @@ const SeatPlan: React.FC = () => {
                             <div className="h-[1rem]"></div>
                           </div>
                         ) : (
-                          "Unknown User"
+                          <div></div>
                         )}
                       </>
                     ) : (
                       <>
-                        {reservationAM ? (
-                          <>
-                            {userInfoAM ? (
-                              <div className="h-full flex flex-col justify-between py-1">
-                                <div>{userInfoAM.position}</div>
-                                <div>
-                                  {userInfoAM.fname} {userInfoAM.lname}
-                                </div>
-                                <div className="h-[1rem]"></div>
-                              </div>
-                            ) : (
-                              "Unknown User"
-                            )}
-                          </>
-                        ) : (
-                          <>
-                            {reservationPM ? (
-                              <>
-                                {userInfoPM ? (
-                                  <div className="h-full flex flex-col justify-between py-1">
-                                    <div>{userInfoPM.position}</div>
-                                    <div>
-                                      {userInfoPM.fname} {userInfoPM.lname}
-                                    </div>
-                                    <div className="h-[1rem]"></div>
-                                  </div>
-                                ) : (
-                                  "Unknown User"
-                                )}
-                              </>
-                            ) : (
-                              <div className="flex flex-col items-center justify-center h-full">
-                                Available
-                              </div>
-                            )}
-                          </>
-                        )}
+                        <div className="flex flex-col items-center justify-center h-full">
+                          Available
+                        </div>
                       </>
                     )}
                   </span>
