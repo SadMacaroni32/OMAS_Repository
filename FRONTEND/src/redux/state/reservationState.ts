@@ -76,3 +76,16 @@ export const fetchReservationsFailure = (error: any) => ({
   payload: error
 });
 
+
+
+export const reservationsDateReducer = (state = [], action:any) => {
+  switch (action.type) {
+    case 'SET_RESERVATIONS':
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+
+

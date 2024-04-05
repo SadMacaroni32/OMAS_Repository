@@ -1,10 +1,27 @@
 import React, { useState } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Button, Box } from '@mui/material';
 import { NavigateNext, NavigateBefore } from '@mui/icons-material';
+import WeekDisplay from './WeekDisplay'; // Import WeekDisplay component
 
 const timeSlots = [
-  "6:00 AM to 12:30 PM", "12:30 PM to 7:00 PM"
+  { start: "06:00", end: "12:30" },
+  { start: "12:30", end: "19:00" }
 ];
+
+// Function to convert time string to timestamp
+const convertToTimestamp = (timeString) => {
+  const [hours, minutes] = timeString.split(":");
+  const date = new Date();
+  date.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+  return date.getTime(); // Returns the timestamp in milliseconds since Unix epoch
+};
+
+const timeSlotTimestamps = timeSlots.map(slot => ({
+  start: convertToTimestamp(slot.start),
+  end: convertToTimestamp(slot.end)
+}));
+
+console.log(timeSlotTimestamps);
 
 const WeekDatesGrid = ({ startOfWeek, endOfWeek, reserveSlot }) => {
   const [currentStartOfWeek, setCurrentStartOfWeek] = useState(startOfWeek);
@@ -53,6 +70,9 @@ const WeekDatesGrid = ({ startOfWeek, endOfWeek, reserveSlot }) => {
 
   return (
     <>
+      {/* Pass currentStartOfWeek and endOfWeek to WeekDisplay */}
+      <WeekDisplay startOfWeek={currentStartOfWeek} endOfWeek={endOfWeek} />
+
       <Box style={{ marginBottom: '20px' }}>
         <IconButton onClick={handlePreviousWeek}>
           <NavigateBefore />
@@ -64,7 +84,7 @@ const WeekDatesGrid = ({ startOfWeek, endOfWeek, reserveSlot }) => {
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
-            <TableRow sx={{background:"#25476A"}}>
+            <TableRow sx={{ background: "#25476A" }}>
               <TableCell style={{ color: "white" }}>Date</TableCell>
               {dates.map((date, index) => (
                 <TableCell style={{ color: "white" }} key={index}>{getDayName(date)}, {date.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' })}</TableCell>
@@ -74,9 +94,9 @@ const WeekDatesGrid = ({ startOfWeek, endOfWeek, reserveSlot }) => {
           <TableBody>
             {timeSlots.map((timeSlot, index) => (
               <TableRow key={index}>
-                <TableCell>{timeSlot}</TableCell>
+                <TableCell>{`${timeSlot.start} - ${timeSlot.end}`}</TableCell> {/* Display time range */}
                 {dates.map((date, index) => {
-                  const reservationKey = `${date.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' })}-${timeSlot}`;
+                  const reservationKey = `${date.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' })}-${timeSlot.start}-${timeSlot.end}`;
                   return (
                     <TableCell key={index}>
                       {reservations[reservationKey] ? reservations[reservationKey] : (

@@ -5,7 +5,7 @@ import { seatPlanSaga } from "./seatPlanSaga";
 import { getSeatsSaga } from "./seatSaga";
 import { getReservedSeatsSaga } from "./seatReservedSaga";
 import { reservationSaga } from "./reservationSaga";
-import  reservationsSaga  from "./reservationsSaga"
+import  {reservationsSaga, fetchReservationsDate, reservationsSagaDate}  from "./reservationsSaga"
 import { watchFetchUsers } from "./userSaga";
 
 export default function* rootSaga() {
@@ -17,5 +17,7 @@ export default function* rootSaga() {
     reservationSaga(),
     reservationsSaga(),
     watchFetchUsers(),
+    fetchReservationsDate(),
+    reservationsSagaDate(),
   ]);
 }
