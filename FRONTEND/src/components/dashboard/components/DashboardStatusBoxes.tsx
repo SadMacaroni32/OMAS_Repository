@@ -26,7 +26,9 @@ export default function dashboardStatusBoxed() {
 
   const dispatch = useDispatch();
   const seatData = useSelector((state: RootState) => state.seatReducer.seating);
-  const seatReservedData = useSelector((state: RootState) => state.seatReservedReducer.seatingReserved);
+  const seatReservedData = useSelector(
+    (state: RootState) => state.seatReservedReducer.seatingReserved
+  );
   const [dataState, setDataState] = useState<dataFormat | null>(null);
 
   useEffect(() => {
@@ -53,17 +55,20 @@ export default function dashboardStatusBoxed() {
     }
   }, []);
 
-  {/* FOR CHECKING API DATA CONSOLE */}
+  {
+    /* FOR CHECKING API DATA CONSOLE */
+  }
   // console.log(seatData);
   // console.log(seatReservedData);
 
-  {/* MOCK DATA FOR TESTING ONLY */}
+  {
+    /* MOCK DATA FOR TESTING ONLY */
+  }
   let totalAssoc = 100;
   // let totalSeats = 100;
 
   return (
-    
-    <Grid container spacing={1} >
+    <Grid container spacing={1}>
       <Grid item xs={4}>
         <Paper
           elevation={6}
@@ -79,10 +84,10 @@ export default function dashboardStatusBoxed() {
           }}
         >
           <EventSeatIcon sx={iconStyle} />
-          <Typography variant="h6" gutterBottom m={1} sx={{...numberStyle}}>
+          <Typography variant="h6" gutterBottom m={1} sx={{ ...numberStyle }}>
             {seatData.length}
           </Typography>
-          <Typography variant="subtitle1" gutterBottom sx={{...textStyle}}>
+          <Typography variant="subtitle1" gutterBottom sx={{ ...textStyle }}>
             TOTAL SEATS
           </Typography>
         </Paper>
@@ -100,10 +105,10 @@ export default function dashboardStatusBoxed() {
           }}
         >
           <AccountBoxIcon sx={{ ...iconStyle }} />
-          <Typography variant="h6" gutterBottom m={1} sx={{...numberStyle}}>
-            {totalAssoc}  {/* MOCK DATA */}
+          <Typography variant="h6" gutterBottom m={1} sx={{ ...numberStyle }}>
+            {totalAssoc} {/* MOCK DATA */}
           </Typography>
-          <Typography variant="subtitle1" gutterBottom sx={{...textStyle}}>
+          <Typography variant="subtitle1" gutterBottom sx={{ ...textStyle }}>
             TOTAL ASSOCIATES
           </Typography>
         </Paper>
@@ -123,10 +128,10 @@ export default function dashboardStatusBoxed() {
           }}
         >
           <AirlineSeatReclineNormalIcon sx={{ ...iconStyle }} />
-          <Typography variant="h6" gutterBottom m={1} sx={{...numberStyle}}>
-          {seatReservedData.length}
+          <Typography variant="h6" gutterBottom m={1} sx={{ ...numberStyle }}>
+            {seatReservedData.length}
           </Typography>
-          <Typography variant="subtitle1" gutterBottom sx={{...textStyle}}>
+          <Typography variant="subtitle1" gutterBottom sx={{ ...textStyle }}>
             OCCUPIED SEATS
           </Typography>
         </Paper>
@@ -144,10 +149,10 @@ export default function dashboardStatusBoxed() {
           }}
         >
           <InsertEmoticonIcon sx={{ ...iconStyle }} />
-          <Typography variant="h6" gutterBottom m={1} sx={{...numberStyle}}>
+          <Typography variant="h6" gutterBottom m={1} sx={{ ...numberStyle }}>
             {seatReservedData.length}
           </Typography>
-          <Typography variant="subtitle1" gutterBottom sx={{...textStyle}}>
+          <Typography variant="subtitle1" gutterBottom sx={{ ...textStyle }}>
             WITH SEATS ASSIGNED
           </Typography>
         </Paper>
@@ -167,10 +172,10 @@ export default function dashboardStatusBoxed() {
           }}
         >
           <ChairAltIcon sx={{ ...iconStyle }} />
-          <Typography variant="h6" gutterBottom m={1} sx={{...numberStyle}}>
-            {seatData.length - seatReservedData.length}  {/* MOCK DATA */}
+          <Typography variant="h6" gutterBottom m={1} sx={{ ...numberStyle }}>
+            {seatData.length - seatReservedData.length} {/* MOCK DATA */}
           </Typography>
-          <Typography variant="subtitle1" gutterBottom sx={{...textStyle}}>
+          <Typography variant="subtitle1" gutterBottom sx={{ ...textStyle }}>
             AVAILABLE SEATS
           </Typography>
         </Paper>
@@ -188,15 +193,14 @@ export default function dashboardStatusBoxed() {
           }}
         >
           <SentimentVeryDissatisfiedIcon sx={{ ...iconStyle }} />
-          <Typography variant="h6" gutterBottom m={1} sx={{...numberStyle}}>
-            {totalAssoc - seatReservedData.length}  {/* MOCK DATA */}
+          <Typography variant="h6" gutterBottom m={1} sx={{ ...numberStyle }}>
+            {totalAssoc - seatReservedData.length} {/* MOCK DATA */}
           </Typography>
-          <Typography variant="subtitle1" gutterBottom sx={{...textStyle}}>
+          <Typography variant="subtitle1" gutterBottom sx={{ ...textStyle }}>
             WITHOUT ASSIGNED SEATS
           </Typography>
         </Paper>
       </Grid>
     </Grid>
-    
   );
 }
