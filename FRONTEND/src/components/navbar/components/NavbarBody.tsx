@@ -15,6 +15,14 @@ import AdbIcon from "@mui/icons-material/Adb";
 
 import NavbarSearchBox from "./NavbarSearchBox";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../redux/store/store";
+import { getUsersFetch } from "../../../redux/state/userState";
+import { useEffect } from "react";
+
+interface dataFormat {
+  emp_id: number;
+}
 
 export default function navbarBody() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -40,8 +48,19 @@ export default function navbarBody() {
     setAnchorElUser(null);
   };
 
-  const pageNavigation = () => {
-    navigate("/dashboard/*");
+  const dispatch = useDispatch();
+  const user: dataFormat [] = useSelector((state: RootState) => state.userReducer.users);
+
+  useEffect(() => {
+    dispatch(getUsersFetch());
+  }, [dispatch]); 
+
+  const pageDashboard = () => {
+    navigate(-1);
+  };
+
+  const pageSeatplan = () => {
+    navigate(`/seatplan`);
   };
 
   return (
@@ -140,13 +159,32 @@ export default function navbarBody() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
+              {/* Dashboard */}
               <MenuItem
                 onClick={() => {
                   handleCloseUserMenu();
-                  pageNavigation();
+                  pageDashboard();
                 }}
               >
-                <Typography textAlign="center">TEST</Typography>
+                <Typography textAlign="center">Dashboard</Typography>
+              </MenuItem>
+                {/* Seatplan */}
+              <MenuItem
+                onClick={() => {
+                  handleCloseUserMenu();
+                  pageSeatplan();
+                }}
+              >
+                <Typography textAlign="center">View Seatplan</Typography>
+              </MenuItem>
+                {/* Logout */}
+              <MenuItem
+                onClick={() => {
+                  handleCloseUserMenu();
+                  pageDashboard();
+                }}
+              >
+                <Typography textAlign="center">Logout</Typography>
               </MenuItem>
             </Menu>
           </Box>
