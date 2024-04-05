@@ -15,18 +15,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
 import { useEffect } from "react";
 import { getUsersFetch } from "../../../redux/state/userState";
+import { getSeatsFetch } from "../../../redux/state/seatState";
 
 interface Data {
   emp_id: number;
   dept_name: string;
-  seats: number;
+  seat_id: number;
 }
 
-function createData(emp_id: number, dept_name: string, seats: number): Data {
+function createData(emp_id: number, dept_name: string, seat_id: number): Data {
   return {
     emp_id,
     dept_name,
-    seats,
+    seat_id,
   };
 }
 
@@ -81,22 +82,33 @@ export default function EnhancedTable() {
   }
   const dispatch = useDispatch();
   const seatData: Data[] = useSelector(
-    (state: RootState) => state.userReducer.users
+    (state: RootState) => state.seatReducer.seating
   );
 
   useEffect(() => {
-    dispatch(getUsersFetch());
+    dispatch(getSeatsFetch());
   }, [dispatch]);
-    // Data filtered rows to avoid duplicates
-  const deptNamesSet = new Set<string>();
 
-  const rows = seatData.reduce((acc: Data[], item: Data) => {
-    if (!deptNamesSet.has(item.dept_name)) {
-      deptNamesSet.add(item.dept_name);
-      acc.push(createData(item.emp_id, item.dept_name, item.seats));
-    }
-    return acc;
-  }, []);
+  const rowsByDept: {
+    [key: string]: { dept_name: string; seat_count: number };
+  } = {};
+
+  if (Array.isArray(seatData)) {
+    seatData.forEach((item) => { 
+      if (!rowsByDept[item.dept_name]) {
+        rowsByDept[item.dept_name] = {
+          dept_name: item.dept_name,
+          seat_count: 0,
+        };
+      }
+      // Increment seat_count by 1 for each seat encountered
+      rowsByDept[item.dept_name].seat_count++;
+    });
+  }
+
+  const rows: Data[] = Object.values(rowsByDept).map((row) =>
+    createData(-1, row.dept_name, row.seat_count)
+  );
 
   {
     /* End - API data retrieval and mapping to rows */
@@ -171,12 +183,12 @@ export default function EnhancedTable() {
                 </TableCell>
                 <TableCell>
                   <TableSortLabel
-                    active={orderBy === "seats"}
-                    direction={orderBy === "seats" ? order : "asc"}
-                    onClick={(event) => handleRequestSort(event, "seats")}
+                    active={orderBy === "seat_id"}
+                    direction={orderBy === "seat_id" ? order : "asc"}
+                    onClick={(event) => handleRequestSort(event, "seat_id")}
                   >
                     Seats
-                    {orderBy === "seats" ? (
+                    {orderBy === "seat_id" ? (
                       <Box component="span" sx={visuallyHidden}>
                         {order === "desc"
                           ? "sorted descending"
@@ -189,11 +201,11 @@ export default function EnhancedTable() {
             </TableHead>
             <TableBody>
               {visibleRows.map((row) => (
-                <TableRow key={row.emp_id}>
+                <TableRow key={row.dept_name}>
                   <TableCell component="th" scope="row">
                     {row.dept_name}
                   </TableCell>
-                  <TableCell>{row.seats}</TableCell>
+                  <TableCell>{row.seat_id}</TableCell>
                 </TableRow>
               ))}
               {emptyRows > 0 && (
