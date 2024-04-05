@@ -13,7 +13,7 @@ import Paper from "@mui/material/Paper";
 import { visuallyHidden } from "@mui/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getUsersFetch } from "../../../redux/state/userState";
 import { getSeatsFetch } from "../../../redux/state/seatState";
 
@@ -77,9 +77,6 @@ export default function EnhancedTable() {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const shadowStyle = { boxShadow: "0px 4px 10px #25476A" };
 
-  {
-    /* Start - API data retrieval and mapping to rows */
-  }
   const dispatch = useDispatch();
   const seatData: Data[] = useSelector(
     (state: RootState) => state.seatReducer.seating
@@ -88,6 +85,23 @@ export default function EnhancedTable() {
   useEffect(() => {
     dispatch(getSeatsFetch());
   }, [dispatch]);
+
+  useEffect(() => {
+    // Save table state to localStorage
+    localStorage.setItem("tableState", JSON.stringify({ order, orderBy, page, rowsPerPage }));
+  }, [order, orderBy, page, rowsPerPage]);
+
+  useEffect(() => {
+    // Retrieve table state from localStorage
+    const storedState = localStorage.getItem("tableState");
+    if (storedState) {
+      const { order, orderBy, page, rowsPerPage } = JSON.parse(storedState);
+      setOrder(order);
+      setOrderBy(orderBy);
+      setPage(page);
+      setRowsPerPage(rowsPerPage);
+    }
+  }, []);
 
   const rowsByDept: {
     [key: string]: { dept_name: string; seat_count: number };
@@ -109,10 +123,6 @@ export default function EnhancedTable() {
   const rows: Data[] = Object.values(rowsByDept).map((row) =>
     createData(-1, row.dept_name, row.seat_count)
   );
-
-  {
-    /* End - API data retrieval and mapping to rows */
-  }
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
