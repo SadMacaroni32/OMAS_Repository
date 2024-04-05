@@ -47,14 +47,14 @@ export default function DashboardUserProfile() {
   // console.log(fname, position);
 
   return (
-    <Paper elevation={6} sx={{ m: 1, ...shadowStyle }}>
+    <Paper elevation={6} sx={{ m: 1, ml: 1, ...shadowStyle }}>
       <Card>
         <CardActionArea>
           <CardMedia
             component="img"
             image={ProfilePicture}
             alt="User Profile Picture"
-            sx={{ height: "20rem" }}
+            sx={{ height: "18.7rem" }}
           />
           {emp_id && (
             <CardContent>
