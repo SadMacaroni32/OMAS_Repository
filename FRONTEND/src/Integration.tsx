@@ -22,7 +22,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Navigate to={"/landingpage"} />} />
         <Route path="/landingpage" element={<LandingPage />} />
-        <Route path="/dashboard/*" element={<Dashboard />} />
+        <Route path="/dashboard/:userId" element={<Dashboard />} />
         <Route path="/seatplan" element={<SeatingPlanPage />} />
         <Route path="/timetable/*" element={<TimeTablePage/>}/>
         <Route path="*" element={<Navigate to={"/landingpage"} />} />

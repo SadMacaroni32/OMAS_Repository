@@ -15,7 +15,7 @@ interface dataFormat {
   fname: string;
   lname: string;
   position: string | number;
-  emp_id: number;
+  emp_id: any;
 }
 
 export default function DashboardUserProfile() {
@@ -23,6 +23,7 @@ export default function DashboardUserProfile() {
   const location = useLocation();
   const dispatch = useDispatch();
   const id  = location.state;
+  const {userId} = useParams();
   const userData: dataFormat[] = useSelector((state: RootState) => state.userReducer.users);
   const [dataState, setDataState] = useState<dataFormat | null>(null);
 
@@ -31,10 +32,10 @@ export default function DashboardUserProfile() {
   }, [dispatch, id]);
 
   useEffect(() => {
-    if (userData.length > 0) {
-      setDataState(userData[0]);
+    if (userData.length > 0 && userId !== undefined) {
+      setDataState(userData[Number(userId) - 1]); // decrement userId because JSON data starts at 1, not 0. remove if integrated.
     }
-  }, [userData]);
+  }, [userData, userId]);
 
   const {
     fname,
@@ -44,7 +45,7 @@ export default function DashboardUserProfile() {
   } = dataState ?? {};
 
   {/* FOR CHECKING API DATA CONSOLE */}
-  // console.log(fname, position);
+  // console.log([dataState]);
 
   return (
     <Paper elevation={6} sx={{ m: 1, ml: 1, ...shadowStyle }}>
