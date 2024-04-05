@@ -7,6 +7,7 @@ const seatSlice = createSlice({
     seatInfo: {
       seat_id: "",
       del_flag: "",
+      dept_name: "",
       created_at: "",
       updated_at: "",
       id: "",
