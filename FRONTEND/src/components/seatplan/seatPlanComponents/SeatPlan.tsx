@@ -13,6 +13,10 @@ import FifthCol from "./col-components/FifthCol";
 import SixthCol from "./col-components/SixthCol";
 import SeventhCol from "./col-components/SeventhCol";
 
+//import loading animation 
+import LinearDeterminate from "./SeatPlanLoading";
+
+
 const SeatPlan: React.FC = () => {
   const dispatch = useDispatch();
 
@@ -20,8 +24,13 @@ const SeatPlan: React.FC = () => {
   const userData = useSelector((state: RootState) => state.userReducer.users);
 
   //get seatPlan data from state
-  const seatPlan  = useSelector(
+  const seatPlan = useSelector(
     (state: RootState) => state.seatPlanReducer.seatPlanValue
+  );
+
+  //get isLoading state
+  const isLoading = useSelector(
+    (state: RootState) => state.seatPlanReducer.isLoading
   );
 
   //get reservation data from state
@@ -75,7 +84,6 @@ const SeatPlan: React.FC = () => {
   });
 
   const currentTime = new Date(); // Get the current time
-
 
   const columnData = [
     {
@@ -167,11 +175,16 @@ const SeatPlan: React.FC = () => {
   ];
   return (
     <div className="w-full h-[100vh] flex justify-center">
-      <div className="flex gap-x-10 h-full mt-[50px]">
-        {columnData.map((col, index) => (
-          <col.component key={index} {...col.props} />
-        ))}
-      </div>
+      {/* Render loading indicator while loading */}
+      {isLoading ? (
+        <LinearDeterminate />
+      ) : (
+        <div className="flex gap-x-10 h-full mt-[50px]">
+          {columnData.map((col, index) => (
+            <col.component key={index} {...col.props} />
+          ))}
+        </div>
+      )}
 
       {seatPlan.map((s, idx) => {
         const { seat_id } = s;
