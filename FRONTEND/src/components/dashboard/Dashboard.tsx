@@ -16,10 +16,13 @@ interface dataFormat {
   seat_id: number;
 }
 export default function Dashboard() {
-
   const dispatch = useDispatch();
-  const seatData: dataFormat[] = useSelector((state: RootState) => state.seatReducer.seating);
-  const seatReservedData = useSelector((state: RootState) => state.seatReservedReducer.seatingReserved);
+  const seatData: dataFormat[] = useSelector(
+    (state: RootState) => state.seatReducer.seating
+  );
+  const seatReservedData = useSelector(
+    (state: RootState) => state.seatReservedReducer.seatingReserved
+  );
 
   // Initialize seatData with default values based on localStorage or current state
   const [data, setData] = useState(() => {
@@ -28,7 +31,9 @@ export default function Dashboard() {
     if (storedSeatData && storedSeatReservedData) {
       return {
         occupied: JSON.parse(storedSeatReservedData).length,
-        available: JSON.parse(storedSeatData).length - JSON.parse(storedSeatReservedData).length,
+        available:
+          JSON.parse(storedSeatData).length -
+          JSON.parse(storedSeatReservedData).length,
         underRepair: 1, // You can set this value accordingly based on your data
       };
     } else {
@@ -74,7 +79,7 @@ export default function Dashboard() {
         </Grid>
 
         {/* SEAT GRAPH CHART */}
-        <Grid item xs={4} >
+        <Grid item xs={4}>
           <DashboardSeatCondition data={data} />
         </Grid>
 

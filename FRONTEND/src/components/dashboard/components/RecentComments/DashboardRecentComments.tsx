@@ -32,33 +32,51 @@ export default function DashboardRecentComments() {
   };
 
   const dispatch = useDispatch();
-  const commentData: dataFormat[] = useSelector((state: RootState) => state.seatReservedReducer.seatingReserved);
-  
+  const commentData: dataFormat[] = useSelector(
+    (state: RootState) => state.seatReservedReducer.seatingReserved
+  );
+
   useEffect(() => {
     dispatch(getSeatsReservedFetch());
   }, [dispatch]);
 
   return (
-    
-      <Paper elevation={6} sx={{ ml: 1, p: 2, ...shadowStyle, maxHeight: "423px", overflow: "auto", borderRadius: "5px" }}>
-        <TableContainer>
-          <Table>
-            <TableHead>
-              <Typography
+    <Paper
+      elevation={6}
+      sx={{
+        ml: 1,
+        p: 2,
+        ...shadowStyle,
+        maxHeight: "423px",
+        overflow: "auto",
+        borderRadius: "5px",
+      }}
+    >
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <Typography
+              sx={{ m: 1 }}
+              variant="h6"
+              id="recentComTitle"
+              component="div"
+            >
+              Recent Comments
+            </Typography>
+          </TableHead>
+          <TableBody id="commentContainer" component="div">
+            {commentData.map((comment) => (
+              <Grid
+                container
+                alignItems="flex-start"
+                key={comment.reservation_id}
+                spacing={1}
                 sx={{ m: 1 }}
-                variant="h6"
-                id="recentComTitle"
-                component="div"
               >
-                Recent Comments
-              </Typography>
-            </TableHead>
-            <TableBody id="commentContainer" component="div">
-              {commentData.map((comment) => (
-              <Grid container alignItems="flex-start" key={comment.reservation_id} spacing={1} sx={{m:1}}>
                 {/* Set alignItems to "flex-start" */}
                 <Grid item>
-                  <Avatar>{getAvatarLetter(comment.fname)}</Avatar> {/* Use commenterName state */}
+                  <Avatar>{getAvatarLetter(comment.fname)}</Avatar>{" "}
+                  {/* Use commenterName state */}
                 </Grid>
                 <Grid item>
                   <Typography
@@ -81,10 +99,10 @@ export default function DashboardRecentComments() {
                   </Grid>
                 </Grid>
               </Grid>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Paper>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Paper>
   );
 }
