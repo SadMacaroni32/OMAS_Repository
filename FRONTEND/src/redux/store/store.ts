@@ -3,7 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import rootSaga from "../saga/rootSaga";
 import { InputReducer, userReducer } from "../state/userState";
 import { seatPlanReducer } from "../state/seatPlanState";
-import { reservationReducer, reservationsReducer } from "../state/reservationState";
+import { reservationReducer, reservationsReducer, reservationsDateReducer } from "../state/reservationState";
 import { seatReducer } from "../state/seatState";
 import { seatReservedReducer } from "../state/seatReservedState";
 import  usersReducer  from "../state/usersState";
@@ -27,6 +27,7 @@ export const store = configureStore({
     //reservation state
     reservationReducer: reservationReducer,
     reservationsReducer: reservationsReducer,
+    reservationsDateReducer: reservationsDateReducer,
 
     // add more reducers here
     
