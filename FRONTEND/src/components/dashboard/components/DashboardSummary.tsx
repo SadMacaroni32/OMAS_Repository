@@ -86,13 +86,7 @@ export default function EnhancedTable() {
     dispatch(getSeatsFetch());
   }, [dispatch]);
 
-  useEffect(() => {
-    // Save table state to localStorage
-    localStorage.setItem(
-      "tableState",
-      JSON.stringify({ order, orderBy, page, rowsPerPage })
-    );
-  }, [order, orderBy, page, rowsPerPage]);
+
 
   useEffect(() => {
     // Retrieve table state from localStorage
@@ -158,6 +152,14 @@ export default function EnhancedTable() {
       ),
     [order, orderBy, page, rowsPerPage]
   );
+
+  useEffect(() => {
+    // Save table state to localStorage
+    localStorage.setItem(
+      "tableState",
+      JSON.stringify({ order, orderBy, page, rowsPerPage, rows })
+    );
+  }, [order, orderBy, page, rowsPerPage, rows]);
 
   return (
     <Box sx={{ width: "100%", borderRadius: "5px", ...shadowStyle }}>

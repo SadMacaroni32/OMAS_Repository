@@ -1,7 +1,7 @@
 import DashboardUserProfile from "./components/DashboardUserProfile";
 import DashboardStatusBoxes from "./components/DashboardStatusBoxes";
 import DashboardSeatCondition from "./components/DashboardSeatCondition";
-import DashboartRecentComments from "./components/DashboardRecentComments";
+import DashboartRecentComments from "./components/RecentComments/DashboardRecentComments";
 import DashboardSummary from "./components/DashboardSummary";
 
 import Box from "@mui/material/Box";
