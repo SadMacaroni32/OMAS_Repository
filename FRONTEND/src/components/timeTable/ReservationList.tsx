@@ -47,14 +47,14 @@ const ReservationList = () => {
       </Box>
       <TableContainer component={Paper}>
   <Table aria-label="reservations table">
-    <TableHead sx={{position:"sticky"}}>
-      <TableRow sx={{ border: "1px solid #25476a" }}> {/* Set border color */}
-        <TableCell>Reservation ID</TableCell>
-        <TableCell>Name</TableCell>
-        <TableCell>Seat Number</TableCell>
-        <TableCell>Project ID</TableCell>
-        <TableCell>Start Date</TableCell>
-        <TableCell>End Date</TableCell>
+    <TableHead >
+      <TableRow sx={{ background: "#468faf" ,border:1}}> {/* Set border color */}
+        <TableCell sx={{color:"white"}}>Reservation ID</TableCell>
+        <TableCell sx={{color:"white"}}>Name</TableCell>
+        <TableCell sx={{color:"white"}}>Seat Number</TableCell>
+        <TableCell sx={{color:"white"}}>Project ID</TableCell>
+        <TableCell sx={{color:"white"}}>Start Date</TableCell>
+        <TableCell sx={{color:"white"}}>End Date</TableCell>
       </TableRow>
     </TableHead>
     <TableBody >
