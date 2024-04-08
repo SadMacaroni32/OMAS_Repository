@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import {
   Avatar,
-  Box,
   Grid,
   Table,
   TableBody,
@@ -32,38 +31,24 @@ export default function DashboardRecentComments() {
   };
 
   const dispatch = useDispatch();
-  const commentData: dataFormat[] = useSelector(
-    (state: RootState) => state.seatReservedReducer.seatingReserved
-  );
-
+  const commentData: dataFormat[] = useSelector((state: RootState) => state.seatReservedReducer.seatingReserved);
+  
   useEffect(() => {
     dispatch(getSeatsReservedFetch());
   }, [dispatch]);
 
   return (
-    <Paper
-      elevation={6}
-      sx={{
-        ml: 1,
-        p: 2,
-        ...shadowStyle,
-        maxHeight: "423px",
-        overflow: "auto",
-        borderRadius: "5px",
-      }}
-    >
-      <TableContainer>
+    <Paper elevation={6} sx={{ ml: 1, ...shadowStyle }}>
+      <TableContainer sx={{ maxHeight: "423px", overflow: "auto", position: "relative" }}>
+        <Typography
+          variant="h6"
+          id="recentComTitle"
+          component="div"
+          sx={{ position: "sticky", top: 0, zIndex: 1, background: "#fff", padding: "8px" }}
+        >
+          Recent Comments
+        </Typography>
         <Table>
-          <TableHead>
-            <Typography
-              sx={{ m: 1 }}
-              variant="h6"
-              id="recentComTitle"
-              component="div"
-            >
-              Recent Comments
-            </Typography>
-          </TableHead>
           <TableBody id="commentContainer" component="div">
             {commentData.map((comment) => (
               <Grid

@@ -1,22 +1,23 @@
 import { Button, TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { getUsersFetch, setUserField } from "../../../redux/state/userState";
 
 import { useNavigate } from "react-router-dom";
 // import axios from "axios";
 
-
+interface dataFormat {
+  emp_id: number;
+}
 const Login: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate()
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   useEffect(() => {
     dispatch(getUsersFetch());
   }, [dispatch]);
 
-  const userData = useSelector((state: RootState) => state.userReducer.users);
+  const userData: dataFormat [] = useSelector((state: RootState) => state.userReducer.users);
   const userInput = useSelector((state: RootState) => state.InputReducer);
 
   const { username, password } = userInput;
@@ -26,7 +27,7 @@ const Login: React.FC = () => {
     dispatch(setUserField({ ...userInput, [name]: value }));
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = (e: { preventDefault: () => void; }) => {
     // Check if the entered username and password match any user data from the API
     e.preventDefault();
     const matchedUser = userData.find(
