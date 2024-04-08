@@ -86,10 +86,7 @@ export default function EnhancedTable() {
     dispatch(getSeatsFetch());
   }, [dispatch]);
 
-  useEffect(() => {
-    // Save table state to localStorage
-    localStorage.setItem("tableState", JSON.stringify({ order, orderBy, page, rowsPerPage }));
-  }, [order, orderBy, page, rowsPerPage]);
+
 
   useEffect(() => {
     // Retrieve table state from localStorage
@@ -108,7 +105,7 @@ export default function EnhancedTable() {
   } = {};
 
   if (Array.isArray(seatData)) {
-    seatData.forEach((item) => { 
+    seatData.forEach((item) => {
       if (!rowsByDept[item.dept_name]) {
         rowsByDept[item.dept_name] = {
           dept_name: item.dept_name,
@@ -156,9 +153,17 @@ export default function EnhancedTable() {
     [order, orderBy, page, rowsPerPage]
   );
 
+  useEffect(() => {
+    // Save table state to localStorage
+    localStorage.setItem(
+      "tableState",
+      JSON.stringify({ order, orderBy, page, rowsPerPage, rows })
+    );
+  }, [order, orderBy, page, rowsPerPage, rows]);
+
   return (
-    <Box sx={{ width: "100%", ...shadowStyle }}>
-      <Paper sx={{ width: "100%", mb: 2 }}>
+    <Box sx={{ width: "100%", borderRadius: "5px", ...shadowStyle }}>
+      <Paper sx={{ width: "100%", mb: 2, borderRadius: "5px" }}>
         <TableContainer>
           <Table
             sx={{ minWidth: 400 }}
