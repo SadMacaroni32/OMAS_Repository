@@ -63,6 +63,13 @@ export default function navbarBody() {
     navigate(`/seatplan`);
   };
 
+  const pageLogout = () => {
+    navigate(`/landingpage`);
+    localStorage.removeItem('tableState');
+    localStorage.removeItem('seatData');
+    localStorage.removeItem('seatReservedData');
+  };
+
   return (
     <AppBar position="static" >
       <Container maxWidth="xl">
@@ -181,7 +188,7 @@ export default function navbarBody() {
               <MenuItem
                 onClick={() => {
                   handleCloseUserMenu();
-                  pageDashboard();
+                  pageLogout();
                 }}
               >
                 <Typography textAlign="center">Logout</Typography>

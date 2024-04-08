@@ -14,38 +14,61 @@ import { getSeatsReservedFetch } from "../../../redux/state/seatReservedState";
 
 interface dataFormat {
   seat_id: number;
+  seatData: any;
+  seatReservedData: any;
 }
 export default function dashboardStatusBoxed() {
   const shadowStyle = { boxShadow: "0px 4px 10px #25476A" };
   const iconStyle = { width: "2.5vw", height: "2.5vw", color: "#25476A" };
   const paperStyle = { width: "100%", height: "10.5vw" };
-  const numberStyle = { fontSize: "2vw"};
+  const numberStyle = { fontSize: "2vw" };
   const textStyle = { fontSize: "0.6vw", fontWeight: "bold" };
 
   const dispatch = useDispatch();
   const seatData = useSelector((state: RootState) => state.seatReducer.seating);
-  const seatReservedData = useSelector((state: RootState) => state.seatReservedReducer.seatingReserved);
+  const seatReservedData = useSelector(
+    (state: RootState) => state.seatReservedReducer.seatingReserved
+  );
   const [dataState, setDataState] = useState<dataFormat | null>(null);
 
-  useEffect (() => {
+  useEffect(() => {
     dispatch(getSeatsFetch());
-  }, [dispatch]);
-
-  useEffect (() => {
     dispatch(getSeatsReservedFetch());
   }, [dispatch]);
 
-  {/* FOR CHECKING API DATA CONSOLE */}
+  // Save seatData and seatReservedData to localStorage
+  useEffect(() => {
+    localStorage.setItem("seatData", JSON.stringify(seatData));
+    localStorage.setItem("seatReservedData", JSON.stringify(seatReservedData));
+  }, [seatData, seatReservedData]);
+
+  // Retrieve seatData and seatReservedData from localStorage on component mount
+  useEffect(() => {
+    const storedSeatData = localStorage.getItem("seatData");
+    const storedSeatReservedData = localStorage.getItem("seatReservedData");
+    if (storedSeatData && storedSeatReservedData) {
+      setDataState({
+        seat_id: 0, // Dummy value for seat_id, replace it with actual value if necessary
+        seatData: JSON.parse(storedSeatData),
+        seatReservedData: JSON.parse(storedSeatReservedData),
+      });
+    }
+  }, []);
+
+  {
+    /* FOR CHECKING API DATA CONSOLE */
+  }
   // console.log(seatData);
   // console.log(seatReservedData);
 
-  {/* MOCK DATA FOR TESTING ONLY */}
+  {
+    /* MOCK DATA FOR TESTING ONLY */
+  }
   let totalAssoc = 100;
-  let totalSeats = 100;
+  // let totalSeats = 100;
 
   return (
-    
-    <Grid container spacing={1} >
+    <Grid container spacing={1}>
       <Grid item xs={4}>
         <Paper
           elevation={6}
@@ -61,10 +84,10 @@ export default function dashboardStatusBoxed() {
           }}
         >
           <EventSeatIcon sx={iconStyle} />
-          <Typography variant="h6" gutterBottom m={1} sx={{...numberStyle}}>
-            {totalSeats}
+          <Typography variant="h6" gutterBottom m={1} sx={{ ...numberStyle }}>
+            {seatData.length}
           </Typography>
-          <Typography variant="subtitle1" gutterBottom sx={{...textStyle}}>
+          <Typography variant="subtitle1" gutterBottom sx={{ ...textStyle }}>
             TOTAL SEATS
           </Typography>
         </Paper>
@@ -82,10 +105,10 @@ export default function dashboardStatusBoxed() {
           }}
         >
           <AccountBoxIcon sx={{ ...iconStyle }} />
-          <Typography variant="h6" gutterBottom m={1} sx={{...numberStyle}}>
-            {totalAssoc}  {/* MOCK DATA */}
+          <Typography variant="h6" gutterBottom m={1} sx={{ ...numberStyle }}>
+            {totalAssoc} {/* MOCK DATA */}
           </Typography>
-          <Typography variant="subtitle1" gutterBottom sx={{...textStyle}}>
+          <Typography variant="subtitle1" gutterBottom sx={{ ...textStyle }}>
             TOTAL ASSOCIATES
           </Typography>
         </Paper>
@@ -105,10 +128,10 @@ export default function dashboardStatusBoxed() {
           }}
         >
           <AirlineSeatReclineNormalIcon sx={{ ...iconStyle }} />
-          <Typography variant="h6" gutterBottom m={1} sx={{...numberStyle}}>
-          {seatReservedData.length}
+          <Typography variant="h6" gutterBottom m={1} sx={{ ...numberStyle }}>
+            {seatReservedData.length}
           </Typography>
-          <Typography variant="subtitle1" gutterBottom sx={{...textStyle}}>
+          <Typography variant="subtitle1" gutterBottom sx={{ ...textStyle }}>
             OCCUPIED SEATS
           </Typography>
         </Paper>
@@ -126,10 +149,10 @@ export default function dashboardStatusBoxed() {
           }}
         >
           <InsertEmoticonIcon sx={{ ...iconStyle }} />
-          <Typography variant="h6" gutterBottom m={1} sx={{...numberStyle}}>
+          <Typography variant="h6" gutterBottom m={1} sx={{ ...numberStyle }}>
             {seatReservedData.length}
           </Typography>
-          <Typography variant="subtitle1" gutterBottom sx={{...textStyle}}>
+          <Typography variant="subtitle1" gutterBottom sx={{ ...textStyle }}>
             WITH SEATS ASSIGNED
           </Typography>
         </Paper>
@@ -149,10 +172,10 @@ export default function dashboardStatusBoxed() {
           }}
         >
           <ChairAltIcon sx={{ ...iconStyle }} />
-          <Typography variant="h6" gutterBottom m={1} sx={{...numberStyle}}>
-            {totalSeats - seatReservedData.length}  {/* MOCK DATA */}
+          <Typography variant="h6" gutterBottom m={1} sx={{ ...numberStyle }}>
+            {seatData.length - seatReservedData.length} {/* MOCK DATA */}
           </Typography>
-          <Typography variant="subtitle1" gutterBottom sx={{...textStyle}}>
+          <Typography variant="subtitle1" gutterBottom sx={{ ...textStyle }}>
             AVAILABLE SEATS
           </Typography>
         </Paper>
@@ -170,15 +193,14 @@ export default function dashboardStatusBoxed() {
           }}
         >
           <SentimentVeryDissatisfiedIcon sx={{ ...iconStyle }} />
-          <Typography variant="h6" gutterBottom m={1} sx={{...numberStyle}}>
-            {totalAssoc - seatReservedData.length}  {/* MOCK DATA */}
+          <Typography variant="h6" gutterBottom m={1} sx={{ ...numberStyle }}>
+            {totalAssoc - seatReservedData.length} {/* MOCK DATA */}
           </Typography>
-          <Typography variant="subtitle1" gutterBottom sx={{...textStyle}}>
+          <Typography variant="subtitle1" gutterBottom sx={{ ...textStyle }}>
             WITHOUT ASSIGNED SEATS
           </Typography>
         </Paper>
       </Grid>
     </Grid>
-    
   );
 }
