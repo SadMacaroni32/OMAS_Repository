@@ -15,8 +15,23 @@ function* fetchReservationsSaga(): any {
   }
 }
 
-function* reservationsSaga() {
+export function* reservationsSaga() {
   yield takeLatest('FETCH_RESERVATIONS_REQUEST', fetchReservationsSaga);
 }
 
-export default reservationsSaga;
+
+
+export function* fetchReservationsDate(): any {
+  try {
+    const response = yield call(axios.get, 'http://localhost:8000/OMAS_SEATS_RESERVATIONS');
+    yield put({ type: 'SET_RESERVATIONS', payload: response.data });
+  } catch (error) {
+    console.error('Error fetching reservations:', error);
+  }
+}
+
+export function* reservationsSagaDate() {
+  yield takeLatest('FETCH_RESERVATIONS', fetchReservationsDate);
+}
+
+

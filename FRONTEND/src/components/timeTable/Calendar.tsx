@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import * as React from "react";
+import { useState, useEffect } from "react"; // Import useEffect hook
+import { useSelector, useDispatch } from "react-redux"; // Import hooks to access Redux store
 import {
   Grid,
   Typography,
@@ -10,13 +12,21 @@ import {
   Box,
   TextField,
   IconButton,
+  ButtonGroup,
+  Grow,
+  Popper,
+  ClickAwayListener,
+  MenuList,
 } from "@mui/material";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
 import WeekDisplay from "./WeekDisplay";
 import WeekDatesGrid from "./WeekDatesGrid";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ReservationList from "./ReservationList";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { current } from "@reduxjs/toolkit";
+import { fetchReservationsRequest } from "../../redux/state/reservationState";
 
 const daysOfWeek = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Frid", "Sat"];
 const monthsOfYear = [
@@ -33,14 +43,76 @@ const monthsOfYear = [
   "Nov",
   "Dec",
 ];
+const options = ["Year", "Months", "Weeks", "Reservation List"];
 
 const Calendar = ({ seat_id, setShowTimeTablePage }) => {
-  const [openList, setOpenList]= useState(false);
+
+   // Retrieve reservations from Redux store using useSelector
+   const reservations = useSelector((state) => state.reservationsReducer.reservations);
+  
+   // Dispatch action to fetch reservations when component mounts
+   const dispatch = useDispatch();
+   useEffect(() => {
+     dispatch(fetchReservationsRequest());
+   }, [dispatch]);
+
+   console.log(reservations);
+
+  
+
+  const [openList, setOpenList] = useState(false);
   const handleOpenList = () => setOpenList(true);
-  const handleCloseList = () => setOpenList(false);
+  const handleCloseList = () => {
+    setOpenList(false);
+    setSelectedIndex(1);
+
+  }
+  
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setShowTimeTablePage(false);
+  const handleCloseWeeks = () => {
+    setOpen(false);
+    setSelectedIndex(1); // Set to Months
+  };
+
+  //Group Buttons
+  const [openButtons, setOpenButtons] = React.useState(false);
+  const anchorRef = React.useRef<HTMLDivElement>(null);
+  const [selectedIndex, setSelectedIndex] = React.useState(1);
+
+  const handleClickButtons = () => {
+    console.info(`You clicked ${options[selectedIndex]}`);
+  };
+
+  const handleMenuItemClick = (
+    event: React.MouseEvent<HTMLLIElement, MouseEvent>,
+    index: number
+  ) => {
+    setSelectedIndex(index);
+    setOpen(false);
+    if (options[index] === "Weeks") {
+      const currentDate = new Date();
+      handleDateClick(currentDate);
+    } else if (options[index] === "Reservation List") {
+      handleOpenList();
+    }
+  };
+
+  const handleToggleButtons = () => {
+    setOpenButtons((prevOpen: any) => !prevOpen);
+  };
+
+  const handleCloseButtons = (event: Event) => {
+    if (
+      anchorRef.current &&
+      anchorRef.current.contains(event.target as HTMLElement)
+    ) {
+      return;
+    }
+
+    setOpenButtons(false);
+  };
 
   // Get current date
   const currentDate = new Date();
@@ -55,7 +127,7 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
   const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
 
   // Function to handle date click
-  const handleDateClick = (date) => {
+  const handleDateClick = (date: string | number | Date | null) => {
     if (!date || date.getMonth() !== currentMonth) {
       // Date clicked is either null or not in the current month, return without opening the modal
       return;
@@ -63,15 +135,12 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
     setOpen(true);
     const clickedDate = new Date(date);
     const dayOfWeek = clickedDate.getDay();
-    const diff =
-      clickedDate.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1); // Adjust if the day is Sunday
+    const diff = clickedDate.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1); // Adjust if the day is Sunday
     const startOfWeek = new Date(clickedDate.setDate(diff));
     const endOfWeek = new Date(startOfWeek);
     endOfWeek.setDate(startOfWeek.getDate() + 5);
     setWeekInfo({ startOfWeek, endOfWeek });
   };
-  
-  
 
   // Generate calendar grid
   const calendarGrid = [];
@@ -92,11 +161,78 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
     if (dayCounter > daysInMonth) break;
   }
 
-  const handleChangeMonth = (event: { target: { value: any; }; }) => {
+    // Get the dates for which reservations exist
+    const reservationDates = reservations.map((reservation) => new Date(reservation.start_date));
+    // Generate calendar grid with reservation IDs
+   // Generate calendar grid with reservation IDs and time format
+// Generate calendar grid with reservation IDs
+const calendarGridWithReservations = calendarGrid.map((week, i) => (
+  <Grid
+    container
+    item
+    key={i}
+    spacing={1}
+    sx={{ height: 120 }}
+    justifyContent="center"
+  >
+    {week.map((day, index) => {
+      const reservation = reservations.find(
+        (reservation) => {
+          const reservationDate = new Date(reservation.start_date);
+          // Strip time portion from reservation date
+          reservationDate.setHours(0, 0, 0, 0);
+          const dayDate = day.date;
+          if (dayDate) {
+            // Strip time portion from day date
+            dayDate.setHours(0, 0, 0, 0);
+            return reservationDate.getTime() === dayDate.getTime();
+          }
+          return false;
+        }
+      );
+      console.log(reservation);
+      return (
+        <Grid
+          sx={{
+            marginLeft: 1,
+            border: 1,
+            borderColor: "#25476A",
+            cursor: "pointer",
+            width: `${100 / 7}%`, // Distribute equally across 7 days
+            backgroundColor:
+              day.date && day.date.getMonth() !== currentMonth
+                ? "#EEEEEE"
+                : "transparent", // Gray background for dates not in current month
+            "&:hover": {
+              backgroundColor: "#caf0f8",
+            },
+          }}
+          item
+          key={`${i}-${index}`}
+          xs={1}
+          onClick={() => handleDateClick(day.date)}
+        >
+          {day.dayOfMonth}
+          {reservation && (
+            <Typography>Reservation ID: {reservation.reservation_id}</Typography>
+          )}
+        </Grid>
+      );
+    })}
+  </Grid>
+));
+
+
+
+
+
+
+
+  const handleChangeMonth = (event: { target: { value: any } }) => {
     setCurrentMonth(event.target.value);
   };
 
-  const handleChangeYear = (event: { target: { value: any; }; }) => {
+  const handleChangeYear = (event: { target: { value: any } }) => {
     setCurrentYear(event.target.value);
   };
 
@@ -141,20 +277,18 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
         alignItems: "center", // Center the content vertically
       }}
     >
-
-       {/* "X" button to close modal */}
-       <IconButton
-          sx={{
-            position: 'absolute',
-            top: 0,
-            right: 0,
-          }}
-          onClick={handleClose}
-        >
-          <CloseIcon width={150} />
-          </IconButton>
+      {/* "X" button to close modal */}
+      <IconButton
+        sx={{
+          position: "absolute",
+          top: 0,
+          right: 0,
+        }}
+        onClick={handleClose}
+      >
+        <CloseIcon width={150} />
+      </IconButton>
       <Grid item xs={10}>
-        
         <Typography variant="h4">
           <Button onClick={handlePrevMonth}>
             <ArrowBackIcon />
@@ -185,27 +319,91 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
             <ArrowForwardIcon />
           </Button>
         </Typography>
-
-        
       </Grid>
       <Grid item xs={2}>
-      <Button onClick={handleOpenList}>
-    Reservation List
-  </Button>
-        </Grid>
+        <React.Fragment>
+          <ButtonGroup
+            variant="contained"
+            ref={anchorRef}
+            aria-label="Button group with a nested menu"
+          >
+            <Button onClick={handleClickButtons}>
+              {options[selectedIndex]}
+            </Button>
+            <Button
+              size="small"
+              aria-controls={openButtons ? "split-button-menu" : undefined}
+              aria-expanded={openButtons ? "true" : undefined}
+              aria-label="select merge strategy"
+              aria-haspopup="menu"
+              onClick={handleToggleButtons}
+            >
+              <ArrowDropDownIcon />
+            </Button>
+          </ButtonGroup>
+          <Popper
+            sx={{
+              zIndex: 1,
+            }}
+            open={openButtons}
+            anchorEl={anchorRef.current}
+            role={undefined}
+            transition
+            disablePortal
+          >
+            {({ TransitionProps, placement }) => (
+              <Grow
+                {...TransitionProps}
+                style={{
+                  transformOrigin:
+                    placement === "bottom" ? "center top" : "center bottom",
+                }}
+              >
+                <Paper>
+                  <ClickAwayListener onClickAway={handleCloseButtons}>
+                    <MenuList id="split-button-menu" autoFocusItem>
+                      {options.map((option, index) => (
+                        <MenuItem
+                          key={option}
+                          selected={index === selectedIndex}
+                          onClick={(event: any) => {
+                            handleMenuItemClick(event, index);
+                          }}
+                        >
+                          {option}
+                        </MenuItem>
+                      ))}
+                    </MenuList>
+                  </ClickAwayListener>
+                </Paper>
+              </Grow>
+            )}
+          </Popper>
+        </React.Fragment>
 
-  <Typography variant="h3" ml={2}>
-    {monthsOfYear[currentMonth]} {currentYear}
-  </Typography>
+  
+      </Grid>
 
+      <Typography variant="h3" ml={2}>
+        {monthsOfYear[currentMonth]} {currentYear}
+      </Typography>
 
       {/* Modal to display the ReservationList */}
       <Modal open={openList} onClose={handleCloseList}>
-        <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', bgcolor: 'white', p: 4 }}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            bgcolor: "white",
+            p: 4,
+          }}
+        >
           <Typography variant="h6" gutterBottom>
             Reservation List
           </Typography>
-          <ReservationList /> 
+          <ReservationList />
         </Box>
       </Modal>
 
@@ -216,43 +414,13 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
           </Grid>
         ))}
       </Grid>
-      {calendarGrid.map((week, i) => (
-        <Grid 
-        container 
-        item key={i} 
-        spacing={1} 
-        sx={{ height: 120 }} 
-        justifyContent="center"
-        >
-          {week.map((day, index) => (
-            <Grid
-            sx={{
-              marginLeft: 1,
-              border: 1,
-              borderColor: "#25476A",
-              cursor: "pointer",
-              width: `${100 / 7}%`, // Distribute equally across 7 days
-              backgroundColor: day.date && day.date.getMonth() !== currentMonth ? "#EEEEEE" : "transparent", // Gray background for dates not in current month
-              "&:hover": {
-                backgroundColor: "#caf0f8",
-              },
-            }}
-            item
-            key={`${i}-${index}`}
-            xs={1}
-            onClick={() => handleDateClick(day.date)}
-          >
-              {day.dayOfMonth}
-            </Grid>
-          ))}
-        </Grid>
-      ))}
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
+      {calendarGridWithReservations}
+      <Modal
+        open={open}
+        onClose={handleCloseWeeks}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
         <Box
           sx={{
             width: "90%",
@@ -266,14 +434,6 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
             borderRadius: 5,
           }}
         >
-          <Box>
-            {weekInfo && (
-              <WeekDisplay
-                startOfWeek={weekInfo.startOfWeek}
-                endOfWeek={weekInfo.endOfWeek}
-              />
-            )}
-          </Box>
           {weekInfo && (
             <WeekDatesGrid
               startOfWeek={weekInfo.startOfWeek}
@@ -283,10 +443,11 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
           )}
         </Box>
       </Modal>
-      
+
       <Typography className="text-[3rem] font-bold">
         ETO YUNG SEAT ID: {seat_id}
       </Typography>
+      
     </Grid>
   );
 };
