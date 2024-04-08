@@ -7,6 +7,9 @@ const seatReservedSlice = createSlice({
     seatInfo: {
       reservation_id: "",
       emp_id: "",
+      note: "",
+      fname: "",
+      lname: "",
       seat_id: "",
       project_id: "",
       start_date: "",
