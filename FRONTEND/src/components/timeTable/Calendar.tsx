@@ -172,9 +172,6 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
     if (dayCounter > daysInMonth) break;
   }
 
-  // Get the dates for which reservations exist
-  const reservationDates = reservations.map((reservation) => new Date(reservation.start_date));
-  
   // Generate calendar grid with reservation IDs
   const calendarGridWithReservations = calendarGrid.map((week, i) => (
     <Grid
@@ -187,7 +184,7 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
     >
 
       {week.map((day, index) => {
-        const reservation = reservations.find(
+        const reservationsForDay = reservations.filter(
           (reservation) => {
             const reservationDate = new Date(reservation.start_date);
             // Strip time portion from reservation date
@@ -216,9 +213,11 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
               backgroundColor:
                 day.date && day.date.getMonth() !== currentMonth
                   ? "#EEEEEE"
-                  : "transparent", // Gray background for dates not in current month
+                  : reservationsForDay.length > 0
+                  ? "#caf0f8" // Background color for dates with reservations
+                  : "transparent", // Transparent background for other dates
               "&:hover": {
-                backgroundColor: "#caf0f8",
+                backgroundColor: "#caf0f8", // Hover color for all dates
               },
             }}
             item
@@ -227,8 +226,13 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
             onClick={() => handleDateClick(day.date)}
           >
             {day.dayOfMonth}
-            {reservation && (
-              <Typography>Reservation ID: {reservation.reservation_id}</Typography>
+            {reservationsForDay.length > 0 && (
+              <Typography>
+                Reservation IDs:{" "}
+                {reservationsForDay.map(
+                  (reservation) => reservation.reservation_id
+                ).join(", ")}
+              </Typography>
             )}
           </Grid>
         );
