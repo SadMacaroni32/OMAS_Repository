@@ -86,8 +86,6 @@ export default function EnhancedTable() {
     dispatch(getSeatsFetch());
   }, [dispatch]);
 
-
-
   useEffect(() => {
     // Retrieve table state from localStorage
     const storedState = localStorage.getItem("tableState");
