@@ -14,7 +14,7 @@ const FirstCol: React.FC = ({
       <div className="flex flex-col justify-between ">
         <div className="flex flex-col gap-y-1">
           {seatPlan.slice(0, 3).map((sp, idx) => {
-            const { seat_id, dept_name } = sp;
+            const { seat_id, dept_name, seat_status } = sp;
             // Find reservation for this seat for today AM
             const reservationAM: any = reservationsAM.find(
               (res: any) => res.seat_id === seat_id
@@ -88,7 +88,7 @@ const FirstCol: React.FC = ({
         </div>
         <div className="flex flex-col gap-y-1">
           {seatPlan.slice(3, 4).map((sp, idx) => {
-            const { seat_id, dept_name } = sp;
+            const { seat_id, dept_name, seat_status } = sp;
             // Find reservation for this seat for today AM
             const reservationAM: any = reservationsAM.find(
               (res: any) => res.seat_id === seat_id
@@ -159,7 +159,7 @@ const FirstCol: React.FC = ({
           })}
 
           {seatPlan.slice(4, 6).map((sp, idx) => {
-            const { seat_id, dept_name } = sp;
+            const { seat_id, dept_name, seat_status } = sp;
             // Find reservation for this seat for today AM
             const reservationAM: any = reservationsAM.find(
               (res: any) => res.seat_id === seat_id
@@ -233,7 +233,7 @@ const FirstCol: React.FC = ({
       <div className="border-[.2rem] border-black h-[18.5rem]"></div>
       <div className="flex flex-col gap-y-1">
         {seatPlan.slice(6, 9).map((sp, idx) => {
-          const { seat_id, dept_name } = sp;
+          const { seat_id, dept_name, seat_status } = sp;
           // Find reservation for this seat for today AM
           const reservationAM: any = reservationsAM.find(
             (res: any) => res.seat_id === seat_id
