@@ -7,6 +7,7 @@ import { getReservedSeatsSaga } from "./seatReservedSaga";
 import { reservationSaga } from "./reservationSaga";
 import  {reservationsSaga, fetchReservationsDate, reservationsSagaDate}  from "./reservationsSaga"
 import { watchFetchUsers } from "./userSaga";
+// import { reservationIdsSaga } from "./datesReservedSaga";
 
 export default function* rootSaga() {
   yield all([
@@ -19,5 +20,6 @@ export default function* rootSaga() {
     watchFetchUsers(),
     fetchReservationsDate(),
     reservationsSagaDate(),
+    // reservationIdsSaga(),
   ]);
 }

@@ -28,6 +28,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { current } from "@reduxjs/toolkit";
 import { fetchReservationsRequest } from "../../redux/state/reservationState";
 import YearView from "./YearView";
+import AddAppointment from "./AddAppointment";
 
 const daysOfWeek = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Frid", "Sat"];
 const monthsOfYear = [
@@ -47,35 +48,40 @@ const monthsOfYear = [
 const options = ["Years", "Months", "Weeks", "Reservation List"];
 
 const Calendar = ({ seat_id, setShowTimeTablePage }) => {
+  // Retrieve reservations from Redux store using useSelector
+  const reservations = useSelector(
+    (state) => state.reservationsReducer.reservations
+  );
 
-   // Retrieve reservations from Redux store using useSelector
-   const reservations = useSelector((state) => state.reservationsReducer.reservations);
-  
-   // Dispatch action to fetch reservations when component mounts
-   const dispatch = useDispatch();
-   useEffect(() => {
-     dispatch(fetchReservationsRequest());
-   }, [dispatch]);
+  // Dispatch action to fetch reservations when component mounts
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchReservationsRequest());
+  }, [dispatch]);
 
-   console.log(reservations);
-
-  
+  console.log(reservations);
 
   const [openList, setOpenList] = useState(false);
   const handleOpenList = () => setOpenList(true);
   const handleCloseList = () => {
     setOpenList(false);
     setSelectedIndex(1);
-
-  }
-  const [openYearView, setOpenYearView] = useState(false)
+  };
+  const [openYearView, setOpenYearView] = useState(false);
   const handleOpenYearView = () => setOpenYearView(true);
   const handleCloseYearView = () => {
     setOpenYearView(false);
     setSelectedIndex(1);
+  };
 
-  }
-  
+
+
+  const [openAddAppointment, setOpenAddAppointment] = useState(false);
+  const handleOpenAddAppointment = () => setOpenAddAppointment(true);
+  const handleCloseAddAppointment = () => {
+    setOpenAddAppointment(false);
+  };
+
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setShowTimeTablePage(false);
@@ -104,10 +110,9 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
       handleDateClick(currentDate);
     } else if (options[index] === "Reservation List") {
       handleOpenList();
-    } else if (options[index] === "Years"){
+    } else if (options[index] === "Years") {
       handleOpenYearView();
     }
-
   };
 
   const handleToggleButtons = () => {
@@ -182,29 +187,29 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
       sx={{ height: 120 }}
       justifyContent="center"
     >
-
       {week.map((day, index) => {
-        const reservationsForDay = reservations.filter(
-          (reservation) => {
-            const reservationDate = new Date(reservation.start_date);
-            // Strip time portion from reservation date
-            reservationDate.setHours(0, 0, 0, 0);
-            const dayDate = day.date;
-            if (dayDate) {
-              // Strip time portion from day date
-              dayDate.setHours(0, 0, 0, 0);
-              return (
-                reservationDate.getTime() === dayDate.getTime() &&
-                reservation.seat_id === seat_id
-              );
-            }
-            return false;
+        const reservationsForDay = reservations.filter((reservation) => {
+          const reservationDate = new Date(reservation.start_date);
+          // Strip time portion from reservation date
+          reservationDate.setHours(0, 0, 0, 0);
+          const dayDate = day.date;
+          if (dayDate) {
+            // Strip time portion from day date
+            dayDate.setHours(0, 0, 0, 0);
+            return (
+              reservationDate.getTime() === dayDate.getTime() &&
+              reservation.seat_id === seat_id
+            );
           }
-        );
+          return false;
+        });
 
         return (
+          
           <Grid
+            flexWrap={1}
             sx={{
+              borderRadius:4,
               marginLeft: 1,
               border: 1,
               borderColor: "#25476A",
@@ -227,11 +232,11 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
           >
             {day.dayOfMonth}
             {reservationsForDay.length > 0 && (
-              <Typography>
-                Reservation IDs:{" "}
-                {reservationsForDay.map(
-                  (reservation) => reservation.reservation_id
-                ).join(", ")}
+              <Typography flexWrap={1}>
+                Reserved IDs:{" "}
+                {reservationsForDay
+                  .map((reservation) => reservation.reservation_id)
+                  .join(", ")}
               </Typography>
             )}
           </Grid>
@@ -270,11 +275,13 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
   };
 
   return (
+    <div>
     <Grid
       container
       spacing={1}
       m={1}
       sx={{
+        overflow: 'auto',
         width: "95%",
         height: "100%",
         position: "absolute",
@@ -300,7 +307,7 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
       >
         <CloseIcon width={150} />
       </IconButton>
-      <Grid item xs={10}>
+      <Grid item xs={9}>
         <Typography variant="h4">
           <Button onClick={handlePrevMonth}>
             <ArrowBackIcon />
@@ -332,7 +339,7 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
           </Button>
         </Typography>
       </Grid>
-      <Grid item xs={2}>
+      <Grid item xs={3}>
         <React.Fragment>
           <ButtonGroup
             variant="contained"
@@ -392,6 +399,8 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
             )}
           </Popper>
         </React.Fragment>
+
+        <Button onClick={handleOpenAddAppointment} sx={{marginLeft:2}}>Add Appointment</Button>
       </Grid>
 
       <Typography variant="h3" ml={2}>
@@ -455,8 +464,15 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
         </Box>
       </Modal>
 
-      <Modal open={openYearView} onClose={handleCloseYearView}>
-      <Box
+      
+
+      <Typography className="text-[3rem] font-bold">
+        ETO YUNG SEAT ID: {seat_id}
+      </Typography>
+      
+    </Grid>
+    <Modal open={openYearView} onClose={handleCloseYearView}>
+        <Box
           sx={{
             position: "absolute",
             top: "50%",
@@ -465,17 +481,30 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
             bgcolor: "white",
             p: 4,
           }}
-          
         >
-  <YearView />
-  </Box>
-</Modal>
+          <YearView />
+          
+        </Box>
+      </Modal>
 
-  
-      <Typography className="text-[3rem] font-bold">
-        ETO YUNG SEAT ID: {seat_id}
-      </Typography>
-    </Grid>
+      <Modal open={openAddAppointment} onClose={handleCloseAddAppointment}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            bgcolor: "white",
+            p: 4,
+            boxShadow: 24,
+            borderRadius: 5,
+          }}
+        >
+       
+          <AddAppointment/>
+        </Box>
+      </Modal>
+    </div>
   );
 };
 

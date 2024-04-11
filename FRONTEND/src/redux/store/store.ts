@@ -7,6 +7,7 @@ import { reservationReducer, reservationsReducer, reservationsDateReducer } from
 import { seatReducer } from "../state/seatState";
 import { seatReservedReducer } from "../state/seatReservedState";
 import  usersReducer  from "../state/usersState";
+import { reservationIdsSlice } from "../state/datesReservedState";
 
 const saga = createSagaMiddleware();
 export const store = configureStore({
@@ -28,6 +29,9 @@ export const store = configureStore({
     reservationReducer: reservationReducer,
     reservationsReducer: reservationsReducer,
     reservationsDateReducer: reservationsDateReducer,
+
+    //reservations state
+    // reservationIdsReducer: reservationIdsSlice.reducer,
 
     // add more reducers here
     
