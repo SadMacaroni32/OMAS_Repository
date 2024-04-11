@@ -73,7 +73,7 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
     setOpenYearView(false);
     setSelectedIndex(1);
   };
-
+//Jose Bayola
 
 
   const [openAddAppointment, setOpenAddAppointment] = useState(false);
