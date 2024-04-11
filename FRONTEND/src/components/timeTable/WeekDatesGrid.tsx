@@ -1,30 +1,34 @@
-import React, { useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Button, Box } from '@mui/material';
-import { NavigateNext, NavigateBefore } from '@mui/icons-material';
-import WeekDisplay from './WeekDisplay'; // Import WeekDisplay component
+import React, { useEffect, useState } from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  IconButton,
+  Button,
+  Box,
+} from "@mui/material";
+import { NavigateNext, NavigateBefore } from "@mui/icons-material";
+import WeekDisplay from "./WeekDisplay"; // Import WeekDisplay component
+import { useDispatch, useSelector } from "react-redux";
+import { fetchReservationsRequest } from "../../redux/state/reservationState";
 
-const timeSlots = [
-  { start: "06:00", end: "12:30" },
-  { start: "12:30", end: "19:00" }
-];
+const WeekDatesGrid = ({ startOfWeek, reserveSlot, seat_id }) => {
+  const [currentStartOfWeek, setCurrentStartOfWeek] = useState(
+    new Date(startOfWeek)
+  );
+  const reservations = useSelector((state) => state.reservationsReducer.reservations);
 
-// Function to convert time string to timestamp
-const convertToTimestamp = (timeString) => {
-  const [hours, minutes] = timeString.split(":");
-  const date = new Date();
-  date.setHours(parseInt(hours), parseInt(minutes), 0, 0);
-  return date.getTime(); // Returns the timestamp in milliseconds since Unix epoch
-};
+  // Dispatch action to fetch reservations when component mounts
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchReservationsRequest());
+  }, [dispatch]);
 
-const timeSlotTimestamps = timeSlots.map(slot => ({
-  start: convertToTimestamp(slot.start),
-  end: convertToTimestamp(slot.end)
-}));
-
-console.log(timeSlotTimestamps);
-
-const WeekDatesGrid = ({ startOfWeek, endOfWeek, reserveSlot }) => {
-  const [currentStartOfWeek, setCurrentStartOfWeek] = useState(startOfWeek);
+  console.log(reservations);
 
   // Function to handle moving to the next week
   const handleNextWeek = () => {
@@ -46,7 +50,10 @@ const WeekDatesGrid = ({ startOfWeek, endOfWeek, reserveSlot }) => {
     setCurrentStartOfWeek(previousWeekStart);
   };
 
-  const dates: Date[] = [];
+  const endOfWeek = new Date(currentStartOfWeek);
+  endOfWeek.setDate(endOfWeek.getDate() + 6); // Setting the end of the week to six days after the current start of the week
+
+  const dates = [];
   let currentDate = new Date(currentStartOfWeek);
 
   // Calculate the dates for the week
@@ -55,25 +62,13 @@ const WeekDatesGrid = ({ startOfWeek, endOfWeek, reserveSlot }) => {
     currentDate.setDate(currentDate.getDate() + 1);
   }
 
-  // State to track reservations
-  const [reservations, setReservations] = useState({});
 
-  // Function to handle reservation
-  const handleReservation = (date: { toLocaleDateString: (arg0: string, arg1: { month: string; day: string; year: string; }) => any; }, timeSlot: string) => {
-    const name = prompt('Enter your name:');
-    if (name) {
-      const reservationKey = `${date.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' })}-${timeSlot}`;
-      setReservations({ ...reservations, [reservationKey]: name });
-      reserveSlot(date.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' }), timeSlot, name);
-    }
-  };
-
+  
   return (
     <>
       {/* Pass currentStartOfWeek and endOfWeek to WeekDisplay */}
       <WeekDisplay startOfWeek={currentStartOfWeek} endOfWeek={endOfWeek} />
-
-      <Box style={{ marginBottom: '20px' }}>
+      <Box sx={{ marginBottom: "20px" }}>
         <IconButton onClick={handlePreviousWeek}>
           <NavigateBefore />
         </IconButton>
@@ -81,32 +76,56 @@ const WeekDatesGrid = ({ startOfWeek, endOfWeek, reserveSlot }) => {
           <NavigateNext />
         </IconButton>
       </Box>
+      Seat Number to {seat_id}
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
-            <TableRow sx={{ background: "#25476A" }}>
+            <TableRow sx={{ background: "#468faf" }}>
               <TableCell style={{ color: "white" }}>Date</TableCell>
               {dates.map((date, index) => (
-                <TableCell style={{ color: "white" }} key={index}>{getDayName(date)}, {date.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' })}</TableCell>
+                <TableCell style={{ color: "white" }} key={index}>
+                  {getDayName(date)},{" "}
+                  {date.toLocaleDateString("en-US", {
+                    month: "2-digit",
+                    day: "2-digit",
+                    year: "2-digit",
+                  })}
+                  <br />
+                  {reservations.map((reservation) => {
+                    const reservationDate = new Date(reservation.start_date);
+                    if (reservationDate.toDateString() === date.toDateString()) {
+                      return (
+                        <div key={reservation.reservation_id}>
+                          {reservationDate.toLocaleTimeString()}
+                        </div>
+                      );
+                    }
+                    return null;
+                  })}
+                </TableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {timeSlots.map((timeSlot, index) => (
-              <TableRow key={index}>
-                <TableCell>{`${timeSlot.start} - ${timeSlot.end}`}</TableCell> {/* Display time range */}
-                {dates.map((date, index) => {
-                  const reservationKey = `${date.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' })}-${timeSlot.start}-${timeSlot.end}`;
-                  return (
-                    <TableCell key={index}>
-                      {reservations[reservationKey] ? reservations[reservationKey] : (
-                        <Button onClick={() => handleReservation(date, timeSlot)} variant="outlined">
-                          Reserve
-                        </Button>
-                      )}
-                    </TableCell>
-                  );
-                })}
+            {reservations.map((reservation, resIndex) => (
+              <TableRow key={resIndex}>
+                <TableCell>{reservation.seat_id === seat_id ? `AM` : ""}</TableCell>
+                {dates.map((date, dateIndex) => (
+                  <TableCell key={dateIndex}>
+                    {reservation.seat_id === seat_id &&
+                      new Date(reservation.start_date).toLocaleDateString("en-US", {
+                        month: "2-digit",
+                        day: "2-digit",
+                        year: "2-digit",
+                      }) === date.toLocaleDateString("en-US", {
+                        month: "2-digit",
+                        day: "2-digit",
+                        year: "2-digit",
+                      })
+                        ? `Reservation ID: ${reservation.reservation_id}`
+                        : ""}
+                  </TableCell>
+                ))}
               </TableRow>
             ))}
           </TableBody>
@@ -115,8 +134,8 @@ const WeekDatesGrid = ({ startOfWeek, endOfWeek, reserveSlot }) => {
     </>
   );
 
-  function getDayName(date: Date) {
-    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Frid', 'Sat'];
+  function getDayName(date) {
+    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Frid", "Sat"];
     return days[date.getDay()];
   }
 };
