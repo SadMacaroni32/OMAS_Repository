@@ -4,20 +4,34 @@ import axios from "axios";
 import { getReservationsSuccess } from "../state/reservationState";
 
 // Fetch User List
-function* fetchResevations(): any {
+function* fetchReservations(): any {
   try {
-    const reservationValue = yield call(() =>
-      axios
-        .get("http://localhost:8000/OMAS_SEATS_RESERVATIONS")
-        .then((res) => res.data)
-    );
-    yield put(getReservationsSuccess(reservationValue));
+    // Get the token from localStorage
+    const token = localStorage.getItem("token");
+
+    // Check if the token exists
+    if (token) {
+      // Fetch seats data using the token in Authorization header
+      const reservationValue = yield call(() =>
+        axios
+          .get("http://localhost:8080/api/reservations/all", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => res.data)
+      );
+      yield put(getReservationsSuccess(reservationValue));
+    } else {
+      // Handle case where token is not found in localStorage
+      console.error("Token not found in localStorage");
+    }
   } catch (error) {
-    // Handle error if needed
-    console.error("Error fetching user list:", error);
+    // Handle error
+    console.error("Error fetching reservations:", error);
   }
 }
 
 export function* reservationSaga() {
-  yield takeEvery("reservation/getReservationsFetch", fetchResevations);
+  yield takeEvery("reservation/getReservationsFetch", fetchReservations);
 }

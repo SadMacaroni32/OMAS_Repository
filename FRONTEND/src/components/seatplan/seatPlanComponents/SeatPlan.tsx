@@ -28,6 +28,8 @@ const SeatPlan: React.FC = () => {
     (state: RootState) => state.seatPlanReducer.seatPlanValue
   );
 
+
+
   //get isLoading state
   const isLoading = useSelector(
     (state: RootState) => state.seatPlanReducer.isLoading
@@ -38,6 +40,7 @@ const SeatPlan: React.FC = () => {
     (state: RootState) => state.reservationReducer.reservationValue
   );
 
+  console.log(reservationsData);
   useEffect(() => {
     dispatch(getUsersFetch());
     dispatch(getSeatsFetch());
@@ -173,6 +176,7 @@ const SeatPlan: React.FC = () => {
     },
     // Add more objects for other columns as needed
   ];
+
   return (
     <div className="w-full h-[100vh] flex justify-center">
       {/* Render loading indicator while loading */}
