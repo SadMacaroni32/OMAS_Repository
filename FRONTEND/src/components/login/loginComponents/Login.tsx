@@ -8,12 +8,11 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 // import axios from "axios";
 
-
 const Login: React.FC = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-   const [loginError, setLoginError] = useState(false);
+  const [loginError, setLoginError] = useState(false);
   useEffect(() => {
     dispatch(getUsersFetch());
   }, [dispatch]);
@@ -66,8 +65,6 @@ const Login: React.FC = () => {
       setLoginError(true);
     }
   };
- 
-
 
   return (
     <div className="rounded-md shadow-sm drop-shadow-lg border-[.1rem] h-[20rem] w-full  lg:h-[30rem] flex flex-col items-center justify-center">
@@ -104,10 +101,8 @@ const Login: React.FC = () => {
           Login
         </Button>
       </form>
-     
     </div>
   );
 };
 
 export default Login;
-

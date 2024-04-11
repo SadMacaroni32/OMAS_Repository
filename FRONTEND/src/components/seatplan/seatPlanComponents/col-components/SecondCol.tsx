@@ -1,5 +1,3 @@
-
-
 const SecondCol: React.FC = ({
   seatPlan,
   getUserInfo,
@@ -13,7 +11,7 @@ const SecondCol: React.FC = ({
     <div className="flex gap-x-1">
       <div className="flex flex-col gap-y-1">
         {seatPlan.slice(9, 12).map((sp, idx) => {
-          const { seat_id, dept_name } = sp;
+          const { seat_id, dept_name, seat_status } = sp;
           // Find reservation for this seat for today AM
           const reservationAM: any = reservationsAM.find(
             (res: any) => res.seat_id === seat_id
@@ -86,7 +84,7 @@ const SecondCol: React.FC = ({
       <div className="border-[.2rem] border-black h-[43.5rem]"></div>
       <div className="flex flex-col gap-y-1">
         {seatPlan.slice(12, 19).map((sp, idx) => {
-          const { seat_id, dept_name } = sp;
+          const { seat_id, dept_name, seat_status } = sp;
           // Find reservation for this seat for today AM
           const reservationAM: any = reservationsAM.find(
             (res: any) => res.seat_id === seat_id
@@ -160,4 +158,4 @@ const SecondCol: React.FC = ({
   );
 };
 
-export default SecondCol
+export default SecondCol;

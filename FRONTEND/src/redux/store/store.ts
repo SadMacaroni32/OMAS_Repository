@@ -11,6 +11,9 @@ import  usersReducer  from "../state/usersState";
 const saga = createSagaMiddleware();
 export const store = configureStore({
   reducer: {
+
+    
+
     //user state
     userReducer: userReducer,
     InputReducer: InputReducer,
