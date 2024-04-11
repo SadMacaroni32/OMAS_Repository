@@ -5,14 +5,16 @@ import { useEffect } from "react";
 import { getUsersFetch, setUserField } from "../../../redux/state/userState";
 
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 // import axios from "axios";
 
-interface dataFormat {
-  emp_id: number;
-}
+
 const Login: React.FC = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loginError, setLoginError] = useState(false);
+
   useEffect(() => {
     dispatch(getUsersFetch());
   }, [dispatch]);
@@ -27,19 +29,28 @@ const Login: React.FC = () => {
     dispatch(setUserField({ ...userInput, [name]: value }));
   };
 
-  const handleLogin = (e: { preventDefault: () => void; }) => {
-    // Check if the entered username and password match any user data from the API
-    e.preventDefault();
-    const matchedUser = userData.find(
-      (user: any) => user.username === username && user.password === password
-    );
 
-    // If a user with matching credentials is found, log in
-    if (matchedUser) {
-      console.log("Successfully logged in!");
-      navigate(`/dashboard/${matchedUser.emp_id}`, { state: { matchedUser } });
-    } else {
-      console.log("Invalid username or password");
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/auth/authenticate",
+        {
+          username,
+          password,
+        }
+      );
+      // Assuming the response contains some user data or token upon successful login
+      const { data } = response;
+      console.log("Successfully logged in:", data.token);
+      // Save token to localStorage
+      localStorage.setItem("token", data.token);
+      setIsLoggedIn(true);
+      navigate(`/dashboard/${data.emp_id}`, { state: { userData: data } });
+    } catch (error) {
+      console.error("Login failed:", error.message);
+      setLoginError(true);
     }
   };
 
@@ -78,10 +89,8 @@ const Login: React.FC = () => {
           Login
         </Button>
       </form>
-     
     </div>
   );
 };
 
 export default Login;
-
