@@ -1,8 +1,8 @@
-import DashboardUserProfile from "./components/DashboardUserProfile";
-import DashboardStatusBoxes from "./components/DashboardStatusBoxes";
-import DashboardSeatCondition from "./components/DashboardSeatCondition";
-import DashboartRecentComments from "./components/RecentComments/DashboardRecentComments";
-import DashboardSummary from "./components/DashboardSummary";
+import DashboardUserProfile from "./dashboardComponents/DashboardUserProfile";
+import DashboardStatusBoxes from "./dashboardComponents/DashboardStatusBoxes";
+import DashboardSeatCondition from "./dashboardComponents/DashboardSeatCondition";
+import DashboartRecentComments from "./dashboardComponents/DashboardRecentComments";
+import DashboardSummary from "./dashboardComponents/DashboardSummary";
 
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";

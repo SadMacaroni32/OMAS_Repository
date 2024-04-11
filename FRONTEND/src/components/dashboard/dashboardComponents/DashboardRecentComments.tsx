@@ -10,8 +10,8 @@ import {
 } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../../redux/store/store";
-import { getSeatsReservedFetch } from "../../../../redux/state/seatReservedState";
+import { RootState } from "../../../redux/store/store";
+import { getSeatsReservedFetch } from "../../../redux/state/seatReservedState";
 
 interface dataFormat {
   reservation_id: number;
