@@ -5,6 +5,7 @@ const reservationSlice = createSlice({
   name: "reservation",
   initialState: {
     reservationValue: [],
+    reservationWithUserInfo: [],
     isLoading: false,
   },
   reducers: {
@@ -15,11 +16,22 @@ const reservationSlice = createSlice({
       state.reservationValue = action.payload;
       state.isLoading = false;
     },
+    getReservationsWithUserInfoFetch: (state) => {
+      state.isLoading = true;
+    },
+    getReservationsWithUserInfoSuccess: (state, action) => {
+      state.reservationWithUserInfo = action.payload;
+      state.isLoading = false;
+    },
   },
 });
 
-export const { getReservationsFetch, getReservationsSuccess } =
-  reservationSlice.actions;
+export const {
+  getReservationsFetch,
+  getReservationsSuccess,
+  getReservationsWithUserInfoFetch,
+  getReservationsWithUserInfoSuccess,
+} = reservationSlice.actions;
 export const reservationReducer = reservationSlice.reducer;
 
 
