@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
 import { useEffect, useState } from "react";
 import { getSeatsFetch } from "../../../redux/state/seatPlanState";
-import { getReservationsFetch } from "../../../redux/state/reservationState";
+import { getReservationsFetch, getReservationsWithUserInfoFetch } from "../../../redux/state/reservationState";
 import TimeTablePage from "../../../pages/TimeTablePage";
 import { getUsersFetch } from "../../../redux/state/userState";
 import FirstCol from "./col-components/FirstCol";
@@ -21,14 +21,14 @@ const SeatPlan: React.FC = () => {
   const dispatch = useDispatch();
 
   //get users for seat reservation
-  const userData = useSelector((state: RootState) => state.userReducer.users);
+  const userData = useSelector((state: RootState) => state.reservationReducer.reservationWithUserInfo);
 
   //get seatPlan data from state
   const seatPlan = useSelector(
     (state: RootState) => state.seatPlanReducer.seatPlanValue
   );
 
-
+ 
 
   //get isLoading state
   const isLoading = useSelector(
@@ -40,11 +40,12 @@ const SeatPlan: React.FC = () => {
     (state: RootState) => state.reservationReducer.reservationValue
   );
 
-  console.log(reservationsData);
+
   useEffect(() => {
     dispatch(getUsersFetch());
     dispatch(getSeatsFetch());
     dispatch(getReservationsFetch());
+    dispatch(getReservationsWithUserInfoFetch());
   }, [dispatch]);
 
   const [seatId, setSeatId] = useState(null);
@@ -64,12 +65,13 @@ const SeatPlan: React.FC = () => {
   // Fetch user information using emp_id
   const getUserInfo = (empId) => {
     const user = userData.find((user) => user.emp_id === empId);
+  
     return user
       ? {
-          deptName: user.dept_name,
-          fname: user.fname,
-          lname: user.lname,
-          position: user.position,
+          client: user.client_sn,
+          fname: user.first_name,
+          lname: user.last_name,
+          position: user.position_sn,
         }
       : null;
   };
@@ -176,6 +178,8 @@ const SeatPlan: React.FC = () => {
     },
     // Add more objects for other columns as needed
   ];
+
+  console.log(userData);
 
   return (
     <div className="w-full h-[100vh] flex justify-center">

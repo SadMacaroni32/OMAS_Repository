@@ -75,7 +75,7 @@ const FourthCol: React.FC = ({
                 )}
               </span>
               <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
-                {dept_name}
+                {userInfoToDisplay ? userInfoToDisplay.client : null}
               </span>
             </div>
           );
@@ -148,7 +148,7 @@ const FourthCol: React.FC = ({
                 )}
               </span>
               <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
-                {dept_name}
+                {userInfoToDisplay ? userInfoToDisplay.client : null}
               </span>
             </div>
           );
