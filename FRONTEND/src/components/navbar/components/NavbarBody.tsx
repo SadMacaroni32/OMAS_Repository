@@ -55,6 +55,8 @@ export default function navbarBody() {
     dispatch(getUsersFetch());
   }, [dispatch]); 
 
+  console.log("test", user)
+
   const pageDashboard = () => {
     navigate(-1);
   };

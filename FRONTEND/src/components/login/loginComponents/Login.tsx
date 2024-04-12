@@ -1,7 +1,7 @@
 import { Button, TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getUsersFetch, setUserField } from "../../../redux/state/userState";
 
 import { useNavigate } from "react-router-dom";
@@ -19,7 +19,7 @@ const Login: React.FC = () => {
     dispatch(getUsersFetch());
   }, [dispatch]);
 
-  const userData: dataFormat [] = useSelector((state: RootState) => state.userReducer.users);
+  const userData = useSelector((state: RootState) => state.userReducer.users);
   const userInput = useSelector((state: RootState) => state.InputReducer);
 
   const { username, password } = userInput;
