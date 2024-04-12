@@ -1,5 +1,3 @@
-
-
 const FirstCol: React.FC = ({
   seatPlan,
   getUserInfo,
@@ -7,7 +5,7 @@ const FirstCol: React.FC = ({
   reservationsAM,
   reservationsPM,
   setShowTimeTablePage,
-  setSeatId
+  setSeatId,
 }) => {
   return (
     <div className="flex gap-x-1 h-[90%]">
@@ -80,7 +78,7 @@ const FirstCol: React.FC = ({
                   )}
                 </span>
                 <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
-                  {dept_name}
+                  {userInfoToDisplay ? userInfoToDisplay.client : null}
                 </span>
               </div>
             );
@@ -152,7 +150,7 @@ const FirstCol: React.FC = ({
                   )}
                 </span>
                 <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
-                  {dept_name}
+                  {userInfoToDisplay ? userInfoToDisplay.client : null}
                 </span>
               </div>
             );
@@ -223,7 +221,7 @@ const FirstCol: React.FC = ({
                   )}
                 </span>
                 <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
-                  {dept_name}
+                  {userInfoToDisplay ? userInfoToDisplay.client : null}
                 </span>
               </div>
             );
@@ -297,7 +295,7 @@ const FirstCol: React.FC = ({
                 )}
               </span>
               <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
-                {dept_name}
+                {userInfoToDisplay ? userInfoToDisplay.client : null}
               </span>
             </div>
           );
@@ -307,4 +305,4 @@ const FirstCol: React.FC = ({
   );
 };
 
-export default FirstCol
+export default FirstCol;

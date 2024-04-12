@@ -1,5 +1,3 @@
-
-
 const FifthCol: React.FC = ({
   seatPlan,
   getUserInfo,
@@ -77,7 +75,7 @@ const FifthCol: React.FC = ({
                 )}
               </span>
               <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
-                {dept_name}
+                {userInfoToDisplay ? userInfoToDisplay.client : null}
               </span>
             </div>
           );
@@ -150,7 +148,7 @@ const FifthCol: React.FC = ({
                 )}
               </span>
               <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
-                {dept_name}
+                {userInfoToDisplay ? userInfoToDisplay.client : null}
               </span>
             </div>
           );
@@ -160,4 +158,4 @@ const FifthCol: React.FC = ({
   );
 };
 
-export default FifthCol
+export default FifthCol;
