@@ -1,5 +1,3 @@
-
-
 const FirstCol: React.FC = ({
   seatPlan,
   getUserInfo,
@@ -7,14 +5,14 @@ const FirstCol: React.FC = ({
   reservationsAM,
   reservationsPM,
   setShowTimeTablePage,
-  setSeatId
+  setSeatId,
 }) => {
   return (
     <div className="flex gap-x-1 h-[90%]">
       <div className="flex flex-col justify-between ">
         <div className="flex flex-col gap-y-1">
           {seatPlan.slice(0, 3).map((sp, idx) => {
-            const { seat_id, dept_name } = sp;
+            const { seat_id, dept_name, seat_status } = sp;
             // Find reservation for this seat for today AM
             const reservationAM: any = reservationsAM.find(
               (res: any) => res.seat_id === seat_id
@@ -80,7 +78,7 @@ const FirstCol: React.FC = ({
                   )}
                 </span>
                 <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
-                  {dept_name}
+                  {userInfoToDisplay ? userInfoToDisplay.client : null}
                 </span>
               </div>
             );
@@ -88,7 +86,7 @@ const FirstCol: React.FC = ({
         </div>
         <div className="flex flex-col gap-y-1">
           {seatPlan.slice(3, 4).map((sp, idx) => {
-            const { seat_id, dept_name } = sp;
+            const { seat_id, dept_name, seat_status } = sp;
             // Find reservation for this seat for today AM
             const reservationAM: any = reservationsAM.find(
               (res: any) => res.seat_id === seat_id
@@ -152,14 +150,14 @@ const FirstCol: React.FC = ({
                   )}
                 </span>
                 <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
-                  {dept_name}
+                  {userInfoToDisplay ? userInfoToDisplay.client : null}
                 </span>
               </div>
             );
           })}
 
           {seatPlan.slice(4, 6).map((sp, idx) => {
-            const { seat_id, dept_name } = sp;
+            const { seat_id, dept_name, seat_status } = sp;
             // Find reservation for this seat for today AM
             const reservationAM: any = reservationsAM.find(
               (res: any) => res.seat_id === seat_id
@@ -223,7 +221,7 @@ const FirstCol: React.FC = ({
                   )}
                 </span>
                 <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
-                  {dept_name}
+                  {userInfoToDisplay ? userInfoToDisplay.client : null}
                 </span>
               </div>
             );
@@ -233,7 +231,7 @@ const FirstCol: React.FC = ({
       <div className="border-[.2rem] border-black h-[18.5rem]"></div>
       <div className="flex flex-col gap-y-1">
         {seatPlan.slice(6, 9).map((sp, idx) => {
-          const { seat_id, dept_name } = sp;
+          const { seat_id, dept_name, seat_status } = sp;
           // Find reservation for this seat for today AM
           const reservationAM: any = reservationsAM.find(
             (res: any) => res.seat_id === seat_id
@@ -297,7 +295,7 @@ const FirstCol: React.FC = ({
                 )}
               </span>
               <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
-                {dept_name}
+                {userInfoToDisplay ? userInfoToDisplay.client : null}
               </span>
             </div>
           );
@@ -307,4 +305,4 @@ const FirstCol: React.FC = ({
   );
 };
 
-export default FirstCol
+export default FirstCol;

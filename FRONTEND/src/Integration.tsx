@@ -4,6 +4,8 @@ import Dashboard from "./pages/DashboardPage";
 import SeatingPlanPage from "./pages/SeatingPlanPage";
 import TimeTablePage from "./pages/TimeTablePage";
 import Navbar from "../src/components/navbar/Navbar";
+import ViewReservation from "../src/components/timeTable/ViewReservation";
+import testPage from "../src/components/navbar/components/TestFile_Nav";
 
 export default function App() {
   const location = useLocation();
@@ -12,7 +14,8 @@ export default function App() {
   const navbarVisiblePaths = [
     "/dashboard", 
     "/seatplan", 
-    "/timetable"
+    "/timetable",
+    "/viewreservation"
   ];
   const showNavbar = navbarVisiblePaths.some(path => location.pathname.startsWith(path));
 
@@ -23,9 +26,11 @@ export default function App() {
         <Route path="/" element={<Navigate to={"/landingpage"} />} />
         <Route path="/landingpage" element={<LandingPage />} />
         <Route path="/dashboard/:userId" element={<Dashboard />} />
+        <Route path="/viewreservation/*" element={<ViewReservation />} />
         <Route path="/seatplan" element={<SeatingPlanPage />} />
-        <Route path="/timetable/*" element={<TimeTablePage/>}/>
+        <Route path="/timetable/*" element={<TimeTablePage seat_id={undefined} setShowTimeTablePage={undefined}/>}/>
         <Route path="*" element={<Navigate to={"/landingpage"} />} />
+        <Route path="/testpage/:userId" element={<testPage />} />
       </Routes>
     </>
   );

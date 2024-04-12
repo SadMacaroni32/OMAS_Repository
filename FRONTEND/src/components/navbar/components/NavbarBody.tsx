@@ -63,6 +63,10 @@ export default function navbarBody() {
     navigate(`/seatplan`);
   };
 
+  const pageViewAppointments = () => {
+    navigate(`/viewreservation`);
+  };
+
   const pageLogout = () => {
     navigate(`/landingpage`);
     localStorage.removeItem('tableState');
@@ -144,6 +148,35 @@ export default function navbarBody() {
             LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }} />
+          {/* Dashboard */}
+          <MenuItem
+                onClick={() => {
+                  handleCloseUserMenu();
+                  pageDashboard();
+                }}
+              >
+                <Typography textAlign="center">Dashboard</Typography>
+              </MenuItem>
+              {/* Seatplan */}
+              <MenuItem
+                onClick={() => {
+                  handleCloseUserMenu();
+                  pageSeatplan();
+                }}
+              >
+                <Typography textAlign="center">View Seatplan</Typography>
+              </MenuItem>
+                {/* View Appointments */}
+              <MenuItem
+                onClick={() => {
+                  handleCloseUserMenu();
+                  pageViewAppointments();
+                }}
+              >
+                <Typography textAlign="center">View Appointments</Typography>
+              </MenuItem>
+
+              {/* COLLAPSE MENU */}
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -166,24 +199,6 @@ export default function navbarBody() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {/* Dashboard */}
-              <MenuItem
-                onClick={() => {
-                  handleCloseUserMenu();
-                  pageDashboard();
-                }}
-              >
-                <Typography textAlign="center">Dashboard</Typography>
-              </MenuItem>
-                {/* Seatplan */}
-              <MenuItem
-                onClick={() => {
-                  handleCloseUserMenu();
-                  pageSeatplan();
-                }}
-              >
-                <Typography textAlign="center">View Seatplan</Typography>
-              </MenuItem>
                 {/* Logout */}
               <MenuItem
                 onClick={() => {

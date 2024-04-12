@@ -1,31 +1,35 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  users: [],
-  isLoading: false,
-  error: "",
-};
-
-const userSlice = createSlice({
+const dashUserSlice = createSlice({
   name: "users",
-  initialState,
+  initialState: {
+    dashUser: [],
+    dashUserInfo: {
+      emp_id: "",
+      fname: "",
+      lname: "",
+      position_name: "",
+    },
+    isLoading:false,
+    error: "",
+  },
   reducers: {
-    getUsersFetch(state) {
+    getDashUsersFetch(state) {
       state.isLoading = true;
     },
-    getUsersSuccess(state, action) {
-      state.users = action.payload;
+    getDashUsersSuccess(state, action) {
+      state.dashUser = action.payload;
       state.isLoading = false;
       state.error = "";
     },
-    getUsersFailure(state, action) {
+    getDashUsersFailure(state, action) {
       state.isLoading = false;
       state.error = action.payload;
     },
   },
 });
 
-export const { getUsersFetch, getUsersSuccess, getUsersFailure } = userSlice.actions;
+export const { getDashUsersFetch, getDashUsersSuccess, getDashUsersFailure } = dashUserSlice.actions;
 
-export default userSlice.reducer;
+export const dashUserReducer = dashUserSlice.reducer;

@@ -4,10 +4,13 @@ import { loginSaga } from "./loginSaga";
 import { seatPlanSaga } from "./seatPlanSaga";
 import { getSeatsSaga } from "./seatSaga";
 import { getReservedSeatsSaga } from "./seatReservedSaga";
-import { reservationSaga } from "./reservationSaga";
+import { reservationSaga, reservationWithUserInfoSaga } from "./reservationSaga";
 import  {reservationsSaga, fetchReservationsDate, reservationsSagaDate}  from "./reservationsSaga"
-import { watchFetchUsers } from "./userSaga";
+
 // import { reservationIdsSaga } from "./datesReservedSaga";
+
+import { getUserIdSaga, watchFetchUsers } from "./userSaga";
+
 
 export default function* rootSaga() {
   yield all([
@@ -20,6 +23,12 @@ export default function* rootSaga() {
     watchFetchUsers(),
     fetchReservationsDate(),
     reservationsSagaDate(),
-    // reservationIdsSaga(),
+
+
+    reservationWithUserInfoSaga(),
+
+    getUserIdSaga(),
+
+
   ]);
 }
