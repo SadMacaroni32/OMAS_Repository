@@ -2,6 +2,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 import { fetchReservationsSuccess, fetchReservationsFailure } from './../state/reservationState';
+import { fetchReservationIdsFailure, fetchReservationIdsSuccess } from '../state/datesReservedState';
 
 function* fetchReservationsSaga(): any {
   try {
@@ -33,5 +34,6 @@ export function* fetchReservationsDate(): any {
 export function* reservationsSagaDate() {
   yield takeLatest('FETCH_RESERVATIONS', fetchReservationsDate);
 }
+
 
 
