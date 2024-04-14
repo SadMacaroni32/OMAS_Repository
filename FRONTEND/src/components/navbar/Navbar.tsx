@@ -10,7 +10,7 @@ interface data {
     emp_id: number;
     fname: string;
 }
-export default function navbar() {
+export default function Navbar() {
     const dispatch = useDispatch();
     const location = useLocation();
     const id = location.state;

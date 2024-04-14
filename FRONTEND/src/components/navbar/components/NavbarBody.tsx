@@ -24,7 +24,7 @@ interface dataFormat {
   emp_id: number;
 }
 
-export default function navbarBody() {
+export default function NavbarBody() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -54,6 +54,8 @@ export default function navbarBody() {
   useEffect(() => {
     dispatch(getUsersFetch());
   }, [dispatch]); 
+
+  console.log("test", user)
 
   const pageDashboard = () => {
     navigate(-1);

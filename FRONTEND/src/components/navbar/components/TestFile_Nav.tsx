@@ -1,6 +1,6 @@
 
 
-export default function testFile_Nav() {
+export default function TestFile_Nav() {
     return(<>
     TEST PAGE
     </>)

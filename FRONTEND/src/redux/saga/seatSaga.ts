@@ -4,18 +4,29 @@ import { getSeatsSuccess } from "../state/seatState";
 
 // Fetch Seats
 function* fetchSeats(): any {
-    try {
+  try {
+    const token = localStorage.getItem("token");
+
+    if (token) {
       const seats = yield call(() =>
-        axios.get("http://localhost:8000/OMAS_SEATS").then((res) => res.data)
+        axios
+          .get("http://localhost:8080/api/seats/all", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => res.data)
       );
       yield put(getSeatsSuccess(seats));
-    } catch (error) {
-      // Handle error if needed
-      console.error("Error fetching seats:", error);
+    } else {
+      console.error("Token not found in localStorage");
     }
+  } catch (error) {
+    // Handle error if needed
+    console.error("Error fetching seats:", error);
   }
-  
-  export function* getSeatsSaga() {
-    yield takeEvery("seats/getSeatsFetch", fetchSeats);
-  }
+}
 
+export function* getSeatsSaga() {
+  yield takeEvery("seats/getSeatsFetch", fetchSeats);
+}
