@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchReservationsRequest } from './../../redux/state/reservationState';
-import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField, IconButton } from '@mui/material';
+import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField, IconButton, InputAdornment } from '@mui/material';
 import { RootState } from '../../redux/store/store';
 import { getUsersFetch, getUsersSuccess } from '../../redux/state/userState';
 import SearchIcon from '@mui/icons-material/Search';
@@ -26,10 +26,6 @@ const ReservationList = () => {
     )
   : reservations;
 
-  const handleSearch = () => {
-    // Implement your search logic here
-  };
-
   return (
     <Box height="500px" width="100vh" overflow="auto">
       <Box display="flex" justifyContent="flex-end" alignItems="center" mb={2}>
@@ -39,16 +35,22 @@ const ReservationList = () => {
           size="small"
           value={searchQuery}
           onChange={(e: { target: { value: any; }; }) => setSearchQuery(e.target.value)}
-          style={{ marginRight: '8px' }}
+          style={{ marginRight: '8px', marginTop: 6}}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
         />
-        <IconButton onClick={handleSearch} aria-label="search">
-          <SearchIcon />
-        </IconButton>
+
+      
       </Box>
       <TableContainer component={Paper}>
   <Table aria-label="reservations table">
     <TableHead >
-      <TableRow sx={{ background: "#468faf" ,border:1}}> {/* Set border color */}
+      <TableRow sx={{ background: "#468faf"}}> {/* Set border color */}
         <TableCell sx={{color:"white"}}>Reservation ID</TableCell>
         <TableCell sx={{color:"white"}}>Name</TableCell>
         <TableCell sx={{color:"white"}}>Seat Number</TableCell>
@@ -60,16 +62,16 @@ const ReservationList = () => {
     <TableBody >
       {filteredReservations.map((reservation: { reservation_id: any; emp_id: any; seat_id: any; project_id: any; start_date: any; end_date: any; }) => (
         <TableRow key={reservation.reservation_id} >
-          <TableCell sx={{ border: "1px solid #25476a" }}>{reservation.reservation_id}</TableCell> {/* Set border color */}
-          <TableCell sx={{ border: "1px solid #25476a" }}>
+          <TableCell >{reservation.reservation_id}</TableCell> {/* Set border color */}
+          <TableCell >
             {users.find(user => user.emp_id === reservation.emp_id)?.fname || 'Unknown User'}
             {' '}
             {users.find(user => user.emp_id === reservation.emp_id)?.lname}
           </TableCell>
-          <TableCell sx={{ border: "1px solid #25476a" }}>{reservation.seat_id}</TableCell> {/* Set border color */}
-          <TableCell sx={{ border: "1px solid #25476a" }}>{reservation.project_id}</TableCell> {/* Set border color */}
-          <TableCell sx={{ border: "1px solid #25476a" }}>{reservation.start_date}</TableCell> {/* Set border color */}
-          <TableCell sx={{ border: "1px solid #25476a" }}>{reservation.end_date}</TableCell> {/* Set border color */}
+          <TableCell >{reservation.seat_id}</TableCell> {/* Set border color */}
+          <TableCell >{reservation.project_id}</TableCell> {/* Set border color */}
+          <TableCell >{reservation.start_date}</TableCell> {/* Set border color */}
+          <TableCell >{reservation.end_date}</TableCell> {/* Set border color */}
         </TableRow>
       ))}
     </TableBody>

@@ -6,7 +6,12 @@ import { seatPlanReducer } from "../state/seatPlanState";
 import { reservationReducer, reservationsReducer, reservationsDateReducer } from "../state/reservationState";
 import { seatReducer } from "../state/seatState";
 import { seatReservedReducer } from "../state/seatReservedState";
-import { dashUserReducer } from "../state/dashUserState";
+
+import  usersReducer  from "../state/usersState";
+import { reservationIdsSlice } from "../state/datesReservedState";
+
+import { dashUserReducer } from "../state/usersState";
+
 
 
 const saga = createSagaMiddleware();
@@ -32,6 +37,9 @@ export const store = configureStore({
     reservationReducer: reservationReducer,
     reservationsReducer: reservationsReducer,
     reservationsDateReducer: reservationsDateReducer,
+
+    //reservations state
+    // reservationIdsReducer: reservationIdsSlice.reducer,
 
     // add more reducers here
     
