@@ -6,7 +6,7 @@ import { seatPlanReducer } from "../state/seatPlanState";
 import { reservationReducer, reservationsReducer, reservationsDateReducer } from "../state/reservationState";
 import { seatReducer } from "../state/seatState";
 import { seatReservedReducer } from "../state/seatReservedState";
-import { dashUserReducer } from "../state/usersState";
+import { dashUserReducer } from "../state/dashUserState";
 
 
 const saga = createSagaMiddleware();

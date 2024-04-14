@@ -3,7 +3,6 @@ import { call, put, takeEvery } from "redux-saga/effects";
 import axios from "axios";
 import { getSeatsSuccess } from "../state/seatPlanState";
 
-
 // Fetch Seats
 function* fetchSeats(): any {
   try {
@@ -36,8 +35,3 @@ function* fetchSeats(): any {
 export function* seatPlanSaga() {
   yield takeEvery("seatPlan/getSeatsFetch", fetchSeats);
 }
-
-
-
-
-

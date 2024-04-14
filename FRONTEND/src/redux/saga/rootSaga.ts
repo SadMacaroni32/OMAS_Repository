@@ -20,7 +20,7 @@ export default function* rootSaga() {
     fetchReservationsDate(),
     reservationsSagaDate(),
 
-    reservationWithUserInfoSaga()
+    reservationWithUserInfoSaga(),
 
     getUserIdSaga(),
 

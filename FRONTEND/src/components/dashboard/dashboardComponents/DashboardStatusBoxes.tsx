@@ -17,7 +17,7 @@ interface dataFormat {
   seatData: any;
   seatReservedData: any;
 }
-export default function dashboardStatusBoxed() {
+export default function DashboardStatusBoxed() {
   const shadowStyle = { boxShadow: "0px 4px 10px #25476A" };
   const iconStyle = { width: "2.5vw", height: "2.5vw", color: "#25476A" };
   const paperStyle = { width: "100%", height: "10.5vw" };

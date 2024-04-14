@@ -12,9 +12,9 @@ import { useLocation, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 interface dataFormat {
-  fname: string;
-  lname: string;
-  position: string | number;
+  username: string;
+  status_code: string;
+  position_id: string | number;
   emp_id: any;
 }
 
@@ -39,12 +39,12 @@ export default function DashboardUserProfile() {
     }
   }, [userData, userId]);
 
-  const { fname, lname, position, emp_id } = dataState ?? {};
+  const { username, status_code, position_id, emp_id } = dataState ?? {};
 
   {
     /* FOR CHECKING API DATA CONSOLE */
   }
-  // console.log([dataState]);
+   console.log("User Profile", [dataState]);
 
   return (
     <Paper elevation={6} sx={{ m: 1, ml: 1, ...shadowStyle }}>
@@ -64,13 +64,13 @@ export default function DashboardUserProfile() {
                 component="div"
                 sx={{ fontWeight: "bold", fontSize: "1.5vw" }}
               >
-                {fname} {lname}
+                {username} {status_code}
               </Typography>
               <Typography
                 variant="body2"
                 sx={{ color: "#25476A", fontWeight: "bold", fontSize: "1.2vw" }}
               >
-                {position}
+                {position_id}
               </Typography>
             </CardContent>
           )}

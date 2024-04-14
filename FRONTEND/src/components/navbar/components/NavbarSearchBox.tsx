@@ -43,7 +43,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function navbarSearchBox() {
+export default function NavbarSearchBox() {
   React.useState<null | HTMLElement>(null);
 
   return (

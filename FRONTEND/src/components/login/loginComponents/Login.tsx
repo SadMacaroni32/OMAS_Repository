@@ -31,7 +31,7 @@ const Login: React.FC = () => {
 
 
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e) => { 
     e.preventDefault();
     try {
       const response = await axios.post(
@@ -47,13 +47,14 @@ const Login: React.FC = () => {
       // Save token to localStorage
       localStorage.setItem("token", data.token);
       setIsLoggedIn(true);
-      navigate(`/dashboard/${data.emp_id}`, { state: { userData: data } });
+      navigate(`/dashboard/${userData.emp_id}`, { state: { userData: data } });
     } catch (error) {
       console.error("Login failed:", error.message);
       setLoginError(true);
     }
   };
 
+console.log("login data", userData);
   return (
     <div className="rounded-md shadow-sm drop-shadow-lg border-[.1rem] h-[20rem] w-full  lg:h-[30rem] flex flex-col items-center justify-center">
       <div className="w-full text-[2rem] font-bold lg:h-[10rem] flex items-center justify-center">
