@@ -90,18 +90,7 @@ const WeekDatesGrid = ({ startOfWeek, reserveSlot, seat_id }) => {
                     day: "2-digit",
                     year: "2-digit",
                   })}
-                  <br />
-                  {reservations.map((reservation) => {
-                    const reservationDate = new Date(reservation.start_date);
-                    if (reservationDate.toDateString() === date.toDateString()) {
-                      return (
-                        <div key={reservation.reservation_id}>
-                          {reservationDate.toLocaleTimeString()}
-                        </div>
-                      );
-                    }
-                    return null;
-                  })}
+                  
                 </TableCell>
               ))}
             </TableRow>
