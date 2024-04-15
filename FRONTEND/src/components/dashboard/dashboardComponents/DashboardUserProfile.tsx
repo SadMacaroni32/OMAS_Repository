@@ -25,7 +25,7 @@ export default function DashboardUserProfile() {
   {
     /* FOR CHECKING API DATA CONSOLE */
   }
-   console.log("User Profile", userData.message.status_code);
+  // console.log("User Profile", username + status_code + position_id + emp_id);
 
   return (
     <Paper elevation={6} sx={{ m: 1, ml: 1, ...shadowStyle }}>

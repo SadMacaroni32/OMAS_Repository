@@ -179,7 +179,7 @@ const SeatPlan: React.FC = () => {
     // Add more objects for other columns as needed
   ];
 
-  console.log(userData);
+  console.log("Seat Plan", userData);
 
   return (
     <div className="w-full h-[100vh] flex justify-center">
