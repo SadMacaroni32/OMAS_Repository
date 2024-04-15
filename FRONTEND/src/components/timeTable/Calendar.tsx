@@ -56,10 +56,13 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
   // Dispatch action to fetch reservations when component mounts
   const dispatch = useDispatch();
   useEffect(() => {
+    console.log("Dispatching fetchReservationsRequest");
     dispatch(fetchReservationsRequest());
   }, [dispatch]);
 
-  console.log(reservations);
+  console.log("mga reserved",(reservations));
+
+  console.log("Redux State:", useSelector((state) => state.reservationsReducer));
 
   const [openList, setOpenList] = useState(false);
   const handleOpenList = () => setOpenList(true);
@@ -178,72 +181,70 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
   }
 
   // Generate calendar grid with reservation IDs
-  const calendarGridWithReservations = calendarGrid.map((week, i) => (
-    <Grid
-      container
-      item
-      key={i}
-      spacing={1}
-      sx={{ height: 120 }}
-      justifyContent="center"
-    >
-      {week.map((day, index) => {
-        const reservationsForDay = reservations.filter((reservation) => {
-          const reservationDate = new Date(reservation.start_date);
-          // Strip time portion from reservation date
-          reservationDate.setHours(0, 0, 0, 0);
-          const dayDate = day.date;
-          if (dayDate) {
-            // Strip time portion from day date
-            dayDate.setHours(0, 0, 0, 0);
-            return (
-              reservationDate.getTime() === dayDate.getTime() &&
-              reservation.seat_id === seat_id
-            );
-          }
-          return false;
-        });
+const calendarGridWithReservations = calendarGrid.map((week, i) => (
+  <Grid
+    container
+    item
+    key={i}
+    spacing={1}
+    sx={{ height: 120 }}
+    justifyContent="center"
+  >
+    {week.map((day, index) => {
+      const reservationsForDay = reservations.filter((reservation) => {
+        const reservationDate = new Date(reservation.start_date);
+        // Strip time portion from reservation date
+        reservationDate.setHours(0, 0, 0, 0);
+        const dayDate = day.date;
+        if (dayDate) {
+          // Strip time portion from day date
+          dayDate.setHours(0, 0, 0, 0);
+          return (
+            reservationDate.getTime() === dayDate.getTime() &&
+            reservation.seat_id === seat_id
+          );
+        }
+        return false;
+      });
 
-        return (
-          
-          <Grid
-            flexWrap={1}
-            sx={{
-              borderRadius:4,
-              marginLeft: 1,
-              border: 1,
-              borderColor: "#25476A",
-              cursor: "pointer",
-              width: `${100 / 7}%`, // Distribute equally across 7 days
-              backgroundColor:
-                day.date && day.date.getMonth() !== currentMonth
-                  ? "#EEEEEE"
-                  : reservationsForDay.length > 0
-                  ? "#caf0f8" // Background color for dates with reservations
-                  : "transparent", // Transparent background for other dates
-              "&:hover": {
-                backgroundColor: "#caf0f8", // Hover color for all dates
-              },
-            }}
-            item
-            key={`${i}-${index}`}
-            xs={1}
-            onClick={() => handleDateClick(day.date)}
-          >
-            {day.dayOfMonth}
-            {reservationsForDay.length > 0 && (
-              <Typography flexWrap={1}>
-                Reserved IDs:{" "}
-                {reservationsForDay
-                  .map((reservation) => reservation.reservation_id)
-                  .join(", ")}
-              </Typography>
-            )}
-          </Grid>
-        );
-      })}
-    </Grid>
-  ));
+      return (
+        <Grid
+          flexWrap={1}
+          sx={{
+            borderRadius: 4,
+            marginLeft: 1,
+            border: 1,
+            borderColor: "#25476A",
+            cursor: "pointer",
+            width: `${100 / 7}%`, // Distribute equally across 7 days
+            backgroundColor:
+              day.date && day.date.getMonth() !== currentMonth
+                ? "#EEEEEE"
+                : reservationsForDay.length > 0
+                ? "#caf0f8" // Background color for dates with reservations
+                : "transparent", // Transparent background for other dates
+            "&:hover": {
+              backgroundColor: "#caf0f8", // Hover color for all dates
+            },
+          }}
+          item
+          key={`${i}-${index}`}
+          xs={1}
+          onClick={() => handleDateClick(day.date)}
+        >
+          {day.dayOfMonth}
+          {reservationsForDay.length > 0 && (
+            <Typography flexWrap={1}>
+              Reserved IDs:{" "}
+              {reservationsForDay.map((reservation) => reservation.reservation_id).join(", ")}
+            </Typography>
+          )}
+        </Grid>
+      );
+    })}
+  </Grid>
+));
+
 
   const handleChangeMonth = (event: { target: { value: any } }) => {
     setCurrentMonth(event.target.value);
@@ -482,7 +483,7 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
             p: 4,
           }}
         >
-          <YearView />
+          <YearView seat_id={seat_id}/>
           
         </Box>
       </Modal>

@@ -12,16 +12,29 @@ import {
   TableRow,
   TableCell,
   Paper,
+  Modal, // Import Modal component
+  Button, // Import Button component
 } from "@mui/material";
+import WeekDatesGrid from "./WeekDatesGrid"; // Import WeekDatesGrid component
 
-const YearView = () => {
+const YearView = ({ seat_id }) => {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [clickedDate, setClickedDate] = useState(null);
+  const [openModal, setOpenModal] = useState(false); // State to control modal visibility
 
-  const handleChangeYear = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setSelectedYear(event.target.value as number);
+  const handleDateClick = (date) => {
+    setClickedDate(date);
+    setOpenModal(true); // Open the modal when a date is clicked
   };
 
-  // Months array for the Select component
+  const handleChangeYear = (event) => {
+    setSelectedYear(event.target.value);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false); // Close the modal
+  };
+
   const months = [
     { value: 0, label: "January" },
     { value: 1, label: "February" },
@@ -37,41 +50,29 @@ const YearView = () => {
     { value: 11, label: "December" },
   ];
 
-  // Function to get the day of the week for a given date
-  const getDayOfWeek = (date: Date) => {
+  const getDayOfWeek = (date) => {
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     return days[date.getDay()];
   };
 
-  // Function to render a mini-calendar
   const renderMiniCalendar = () => {
     return (
-      <div style={{ overflow: "auto", maxHeight: "80vh" }}>
+      <div style={{ overflow: "auto", maxHeight: "75vh" }}>
         <Grid container spacing={2}>
           {months.map((month, index) => {
-            const daysInMonth = new Date(selectedYear, index + 1, 0).getDate(); // Get the number of days in the current month
-            const firstDayOfMonth = new Date(selectedYear, index, 1).getDay(); // Get the first day of the week for the current month
+            const daysInMonth = new Date(selectedYear, index + 1, 0).getDate();
+            const firstDayOfMonth = new Date(selectedYear, index, 1).getDay();
             const dates = Array.from(
               { length: daysInMonth },
               (_, idx) => idx + 1
-            ); // Create an array of dates from 1 to the number of days in the month
+            );
 
-            // Initialize an array to hold the dates for each day of the week
-            const datesForDaysOfWeek: { [key: string]: number[] } = {};
-            const daysOfWeek = [
-              "Sun",
-              "Mon",
-              "Tue",
-              "Wed",
-              "Thu",
-              "Fri",
-              "Sat",
-            ];
+            const datesForDaysOfWeek = {};
+            const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
             daysOfWeek.forEach((day) => {
               datesForDaysOfWeek[day] = [];
             });
 
-            // Populate the dates for each day of the week
             dates.forEach((date) => {
               const dayOfWeek = getDayOfWeek(
                 new Date(selectedYear, index, date)
@@ -113,8 +114,23 @@ const YearView = () => {
                                 <TableCell
                                   key={`${day}-${rowIndex}-${columnIndex}`}
                                   align="center"
+                                  style={{ cursor: "pointer" }}
                                 >
-                                  {date}
+                                  <Typography
+                                    onClick={() =>
+                                      handleDateClick(
+                                        new Date(selectedYear, index, date)
+                                      )
+                                    }
+                                    sx={{
+                                      background: "",
+                                      "&:hover": {
+                                        background: "#25476A",
+                                      },
+                                    }}
+                                  >
+                                    {date}
+                                  </Typography>
                                 </TableCell>
                               );
                             })}
@@ -136,6 +152,8 @@ const YearView = () => {
     <div>
       <Typography variant="h4" sx={{ textAlign: "center" }}>
         Year {selectedYear}
+        <br />
+        Seat Number: {seat_id}
       </Typography>
 
       <Select value={selectedYear} onChange={handleChangeYear}>
@@ -147,9 +165,41 @@ const YearView = () => {
           )
         )}
       </Select>
-<Box marginTop={2}>
-      {renderMiniCalendar()}
-      </Box>
+
+      {/* Modal for WeekDatesGrid */}
+      <Modal
+        open={openModal}
+        onClose={handleCloseModal}
+        aria-labelledby="week-dates-modal"
+        aria-describedby="week-dates-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 4,
+            minWidth: "80%",
+            maxHeight: "80%",
+            overflow: "auto",
+           
+          }}
+        >
+          {clickedDate && (
+            <WeekDatesGrid
+              startOfWeek={clickedDate}
+              seat_id={seat_id}
+              handleClose={handleCloseModal} // Pass handleClose function to close the modal
+            />
+          )}
+        </Box>
+      </Modal>
+
+      <Box marginTop={2}>{renderMiniCalendar()}</Box>
     </div>
   );
 };
