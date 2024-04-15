@@ -5,7 +5,7 @@ import SeatingPlanPage from "./pages/SeatingPlanPage";
 import TimeTablePage from "./pages/TimeTablePage";
 import Navbar from "../src/components/navbar/Navbar";
 import ViewReservation from "../src/components/timeTable/ViewReservation";
-import testPage from "../src/components/navbar/components/TestFile_Nav";
+import TestPage from "../src/components/dashboard/dashboardComponents/Testfile";
 
 export default function App() {
   const location = useLocation();
@@ -25,12 +25,12 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Navigate to={"/landingpage"} />} />
         <Route path="/landingpage" element={<LandingPage />} />
-        <Route path="/dashboard/:userId" element={<Dashboard />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/viewreservation/*" element={<ViewReservation />} />
         <Route path="/seatplan" element={<SeatingPlanPage />} />
         <Route path="/timetable/*" element={<TimeTablePage seat_id={undefined} setShowTimeTablePage={undefined}/>}/>
         <Route path="*" element={<Navigate to={"/landingpage"} />} />
-        <Route path="/testpage/:userId" element={<testPage />} />
+        <Route path="/testpage" element={<TestPage />} />
       </Routes>
     </>
   );

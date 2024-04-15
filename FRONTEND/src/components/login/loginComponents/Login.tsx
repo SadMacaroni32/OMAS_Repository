@@ -47,7 +47,7 @@ const Login: React.FC = () => {
       // Save token to localStorage
       localStorage.setItem("token", data.token);
       setIsLoggedIn(true);
-      navigate(`/dashboard/${userData.emp_id}`, { state: { userData: data } });
+      navigate(`/dashboard`);
     } catch (error) {
       console.error("Login failed:", error.message);
       setLoginError(true);

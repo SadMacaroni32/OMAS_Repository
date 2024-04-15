@@ -7,10 +7,21 @@ import { getUsersSuccess, setError } from "../state/userState";
 // Fetch Users
 function* fetchUsers(): any {
   try {
+    const token = localStorage.getItem("token");
+
+    if (token) {
     const users = yield call(() =>
-      axios.get("http://localhost:8000/OMAS_USERS").then((res) => res.data)
+      axios.get("http://localhost:8080/api/principal/info", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => res.data)
     );
     yield put(getUsersSuccess(users));
+  } else {
+    console.error("Token not found in localStorage")
+  }
   } catch (error) {
     yield put(setError("Failed to fetch users."));
   }
@@ -25,11 +36,21 @@ export function* watchFetchUsers() {
 // Fetch User by Id
 function* fetchUserId(action: any): any {
   try {
-    const { emp_id } = action.payload; 
+    const token = localStorage.getItem("token");
+
+    if (token) {
     const users = yield call(() =>
-      axios.get(`http://localhost:8000/OMAS_USERS?emp_id=${emp_id}`).then((res) => res.data)
+      axios.get(`http://localhost:8080/api/principal/info`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => res.data)
     );
     yield put(getUsersSuccess(users));
+  } else {
+    console.error("Token not found in localStorage");
+  }
   } catch (error) {
     // Handle error if needed
     console.error("Error fetching user list:", error);

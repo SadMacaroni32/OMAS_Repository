@@ -11,7 +11,7 @@ import { getSeatsReservedSuccess } from "../state/seatReservedState";
 
       if (token) {
       const seats = yield call(() =>
-        axios.get("http://localhost:8080/api/reservations/all", {
+        axios.get("http://localhost:8080/api/notes/all", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
