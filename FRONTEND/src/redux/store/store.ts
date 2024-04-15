@@ -10,7 +10,6 @@ import { seatReservedReducer } from "../state/seatReservedState";
 import  usersReducer  from "../state/usersState";
 import { reservationIdsSlice } from "../state/datesReservedState";
 
-import { dashUserReducer } from "../state/usersState";
 
 
 
@@ -23,7 +22,6 @@ export const store = configureStore({
     //user state
     userReducer: userReducer,
     InputReducer: InputReducer,
-    dashUserReducer: dashUserReducer,
 
     //seatPlan state
     seatPlanReducer: seatPlanReducer,

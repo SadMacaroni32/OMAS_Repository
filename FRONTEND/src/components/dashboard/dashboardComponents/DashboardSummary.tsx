@@ -70,7 +70,7 @@ function stableSort<T>(
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function EnhancedTable() {
+export default function DashboardSummary() {
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof Data>("dept_name");
   const [page, setPage] = React.useState(0);

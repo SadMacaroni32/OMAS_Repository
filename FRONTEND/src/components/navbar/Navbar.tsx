@@ -7,42 +7,44 @@ import { useLocation } from "react-router-dom";
 import { EMPTY_DETAIL_PANELS } from "@mui/x-data-grid/internals";
 
 interface data {
-    emp_id: number;
-    fname: string;
+  emp_id: number;
+  fname: string;
 }
-export default function navbar() {
-    const dispatch = useDispatch();
-    const location = useLocation();
-    const id = location.state;
-    
-    const userData: data [] = useSelector(
-        (state: RootState) => state.userReducer.users);
+export default function Navbar() {
+//   const dispatch = useDispatch();
+//   const location = useLocation();
+//   const id = location.state;
 
-        useEffect(() => {
-            dispatch(getUsersSuccess(id));
-        }, [dispatch])
-    const [stateData, setStateData] = useState(id);
-    
-    const { emp_id,fname } = stateData ?? {};
-    
-    useEffect(() => {
-        console.log("id:", id);
-    }, [id]);
-    
-    useEffect(() => {
-        console.log("userData:", userData);
-    }, [userData]);
-    
-    useEffect(() => {
-        console.log("stateData:", stateData);
-    }, [stateData]);
+//   const userData: data[] = useSelector(
+//     (state: RootState) => state.userReducer.users
+//   );
 
-    
-    console.log(stateData);
-    return(<>
-    {stateData.emp_id && (
-        {fname}
-    
-)}<NavbarBody />
-    </>)
+//   useEffect(() => {
+//     dispatch(getUsersSuccess(id));
+//   }, [dispatch]);
+//   const [stateData, setStateData] = useState(id);
+
+//   const { emp_id, fname } = stateData ?? {};
+
+//   useEffect(() => {
+//     console.log("id:", id);
+//   }, [id]);
+
+//   useEffect(() => {
+//     console.log("userData:", userData);
+//   }, [userData]);
+
+//   useEffect(() => {
+//     console.log("stateData:", stateData);
+//   }, [stateData]);
+
+//   console.log(stateData);
+  return (
+    <>
+      {/* {stateData.emp_id && { fname }}
+      <NavbarBody /> */}
+
+    <NavbarBody />
+    </>
+  );
 }
