@@ -11,9 +11,6 @@ import  usersReducer  from "../state/usersState";
 import { reservationIdsSlice } from "../state/datesReservedState";
 
 
-
-
-
 const saga = createSagaMiddleware();
 export const store = configureStore({
   reducer: {
@@ -23,7 +20,6 @@ export const store = configureStore({
     //user state
     userReducer: userReducer,
     InputReducer: InputReducer,
- 
 
     //seatPlan state
     seatPlanReducer: seatPlanReducer,
