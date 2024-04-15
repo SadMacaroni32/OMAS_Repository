@@ -77,7 +77,11 @@ const SixthCol: React.FC = ({
                       <div className="relative flex items-center justify-center h-full">
                         <span
                           className={
-                            seat_status === "repairing"
+                            seat_status === "available"
+                              ? "h-[.5rem] w-[.5rem]  rounded-full absolute right-[.5rem] top-[.5rem] bg-green-400"
+                              : seat_status === "occupied"
+                              ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"
+                              : seat_status === "repairing"
                               ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
                               : ""
                           }></span>
@@ -104,7 +108,7 @@ const SixthCol: React.FC = ({
                 )}
               </span>
               <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
-                {userInfoToDisplay && seat_status !== "repairing"
+                {userInfoToDisplay && seat_status === "occupied"
                   ? userInfoToDisplay.client
                   : null}
               </span>
@@ -178,7 +182,11 @@ const SixthCol: React.FC = ({
                       <div className="relative flex items-center justify-center h-full">
                         <span
                           className={
-                            seat_status === "repairing"
+                            seat_status === "available"
+                              ? "h-[.5rem] w-[.5rem]  rounded-full absolute right-[.5rem] top-[.5rem] bg-green-400"
+                              : seat_status === "occupied"
+                              ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"
+                              : seat_status === "repairing"
                               ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
                               : ""
                           }></span>
@@ -205,7 +213,7 @@ const SixthCol: React.FC = ({
                 )}
               </span>
               <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
-                {userInfoToDisplay && seat_status !== "repairing"
+                {userInfoToDisplay && seat_status === "occupied"
                   ? userInfoToDisplay.client
                   : null}
               </span>
