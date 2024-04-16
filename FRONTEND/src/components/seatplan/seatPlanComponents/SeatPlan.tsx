@@ -5,6 +5,7 @@ import { getSeatsFetch } from "../../../redux/state/seatPlanState";
 import {
   getReservationsFetch,
   getReservationsWithUserInfoFetch,
+  updateReservationStatusFetch,
 } from "../../../redux/state/reservationState";
 import TimeTablePage from "../../../pages/TimeTablePage";
 import { getUsersFetch } from "../../../redux/state/userState";
@@ -54,13 +55,6 @@ const SeatPlan: React.FC = () => {
     (state: RootState) => state.reservationReducer.reservationValue
   );
 
-  useEffect(() => {
-    dispatch(getUsersFetch());
-    dispatch(getSeatsFetch());
-    dispatch(getReservationsFetch());
-    dispatch(getReservationsWithUserInfoFetch());
-  }, [dispatch]);
-
   const [seatId, setSeatId] = useState(null);
   const [showTimeTablePage, setShowTimeTablePage] = useState(false);
 
@@ -88,19 +82,30 @@ const SeatPlan: React.FC = () => {
         }
       : null;
   };
-
-  // Filter reservations starting at 6:00 PM
+  // Filter reservations starting at 6:00 AM
   const reservationsAM = todayReservations.filter((reservation) => {
-    const startTime = new Date(reservation.start_date);
-    return startTime.getHours() === 6 && startTime.getMinutes() === 0;
+    const startTimeUTC = new Date(reservation.start_date); // Convert UTC start time to Date object
+    return (
+      startTimeUTC.getUTCHours() === 6 && startTimeUTC.getUTCMinutes() === 0
+    ); // Check if hours and minutes match 6:00 AM
   });
 
   // Filter reservations starting after 6:00 PM but before midnight
   const reservationsPM = todayReservations.filter((reservation) => {
-    const startTime = new Date(reservation.start_date);
-    return startTime.getHours() >= 12 && startTime.getHours() < 24;
+    const startTimeUTC = new Date(reservation.start_date); // Convert UTC start time to Date object
+    return startTimeUTC.getUTCHours() >= 12 && startTimeUTC.getUTCHours() < 24; // Check if hours are between 18 (6:00 PM) and 23 (11:59 PM)
   });
 
+
+
+  useEffect(() => {
+    dispatch(getUsersFetch());
+    dispatch(getSeatsFetch());
+    dispatch(getReservationsFetch());
+    dispatch(getReservationsWithUserInfoFetch());
+  }, [dispatch]);
+
+ 
   const currentTime = new Date(); // Get the current time
 
   const columnData = [
@@ -212,9 +217,11 @@ const SeatPlan: React.FC = () => {
     },
     // Add more objects for other columns as needed
   ];
+  console.log("this is reservations", todayReservations);
 
-  console.log("Seat Plan", userData);
-  
+  console.log("this is AM", reservationsAM);
+  console.log("this is PM", reservationsPM);
+
   //available handle function
   const availableHandle = () => {
     setAvailable(true);
@@ -245,7 +252,6 @@ const SeatPlan: React.FC = () => {
     setOccupied(true);
     setUnderRepair(true);
     setReset(false);
-
   };
 
   return (
@@ -274,12 +280,14 @@ const SeatPlan: React.FC = () => {
               <div className="h-[.5rem] w-[.5rem] rounded-full  bg-red-500"></div>
               <span>Under-repair</span>
             </div>
-            {reset && <div
-              className="flex items-center cursor-pointer gap-x-2"
-              onClick={resetState}>
-              <div className="h-[.5rem] w-[.5rem] rounded-full bg-blue-400"></div>
-              <span>Reset</span>
-            </div>}
+            {reset && (
+              <div
+                className="flex items-center cursor-pointer gap-x-2"
+                onClick={resetState}>
+                <div className="h-[.5rem] w-[.5rem] rounded-full bg-blue-400"></div>
+                <span>Reset</span>
+              </div>
+            )}
           </div>
           {columnData.map((col, index) => (
             <col.component key={index} {...col.props} />

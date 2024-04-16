@@ -1,7 +1,7 @@
 // userListSaga.ts
 import { call, put, takeEvery } from "redux-saga/effects";
 import axios from "axios";
-import { getReservationsSuccess, getReservationsWithUserInfoSuccess } from "../state/reservationState";
+import { getReservationsSuccess, getReservationsWithUserInfoSuccess, updateReservationStatusFailure, updateReservationStatusSuccess } from "../state/reservationState";
 
 // Fetch all reservations
 function* fetchReservations(): any {
@@ -32,9 +32,6 @@ function* fetchReservations(): any {
   }
 }
 
-export function* reservationSaga() {
-  yield takeEvery("reservation/getReservationsFetch", fetchReservations);
-}
 
 
 //get all reservations with user info
@@ -70,9 +67,44 @@ function* fetchReservationsWithUserInfo(): any {
   }
 }
 
-export function* reservationWithUserInfoSaga() {
+// Update reservation status saga
+function* updateReservationStatus(action: any): any {
+  try {
+    const { reservationId, status } = action.payload;
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      // Make PUT request to update reservation status
+      const updatedStatus = yield call(() =>
+        axios.put(
+          `http://localhost:8080/api/reservations/${reservationId}/${status}`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+      );
+      
+      // Dispatch success action with updated status data
+      yield put(updateReservationStatusSuccess(updatedStatus.data));
+    } else {
+      console.error("Token not found in localStorage");
+    }
+  } catch (error) {
+    console.error("Error updating reservation status:", error);
+    // Dispatch failure action if needed
+    yield put(updateReservationStatusFailure());
+  }
+}
+
+// Watcher saga
+export function* reservationSaga() {
+  yield takeEvery("reservation/getReservationsFetch", fetchReservations);
   yield takeEvery(
     "reservation/getReservationsWithUserInfoFetch",
     fetchReservationsWithUserInfo
   );
+  yield takeEvery("reservation/updateReservationStatusFetch", updateReservationStatus);
 }
