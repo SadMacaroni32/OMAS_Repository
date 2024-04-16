@@ -60,3 +60,31 @@ function* fetchUserId(action: any): any {
 export function* getUserIdSaga() {
   yield takeEvery("users/getUsersFetch", fetchUserId);
 }
+
+
+function* fetchLoggedUser(action: any): any {
+  try {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      const userId = yield call(() =>
+        axios.get(`http://localhost:8080/api/principal/reservation`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => res.data.userId) // Assuming the response has a 'userId' property
+      );
+      yield put(getUsersSuccess([userId])); // Assuming getUsersSuccess expects an array of user IDs
+    } else {
+      console.error("Token not found in localStorage");
+    }
+  } catch (error) {
+    // Handle error if needed
+    console.error("Error fetching user ID:", error);
+  }
+}
+
+export function* fetchLoggedUserSaga() {
+  yield takeEvery("users/getUsersFetch", fetchUserId);
+}
