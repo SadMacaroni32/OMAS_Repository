@@ -16,17 +16,14 @@ import { RootState } from "../../../redux/store/store";
 import { useEffect, useState } from "react";
 import { getUsersFetch } from "../../../redux/state/userState";
 import { getSeatsFetch } from "../../../redux/state/seatState";
+import { getReservationsFetch, getReservationsWithUserInfoFetch } from "../../../redux/state/reservationState";
 
-interface Data {
-  emp_id: number;
-  dept_name: string;
-  seat_id: number;
-}
 
-function createData(emp_id: number, dept_name: string, seat_id: number): Data {
+
+function createData(emp_id: number, client_sn: string, seat_id: number): any {
   return {
     emp_id,
-    dept_name,
+    client_sn,
     seat_id,
   };
 }
@@ -72,19 +69,26 @@ function stableSort<T>(
 
 export default function DashboardSummary() {
   const [order, setOrder] = React.useState<Order>("asc");
-  const [orderBy, setOrderBy] = React.useState<keyof Data>("dept_name");
+  const [orderBy, setOrderBy] = React.useState<keyof any>("client_sn");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const shadowStyle = { boxShadow: "0px 4px 10px #25476A" };
 
   const dispatch = useDispatch();
-  const seatData: Data[] = useSelector(
-    (state: RootState) => state.seatReducer.seating
+  // const seatData: Data[] = useSelector(
+  //   (state: RootState) => state.seatReducer.seating
+  // );
+  const seatData: any = useSelector(
+    (state: RootState) => state.reservationReducer.reservationWithUserInfo
   );
 
+  // useEffect(() => {
+  //   dispatch(getSeatsFetch());
+  // }, [dispatch]);
   useEffect(() => {
-    dispatch(getSeatsFetch());
+    dispatch(getReservationsWithUserInfoFetch());
   }, [dispatch]);
+
 
   useEffect(() => {
     // Retrieve table state from localStorage
@@ -99,29 +103,29 @@ export default function DashboardSummary() {
   }, []);
 
   const rowsByDept: {
-    [key: string]: { dept_name: string; seat_count: number };
+    [key: string]: { client_sn: string; seat_count: number };
   } = {};
 
   if (Array.isArray(seatData)) {
     seatData.forEach((item) => {
-      if (!rowsByDept[item.dept_name]) {
-        rowsByDept[item.dept_name] = {
-          dept_name: item.dept_name,
+      if (!rowsByDept[item.client_sn]) {
+        rowsByDept[item.client_sn] = {
+          client_sn: item.client_sn,
           seat_count: 0,
         };
       }
       // Increment seat_count by 1 for each seat encountered
-      rowsByDept[item.dept_name].seat_count++;
+      rowsByDept[item.client_sn].seat_count++;
     });
   }
 
-  const rows: Data[] = Object.values(rowsByDept).map((row) =>
-    createData(-1, row.dept_name, row.seat_count)
+  const rows: any = Object.values(rowsByDept).map((row) =>
+    createData(-1, row.client_sn, row.seat_count)
   );
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
-    property: keyof Data
+    property: keyof any
   ) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -159,6 +163,7 @@ export default function DashboardSummary() {
     );
   }, [order, orderBy, page, rowsPerPage, rows]);
 
+  //console.log("Dashboard Summary", seatData);
   return (
     <Box sx={{ width: "100%", borderRadius: "5px", ...shadowStyle }}>
       <Paper sx={{ width: "100%", mb: 2, borderRadius: "5px" }}>
@@ -180,12 +185,12 @@ export default function DashboardSummary() {
               <TableRow>
                 <TableCell>
                   <TableSortLabel
-                    active={orderBy === "dept_name"}
-                    direction={orderBy === "dept_name" ? order : "asc"}
-                    onClick={(event) => handleRequestSort(event, "dept_name")}
+                    active={orderBy === "client_sn"}
+                    direction={orderBy === "client_sn" ? order : "asc"}
+                    onClick={(event) => handleRequestSort(event, "client_sn")}
                   >
                     Project Name
-                    {orderBy === "dept_name" ? (
+                    {orderBy === "client_sn" ? (
                       <Box component="span" sx={visuallyHidden}>
                         {order === "desc"
                           ? "sorted descending"
@@ -214,9 +219,9 @@ export default function DashboardSummary() {
             </TableHead>
             <TableBody>
               {visibleRows.map((row) => (
-                <TableRow key={row.dept_name}>
+                <TableRow key={row.client_sn}>
                   <TableCell component="th" scope="row">
-                    {row.dept_name}
+                    {row.client_sn}
                   </TableCell>
                   <TableCell>{row.seat_id}</TableCell>
                 </TableRow>

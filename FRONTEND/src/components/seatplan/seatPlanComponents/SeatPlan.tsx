@@ -213,6 +213,8 @@ const SeatPlan: React.FC = () => {
     // Add more objects for other columns as needed
   ];
 
+  console.log("Seat Plan", userData);
+  
   //available handle function
   const availableHandle = () => {
     setAvailable(true);

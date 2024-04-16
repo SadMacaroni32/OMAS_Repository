@@ -1,4 +1,3 @@
-import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -7,9 +6,6 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 
@@ -19,35 +15,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
 import { getUsersFetch } from "../../../redux/state/userState";
 import { useEffect } from "react";
+import NavbarCollapseMenu from "./NavbarCollapseMenu";
+import { ScriptsNav } from "./ScriptsNav";
+import NavbarMenuItems from "./NavbarMenu";
 
 interface dataFormat {
   emp_id: number;
 }
 
 export default function NavbarBody() {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
+
+  const {
+    anchorElNav,
+    handleOpenNavMenu,
+    handleCloseNavMenu,
+    handleCloseUserMenu,
+    pageDashboard,
+    pageSeatplan,
+    pageViewAppointments,
+  } = ScriptsNav();
+  
   const navigate = useNavigate();
-
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-
   const dispatch = useDispatch();
   const user: dataFormat [] = useSelector((state: RootState) => state.userReducer.users);
 
@@ -55,26 +43,7 @@ export default function NavbarBody() {
     dispatch(getUsersFetch());
   }, [dispatch]); 
 
-  console.log("test", user)
-
-  const pageDashboard = () => {
-    navigate(-1);
-  };
-
-  const pageSeatplan = () => {
-    navigate(`/seatplan`);
-  };
-
-  const pageViewAppointments = () => {
-    navigate(`/viewreservation`);
-  };
-
-  const pageLogout = () => {
-    navigate(`/landingpage`);
-    localStorage.removeItem('tableState');
-    localStorage.removeItem('seatData');
-    localStorage.removeItem('seatReservedData');
-  };
+  //console.log("Navbar Body", user)
 
   return (
     <AppBar position="static" >
@@ -150,68 +119,10 @@ export default function NavbarBody() {
             LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }} />
-          {/* Dashboard */}
-          <MenuItem
-                onClick={() => {
-                  handleCloseUserMenu();
-                  pageDashboard();
-                }}
-              >
-                <Typography textAlign="center">Dashboard</Typography>
-              </MenuItem>
-              {/* Seatplan */}
-              <MenuItem
-                onClick={() => {
-                  handleCloseUserMenu();
-                  pageSeatplan();
-                }}
-              >
-                <Typography textAlign="center">View Seatplan</Typography>
-              </MenuItem>
-                {/* View Appointments */}
-              <MenuItem
-                onClick={() => {
-                  handleCloseUserMenu();
-                  pageViewAppointments();
-                }}
-              >
-                <Typography textAlign="center">View Appointments</Typography>
-              </MenuItem>
+            
+            <NavbarMenuItems />
 
-              {/* COLLAPSE MENU */}
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-                {/* Logout */}
-              <MenuItem
-                onClick={() => {
-                  handleCloseUserMenu();
-                  pageLogout();
-                }}
-              >
-                <Typography textAlign="center">Logout</Typography>
-              </MenuItem>
-            </Menu>
-          </Box>
+              <NavbarCollapseMenu />
         </Toolbar>
       </Container>
     </AppBar>
