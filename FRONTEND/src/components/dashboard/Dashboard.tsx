@@ -11,59 +11,9 @@ import { RootState } from "../../redux/store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { getSeatsFetch } from "../../redux/state/seatState";
 import { getSeatsReservedFetch } from "../../redux/state/seatReservedState";
+import { getSeatConditionFetch } from "../../redux/state/Dashboard_State/seatConditionStates/Total_Seats";
 
-interface dataFormat {
-  seat_id: number;
-}
 export default function Dashboard() {
-  const dispatch = useDispatch();
-  const seatData: dataFormat[] = useSelector(
-    (state: RootState) => state.seatReducer.seating
-  );
-  const seatReservedData = useSelector(
-    (state: RootState) => state.seatReservedReducer.seatingReserved
-  );
-
-  // Initialize seatData with default values based on localStorage or current state
-  const [data, setData] = useState(() => {
-    const storedSeatData = localStorage.getItem("seatData");
-    const storedSeatReservedData = localStorage.getItem("seatReservedData");
-    if (storedSeatData && storedSeatReservedData) {
-      return {
-        occupied: JSON.parse(storedSeatReservedData).length,
-        available:
-          JSON.parse(storedSeatData).length -
-          JSON.parse(storedSeatReservedData).length,
-        underRepair: 1, // You can set this value accordingly based on your data
-      };
-    } else {
-      return {
-        occupied: seatReservedData.length,
-        available: seatData.length - seatReservedData.length,
-        underRepair: 1, // You can set this value accordingly based on your data
-      };
-    }
-  });
-
-  useEffect(() => {
-    dispatch(getSeatsFetch());
-    dispatch(getSeatsReservedFetch());
-  }, [dispatch]);
-
-  // Save seatData and seatReservedData to localStorage
-  useEffect(() => {
-    localStorage.setItem("seatData", JSON.stringify(seatData));
-    localStorage.setItem("seatReservedData", JSON.stringify(seatReservedData));
-  }, [seatData, seatReservedData]);
-
-  // Update data state whenever seatData or seatReservedData changes
-  useEffect(() => {
-    setData({
-      occupied: seatReservedData.length,
-      available: seatData.length - seatReservedData.length,
-      underRepair: data.underRepair, // Preserve the underRepair value
-    });
-  }, [seatData, seatReservedData]);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -80,7 +30,7 @@ export default function Dashboard() {
 
         {/* SEAT GRAPH CHART */}
         <Grid item xs={4}>
-          <DashboardSeatCondition data={data} />
+          <DashboardSeatCondition />
         </Grid>
 
         {/* 2ND ROW */}

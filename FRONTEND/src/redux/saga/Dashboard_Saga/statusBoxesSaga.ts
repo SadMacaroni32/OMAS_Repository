@@ -1,16 +1,16 @@
 import axios from "axios";
 import { call, put, takeEvery } from "redux-saga/effects";
-import { getSeatsReservedSuccess } from "../state/seatReservedState";
+import { getStatusBoxesSuccess } from "../../state/Dashboard_State/statusBoxesState";
 
   
-  // Fetch Notes with User Info
-  function* fetchReservedSeats(): any {
+  // Fetch All
+  function* fetchStatusBoxes(): any {
     try {
 
       const token = localStorage.getItem("token");
 
       if (token) {
-      const seats = yield call(() =>
+      const data = yield call(() =>
         axios.get("http://localhost:8080/api/notes/all", {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -18,7 +18,7 @@ import { getSeatsReservedSuccess } from "../state/seatReservedState";
         })
         .then((res) => res.data)
       );
-      yield put(getSeatsReservedSuccess(seats));
+      yield put(getStatusBoxesSuccess(data));
     } else {
       console.error("Token not found in localStorage");
     }
@@ -28,6 +28,6 @@ import { getSeatsReservedSuccess } from "../state/seatReservedState";
     }
   }
   
-  export function* getReservedSeatsSaga() {
-    yield takeEvery("seatsReserved/getSeatsReservedFetch", fetchReservedSeats);
+  export function* getStatusBoxesSaga() {
+    yield takeEvery("statusBoxesState/getStatusBoxesFetch", fetchStatusBoxes);
   }

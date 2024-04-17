@@ -6,7 +6,7 @@ import { CardActionArea, Paper } from "@mui/material";
 import ProfilePicture from "../../../assets/profile_null.avif";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
-import { getUsersFetch, getUsersSuccess } from "../../../redux/state/userState";
+import { getUsersFetch } from "../../../redux/state/userState";
 import { useEffect } from "react";
 
 export default function DashboardUserProfile() {
