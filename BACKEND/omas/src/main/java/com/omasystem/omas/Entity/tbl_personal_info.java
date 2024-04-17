@@ -20,10 +20,10 @@ public class tbl_personal_info {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long pid;
-    private String emp_id;
-    private String fname;
-    private String mname;
-    private String lname;
-    private String email;
+    private Long pid; // Personal ID
+    private String emp_id; // Employee ID
+    private String fname; // First name
+    private String mname; // Middle name
+    private String lname; // Last name
+    private String email; // Email address
 }

@@ -10,8 +10,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TimetableModel {
-    private Long reservation_id;
-    private int seat_id;
-    private Timestamp start_date, end_date;
-    private String note, project_name, client_name;
+    private Long reservation_id; // Reservation ID
+    private int seat_id; // Seat ID
+    private Timestamp start_date; // Start date of the reservation
+    private Timestamp end_date; // End date of the reservation
+    private String note; // Note associated with the reservation
+    private String project_name; // Project name
+    private String client_name; // Client name
 }

@@ -9,30 +9,31 @@ import org.springframework.web.bind.annotation.RestController;
 import com.omasystem.omas.Service.AssociatesService;
 import org.springframework.web.bind.annotation.GetMapping;
 
-
 @RestController
-@RequestMapping("/api/associates") /*changed from /api/reservation */
+@RequestMapping("/api/associates") 
 public class AssociatesController {
     
     @Autowired
     private AssociatesService associatesService;
 
-    /*Gets the total number of associates */
+    // Retrieves the total number of associates
     @GetMapping("/total")
     public Map<String, Object> getTotalAssociates() {
+        // Returns the total number of associates
         return associatesService.getTotalAssociates();
     }
 
-    /*Gets the total number of assigned seats */
+    // Retrieves the total number of assigned seats
     @GetMapping("/assigned")
     public Map<String, Object> getTotalAssignedSeats() {
+        // Returns the total number of assigned seats
         return associatesService.getTotalAssignedSeats();
     }
 
-    /*Gets the total nuber of unassigned seats */
+    // Retrieves the total number of unassigned seats
     @GetMapping("/unassigned")
     public Map<String, Object> getTotalUnassignedSeats() {
+        // Returns the total number of unassigned seats
         return associatesService.getTotalUnassignedSeats();
     }
-    
 }

@@ -10,7 +10,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class NoteModel {
-    private String emp_id, username, first_name, middle_name, last_name, note;
-    private Timestamp noted_at;
-    private int seat_id;
+    private String emp_id; // Employee ID
+    private String username; // Username
+    private String first_name; // First name
+    private String middle_name; // Middle name
+    private String last_name; // Last name
+    private String note; // Note content
+    private Timestamp noted_at; // Timestamp when note was made
+    private int seat_id; // Seat ID associated with the note
 }

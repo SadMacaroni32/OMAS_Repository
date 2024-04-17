@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.omasystem.omas.Model.PrincipalModel;
-import com.omasystem.omas.Model.UserModel;
 
 @Mapper
 public interface PrincipalDao {

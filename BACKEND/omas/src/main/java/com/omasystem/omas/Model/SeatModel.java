@@ -12,29 +12,24 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SeatModel {
+    private int seat_id; // Seat ID
+    @Enumerated(EnumType.STRING)
+    private SeatStatus seat_status; // Seat status
+    private int del_flag; // Deletion flag
+    private int dept_id; // Department ID
+    private int proj_id; // Project ID
+    private String reg_id; // Registration ID
+    private String proj_name; // Project name
+    private Timestamp reg_date; // Registration date
+    private String update_id; // Update ID
+    private Timestamp update_date; // Update date
+    private int totalSeatsReserved; // Total number of seats reserved
 
-    
-        private int seat_id;
-        @Enumerated(EnumType.STRING)
-        private SeatStatus seat_status;  
-        private int del_flag;
-        private int dept_id;
-        private int proj_id;
-        private String reg_id;
-        private String proj_name;
-        private Timestamp reg_date;
-        private String update_id;
-        private Timestamp update_date;
-        private int totalSeatsReserved;
-    
-        public int getTotalSeatsReserved() {
-                return totalSeatsReserved;
-            }
-        
-            public void setTotalSeatsReserved(int totalSeatsReserved) {
-                this.totalSeatsReserved = totalSeatsReserved;
-            }      
-    
-    
-    
+    public int getTotalSeatsReserved() {
+        return totalSeatsReserved;
+    }
+
+    public void setTotalSeatsReserved(int totalSeatsReserved) {
+        this.totalSeatsReserved = totalSeatsReserved;
+    }
 }

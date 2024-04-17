@@ -10,8 +10,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserProjectModel {
-    private Long upid;
-    private String emp_id, reg_id, update_id;
-    private int proj_id, del_flag;
-    private Timestamp reg_date, update_date;
+    private Long upid; // User project ID
+    private String emp_id; // Employee ID
+    private String reg_id; // Registration ID
+    private String update_id; // Update ID
+    private int proj_id; // Project ID
+    private int del_flag; // Deletion flag
+    private Timestamp reg_date; // Registration date
+    private Timestamp update_date; // Update date
 }

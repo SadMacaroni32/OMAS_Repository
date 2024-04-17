@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserModel {
-    private String emp_id;
-    private String username;
-    private String password;
-    private int position_id;
-    private int dept_id;
-    private int section_id;
-    private String status_code;
-    private String img_src;
+    private String emp_id; // Employee ID
+    private String username; // Username
+    private String password; // Password
+    private int position_id; // Position ID
+    private int dept_id; // Department ID
+    private int section_id; // Section ID
+    private String status_code; // Status code
+    private String img_src; // Image source
 }
