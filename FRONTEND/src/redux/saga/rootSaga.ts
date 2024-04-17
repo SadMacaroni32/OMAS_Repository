@@ -11,6 +11,7 @@ import  {reservationsSaga, fetchReservationsDate, reservationsSagaDate}  from ".
 
 import { getUserIdSaga, watchFetchUsers } from "./userSaga";
 import { addReservationsSaga } from "./addReservationSaga";
+import { weekReserveSaga } from "./weekReserveSaga";
 
 
 export default function* rootSaga() {
@@ -27,6 +28,7 @@ export default function* rootSaga() {
 
     reservationWithUserInfoSaga(),
     addReservationsSaga(),
+    weekReserveSaga(),
 
 
     getUserIdSaga(),

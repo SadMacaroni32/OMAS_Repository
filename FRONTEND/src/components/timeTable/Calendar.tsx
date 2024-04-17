@@ -29,6 +29,7 @@ import { current } from "@reduxjs/toolkit";
 import { fetchReservationsRequest } from "../../redux/state/reservationState";
 import YearView from "./YearView";
 import AddAppointment from "./AddAppointment";
+import { RootState } from "../../redux/store/store";
 
 const daysOfWeek = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Frid", "Sat"];
 const monthsOfYear = [
@@ -50,7 +51,7 @@ const options = ["Years", "Months", "Weeks", "Reservation List"];
 const Calendar = ({ seat_id, setShowTimeTablePage }) => {
   // Retrieve reservations from Redux store using useSelector
   const reservations = useSelector(
-    (state) => state.reservationsReducer.reservations
+    (state: RootState) => state.reservationsReducer.reservations
   );
 
   // Dispatch action to fetch reservations when component mounts
@@ -62,7 +63,7 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
 
   console.log("mga reserved",(reservations));
 
-  console.log("Redux State:", useSelector((state) => state.reservationsReducer));
+  console.log("Redux State:", useSelector((state: RootState) => state.reservationsReducer));
 
   const [openList, setOpenList] = useState(false);
   const handleOpenList = () => setOpenList(true);
@@ -447,7 +448,7 @@ const calendarGridWithReservations = calendarGrid.map((week, i) => (
       >
         <Box
           sx={{
-            width: "90%",
+            width: "70%",
             position: "absolute",
             top: "50%",
             left: "50%",

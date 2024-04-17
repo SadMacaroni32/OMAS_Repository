@@ -10,7 +10,7 @@ import { seatReservedReducer } from "../state/seatReservedState";
 import  usersReducer  from "../state/usersState";
 import { reservationIdsSlice } from "../state/datesReservedState";
 import { addReservationsReducer } from "../state/addReservationReducer";
-
+import { weekReserveReducer } from "../state/weekReserveState"
 
 const saga = createSagaMiddleware();
 export const store = configureStore({
@@ -35,6 +35,7 @@ export const store = configureStore({
     reservationsReducer: reservationsReducer,
     reservationsDateReducer: reservationsDateReducer,
     addReservationsReducer:addReservationsReducer,
+    weekReserveReducer: weekReserveReducer,
     //reservations state
     // reservationIdsReducer: reservationIdsSlice.reducer,
 
