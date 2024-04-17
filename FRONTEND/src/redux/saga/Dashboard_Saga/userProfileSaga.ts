@@ -11,7 +11,7 @@ import { getUserProfileSuccess } from "../../state/Dashboard_State/userProfileSt
 
       if (token) {
       const data = yield call(() =>
-        axios.get("http://localhost:8080/api/notes/all", {
+        axios.get("http://localhost:8080/api/principal/info", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
