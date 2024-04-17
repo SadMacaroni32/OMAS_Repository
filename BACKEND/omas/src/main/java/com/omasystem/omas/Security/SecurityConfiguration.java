@@ -21,9 +21,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfiguration {
     
-    private final JwtAuthenticationFilter jwtAuthFilter;
-    private final AuthenticationProvider authenticationProvider;
-    private final String[] Whitelist = {
+    private final JwtAuthenticationFilter jwtAuthFilter; // JwtAuthenticationFilter bean
+    private final AuthenticationProvider authenticationProvider; // AuthenticationProvider bean
+    private final String[] Whitelist = { // Whitelist of URLs that don't require authentication
         "/api/auth/register",
         "/api/auth/authenticate"
     };
@@ -31,21 +31,21 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())
+                .csrf(csrf -> csrf.disable()) // Disable CSRF protection
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration configuration = new CorsConfiguration();
-                    configuration.setAllowedOrigins(Arrays.asList("*")); // Update with your allowed origins
-                    configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                    configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept"));
+                    configuration.setAllowedOrigins(Arrays.asList("*")); // Set allowed origins
+                    configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Set allowed methods
+                    configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept")); // Set allowed headers
                     return configuration;
                 }))
                 .authorizeRequests(requests -> requests
-                        .requestMatchers(Whitelist).permitAll()
-                        .anyRequest().authenticated())
+                        .requestMatchers(Whitelist).permitAll() // Permit access to Whitelist URLs without authentication
+                        .anyRequest().authenticated()) // Authenticate all other requests
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Set session creation policy to STATELESS
+                .authenticationProvider(authenticationProvider) // Set authentication provider
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class); // Add JwtAuthenticationFilter before UsernamePasswordAuthenticationFilter
 
         return http.build();
     }
