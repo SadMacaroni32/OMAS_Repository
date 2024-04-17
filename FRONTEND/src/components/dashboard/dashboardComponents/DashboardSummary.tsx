@@ -16,8 +16,6 @@ import { RootState } from "../../../redux/store/store";
 import { useEffect } from "react";
 import { getReservationsWithUserInfoFetch } from "../../../redux/state/reservationState";
 
-
-
 function createData(emp_id: number, client_sn: string, seat_id: number): any {
   return {
     emp_id,
@@ -86,7 +84,6 @@ export default function DashboardSummary() {
   useEffect(() => {
     dispatch(getReservationsWithUserInfoFetch());
   }, [dispatch]);
-
 
   useEffect(() => {
     // Retrieve table state from localStorage
@@ -164,10 +161,10 @@ export default function DashboardSummary() {
   //console.log("Dashboard Summary", seatData);
   return (
     <Box sx={{ width: "100%", borderRadius: "5px", ...shadowStyle }}>
-      <Paper sx={{ width: "100%", mb: 2, borderRadius: "5px" }}>
+      <Paper sx={{ borderRadius: "5px" }}>
         <TableContainer>
           <Table
-            sx={{ minWidth: 400 }}
+            sx={{ minWidth: 100 }}
             aria-labelledby="tableTitle"
             size="medium"
           >

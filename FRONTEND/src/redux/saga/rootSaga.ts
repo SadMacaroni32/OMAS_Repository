@@ -11,6 +11,7 @@ import { getRecentCommentsSaga } from "./Dashboard_Saga/recentCommentsSaga";
 // import { reservationIdsSaga } from "./datesReservedSaga";
 
 import { getUserIdSaga, watchFetchUsers } from "./userSaga";
+import { addReservationsSaga } from "./addReservationSaga";
 import { getStatusBoxesSaga } from "./Dashboard_Saga/statusBoxesSaga";
 import { getSummarySaga } from "./Dashboard_Saga/summarySaga";
 import { getUserProfileSaga } from "./Dashboard_Saga/userProfileSaga";
@@ -37,6 +38,7 @@ export default function* rootSaga() {
     PrincipalWithReservationInfoSaga(),
     getUserIdSaga(),
 
+    addReservationsSaga(),
     getRecentCommentsSaga(),
     getStatusBoxesSaga(),
     getSummarySaga(),

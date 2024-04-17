@@ -82,11 +82,11 @@ export default function DashboardStatusBoxed() {
   {
     /* FOR CHECKING API DATA CONSOLE */
   }
-  console.log("Total Seats", totalSeats);
-  console.log("Assigned Seats", assignedSeats);
-  console.log("Total Associates", totalAssociates);
-  console.log("Reserved Associates", reservedAssociates);
-  console.log("Unreserved Associates", unreservedAssociates);
+  // console.log("Total Seats", totalSeats);
+  // console.log("Assigned Seats", assignedSeats);
+  // console.log("Total Associates", totalAssociates);
+  // console.log("Reserved Associates", reservedAssociates);
+  // console.log("Unreserved Associates", unreservedAssociates);
 
   return (
     <Grid container spacing={1}>

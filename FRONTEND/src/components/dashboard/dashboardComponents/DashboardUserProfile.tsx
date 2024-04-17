@@ -6,8 +6,9 @@ import { CardActionArea, Paper } from "@mui/material";
 import ProfilePicture from "../../../assets/profile_null.avif";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
-import { getUsersFetch } from "../../../redux/state/userState";
 import { useEffect } from "react";
+import { getUserProfileFetch } from "../../../redux/state/Dashboard_State/userProfileState";
+import { getUsersFetch } from "../../../redux/state/userState";
 
 export default function DashboardUserProfile() {
   const shadowStyle = { boxShadow: "0px 4px 10px #25476A" };
@@ -15,9 +16,13 @@ export default function DashboardUserProfile() {
   const userData: any = useSelector(
     (state: RootState) => state.userReducer.users
   );
+  const loggedUser = useSelector(
+    (state: RootState) => state.userProfileReducer.userProfile
+  );
 
   useEffect(() => {
     dispatch(getUsersFetch());
+    dispatch(getUserProfileFetch());
   }, [dispatch]);
 
   const { username, status_code, position_id, emp_id } = userData.message ?? {};
@@ -25,7 +30,8 @@ export default function DashboardUserProfile() {
   {
     /* FOR CHECKING API DATA CONSOLE */
   }
-  // console.log("User Profile", username + status_code + position_id + emp_id);
+  console.log("User Profile", userData);
+  console.log("Logged User", loggedUser);
 
   return (
     <Paper elevation={6} sx={{ m: 1, ml: 1, ...shadowStyle }}>

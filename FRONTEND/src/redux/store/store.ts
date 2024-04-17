@@ -7,6 +7,9 @@ import { reservationReducer, reservationsReducer, reservationsDateReducer } from
 import { seatReducer } from "../state/seatState";
 import { seatReservedReducer } from "../state/seatReservedState";
 
+import  usersReducer  from "../state/usersState";
+import { reservationIdsSlice } from "../state/datesReservedState";
+import { addReservationsReducer } from "../state/addReservationReducer";
 // import  usersReducer  from "../state/usersState";
 // import { reservationIdsSlice } from "../state/datesReservedState";
 
@@ -44,7 +47,7 @@ export const store = configureStore({
     reservationReducer: reservationReducer,
     reservationsReducer: reservationsReducer,
     reservationsDateReducer: reservationsDateReducer,
-
+    addReservationsReducer:addReservationsReducer,
     //reservations state
     // reservationIdsReducer: reservationIdsSlice.reducer,
 
