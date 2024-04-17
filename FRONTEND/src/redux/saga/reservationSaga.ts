@@ -70,15 +70,15 @@ function* fetchReservationsWithUserInfo(): any {
 // Update reservation status saga
 function* updateReservationStatus(action: any): any {
   try {
-    const { reservationId, status } = action.payload;
+    const { seatId, start_date, end_date } = action.payload;
     const token = localStorage.getItem("token");
 
     if (token) {
       // Make PUT request to update reservation status
       const updatedStatus = yield call(() =>
         axios.put(
-          `http://localhost:8080/api/reservations/${reservationId}/${status}`,
-          {},
+          `http://localhost:8080/api/reservations/${seatId}/Fixed`,
+           { start_date, end_date },
           {
             headers: {
               Authorization: `Bearer ${token}`,
