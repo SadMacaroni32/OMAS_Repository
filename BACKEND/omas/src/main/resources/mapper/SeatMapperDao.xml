@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.omasystem.omas.Dao.SeatDao">
+
+
+
+
+    <resultMap id="seatResultMap" type="com.omasystem.omas.Model.SeatModel">
+        <id property="seat_id" column="seat_id"/>
+        <!-- Map seat_status column to SeatStatus enum -->
+        <result property="seat_status" column="seat_status" javaType="com.omasystem.omas.Model.Enum.SeatStatus" />
+        <result property="del_flag" column="del_flag"/>
+        <result property="dept_id" column="dept_id"/>
+        <result property="proj_id" column="proj_id"/>
+         <result property="reg_id" column="reg_id"/>
+        <result property="reg_date" column="reg_date"/>
+        <result property="update_id" column="update_id"/>
+        <result property="update_date" column="update_date"/>
+    </resultMap>
+
+<!-- select all seats -->
+    <select id="getAllSeats" resultMap="seatResultMap">
+        SELECT seat_id, seat_status, del_flag, dept_id, proj_id, reg_id, reg_date, update_id, update_date
+        FROM tbl_seat
+        WHERE del_flag = 0
+        ORDER BY seat_id ASC;
+    </select>
+<!-- select all seats by its status-->
+    <select id="getSeatStatus" resultMap="seatResultMap">
+        SELECT seat_id, seat_status, del_flag, dept_id, proj_id,  reg_id, reg_date, update_id, update_date
+         FROM tbl_seat
+        WHERE seat_status = #{seat_status}
+
+    </select>
+
+
+    <!-- <select id="getAllOccupiedSeats" resultMap="seatResultMap">
+        SELECT seat_id, seat_status, del_flag, reg_id, reg_date, update_id, update_date
+         FROM tbl_seat
+        WHERE seat_status = #{seat_status}
+
+    </select> -->
+
+    <!--Get total seats by project-->
+    <select id="getTotalSeatsByProject" resultMap="seatsByProjectResultMap">
+        SELECT
+            COUNT(reservation.seat_id) AS totalSeatsReserved
+        FROM
+            tbl_reservation AS reservation
+        INNER JOIN
+            tbl_project_mst AS proj ON reservation.proj_id = proj.proj_id
+        WHERE
+            proj.proj_id = #{projId}
+        GROUP BY
+            proj.proj_id
+    </select>
+    <resultMap id="seatsByProjectResultMap" type="Integer">
+        <result property="totalSeatsReserved" column="totalSeatsReserved"/>
+    </resultMap>
+
+
+
+<!-- added update mapper -->
+    <update id="updateSeatStatus">
+    UPDATE tbl_seat
+    SET seat_status = #{status}
+    WHERE seat_id = #{seatId}
+</update>
+
+
+<!-- getSeatWithProjectName -->
+
+   <select id="getAllSeatsWithProjectName" resultMap="seatResultMap">
+    SELECT 
+        seat.seat_id AS seat_id, 
+        seat.seat_status AS seat_status, 
+        seat.del_flag AS del_flag, 
+        seat.dept_id AS dept_id,
+        proj.proj_id AS proj_id, 
+        proj.proj_name AS proj_name, 
+        seat.reg_id AS reg_id, 
+        seat.reg_date AS reg_date, 
+        seat.update_id AS update_id, 
+        seat.update_date AS update_date
+    FROM 
+        tbl_seat AS seat
+    INNER JOIN
+        tbl_project_mst AS proj 
+        ON seat.proj_id = proj.proj_id
+    WHERE  
+        seat.del_flag = 0
+        AND proj.proj_id = #{proj_id}
+
+    ORDER BY
+        seat_id ASC;
+</select>
+
+
+
+
+</mapper>
