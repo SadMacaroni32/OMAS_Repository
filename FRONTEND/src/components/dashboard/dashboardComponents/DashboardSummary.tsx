@@ -13,10 +13,8 @@ import Paper from "@mui/material/Paper";
 import { visuallyHidden } from "@mui/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
-import { useEffect, useState } from "react";
-import { getUsersFetch } from "../../../redux/state/userState";
-import { getSeatsFetch } from "../../../redux/state/seatState";
-import { getReservationsFetch, getReservationsWithUserInfoFetch } from "../../../redux/state/reservationState";
+import { useEffect } from "react";
+import { getReservationsWithUserInfoFetch } from "../../../redux/state/reservationState";
 
 
 

@@ -9,14 +9,12 @@ import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDiss
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
 import { useEffect, useState } from "react";
-import { getSeatsFetch } from "../../../redux/state/seatState";
-import { getSeatsReservedFetch } from "../../../redux/state/seatReservedState";
+import { getTotalSeatsFetch } from "../../../redux/state/Dashboard_State/seatConditionStates/Total_Seats";
+import { getAssignedSeatsFetch } from "../../../redux/state/Dashboard_State/seatConditionStates/Assigned_Seats";
+import { getTotalAssociatesFetch } from "../../../redux/state/Dashboard_State/statusBoxesStates/Total_Associates";
+import { getReservedAssociatesFetch } from "../../../redux/state/Dashboard_State/statusBoxesStates/Reserved_Associates";
+import { getUnreservedAssociatesFetch } from "../../../redux/state/Dashboard_State/statusBoxesStates/Unreserved_Associates";
 
-interface dataFormat {
-  seat_id: number;
-  seatData: any;
-  seatReservedData: any;
-}
 export default function DashboardStatusBoxed() {
   const shadowStyle = { boxShadow: "0px 4px 10px #25476A" };
   const iconStyle = { width: "2.5vw", height: "2.5vw", color: "#25476A" };
@@ -25,32 +23,58 @@ export default function DashboardStatusBoxed() {
   const textStyle = { fontSize: "0.6vw", fontWeight: "bold" };
 
   const dispatch = useDispatch();
-  const seatData = useSelector((state: RootState) => state.seatReducer.seating);
-  const seatReservedData = useSelector(
-    (state: RootState) => state.seatReservedReducer.seatingReserved
+  const totalSeats: any = useSelector(
+    (state: RootState) => state.totalSeatsReducer.totalSeats
   );
-  const [dataState, setDataState] = useState<dataFormat | null>(null);
+  const assignedSeats: any = useSelector(
+    (state: RootState) => state.assignedSeatsReducer.assignedSeats
+  );
+  const totalAssociates: any = useSelector(
+    (state: RootState) => state.totalAssociatesReducer.totalAssociates
+  );
+  const reservedAssociates: any = useSelector(
+    (state: RootState) => state.reservedAssociatesReducer.reservedAssociates
+  );
+  const unreservedAssociates: any = useSelector(
+    (state: RootState) => state.unreservedAssociatesReducer.unreservedAssociates
+  );
+
+  const [dataState, setDataState] = useState<any | null>(null);
 
   useEffect(() => {
-    dispatch(getSeatsFetch());
-    dispatch(getSeatsReservedFetch());
+    dispatch(getTotalSeatsFetch());
+    dispatch(getAssignedSeatsFetch());
+    dispatch(getTotalAssociatesFetch());
+    dispatch(getReservedAssociatesFetch());
+    dispatch(getUnreservedAssociatesFetch());
   }, [dispatch]);
 
   // Save seatData and seatReservedData to localStorage
   useEffect(() => {
-    localStorage.setItem("seatData", JSON.stringify(seatData));
-    localStorage.setItem("seatReservedData", JSON.stringify(seatReservedData));
-  }, [seatData, seatReservedData]);
+    localStorage.setItem("Total Seats", JSON.stringify(totalSeats));
+    localStorage.setItem("Assigned Seats", JSON.stringify(assignedSeats));
+    localStorage.setItem("Total Associates", JSON.stringify(totalAssociates));
+    localStorage.setItem("Reserved Associates", JSON.stringify(reservedAssociates));
+  }, [totalSeats, assignedSeats, totalAssociates, reservedAssociates]);
 
   // Retrieve seatData and seatReservedData from localStorage on component mount
   useEffect(() => {
-    const storedSeatData = localStorage.getItem("seatData");
-    const storedSeatReservedData = localStorage.getItem("seatReservedData");
-    if (storedSeatData && storedSeatReservedData) {
+    const storedTotalSeats = localStorage.getItem("Total Seats");
+    const storedAssignedSeats = localStorage.getItem("Assigned Seats");
+    const storedTotalAssociates = localStorage.getItem("Total Associates");
+    const storedReservedAssociates = localStorage.getItem("Reserved Associates");
+    if (
+      storedTotalSeats &&
+      storedAssignedSeats &&
+      storedTotalAssociates &&
+      storedReservedAssociates
+    ) {
       setDataState({
         seat_id: 0, // Dummy value for seat_id, replace it with actual value if necessary
-        seatData: JSON.parse(storedSeatData),
-        seatReservedData: JSON.parse(storedSeatReservedData),
+        TotalSeats: JSON.parse(storedTotalSeats),
+        AssignedSeats: JSON.parse(storedAssignedSeats),
+        TotalAssociates: JSON.parse(storedTotalAssociates),
+        ReservedAssociates: JSON.parse(storedReservedAssociates),
       });
     }
   }, []);
@@ -58,14 +82,11 @@ export default function DashboardStatusBoxed() {
   {
     /* FOR CHECKING API DATA CONSOLE */
   }
-  // console.log(seatData);
-  // console.log(seatReservedData);
-
-  {
-    /* MOCK DATA FOR TESTING ONLY */
-  }
-  let totalAssoc = 100;
-  // let totalSeats = 100;
+  console.log("Total Seats", totalSeats);
+  console.log("Assigned Seats", assignedSeats);
+  console.log("Total Associates", totalAssociates);
+  console.log("Reserved Associates", reservedAssociates);
+  console.log("Unreserved Associates", unreservedAssociates);
 
   return (
     <Grid container spacing={1}>
@@ -85,7 +106,7 @@ export default function DashboardStatusBoxed() {
         >
           <EventSeatIcon sx={iconStyle} />
           <Typography variant="h6" gutterBottom m={1} sx={{ ...numberStyle }}>
-            {seatData.length}
+            {totalSeats.length}
           </Typography>
           <Typography variant="subtitle1" gutterBottom sx={{ ...textStyle }}>
             TOTAL SEATS
@@ -106,7 +127,7 @@ export default function DashboardStatusBoxed() {
         >
           <AccountBoxIcon sx={{ ...iconStyle }} />
           <Typography variant="h6" gutterBottom m={1} sx={{ ...numberStyle }}>
-            {totalAssoc} {/* MOCK DATA */}
+            {totalAssociates["Total Associates"]}
           </Typography>
           <Typography variant="subtitle1" gutterBottom sx={{ ...textStyle }}>
             TOTAL ASSOCIATES
@@ -129,7 +150,7 @@ export default function DashboardStatusBoxed() {
         >
           <AirlineSeatReclineNormalIcon sx={{ ...iconStyle }} />
           <Typography variant="h6" gutterBottom m={1} sx={{ ...numberStyle }}>
-            {seatReservedData.length}
+            {assignedSeats.length}
           </Typography>
           <Typography variant="subtitle1" gutterBottom sx={{ ...textStyle }}>
             OCCUPIED SEATS
@@ -150,7 +171,7 @@ export default function DashboardStatusBoxed() {
         >
           <InsertEmoticonIcon sx={{ ...iconStyle }} />
           <Typography variant="h6" gutterBottom m={1} sx={{ ...numberStyle }}>
-            {seatReservedData.length}
+            {assignedSeats.length}
           </Typography>
           <Typography variant="subtitle1" gutterBottom sx={{ ...textStyle }}>
             WITH SEATS ASSIGNED
@@ -173,7 +194,7 @@ export default function DashboardStatusBoxed() {
         >
           <ChairAltIcon sx={{ ...iconStyle }} />
           <Typography variant="h6" gutterBottom m={1} sx={{ ...numberStyle }}>
-            {seatData.length - seatReservedData.length} {/* MOCK DATA */}
+            {totalSeats.length - assignedSeats.length} {/* MOCK DATA */}
           </Typography>
           <Typography variant="subtitle1" gutterBottom sx={{ ...textStyle }}>
             AVAILABLE SEATS
@@ -194,7 +215,7 @@ export default function DashboardStatusBoxed() {
         >
           <SentimentVeryDissatisfiedIcon sx={{ ...iconStyle }} />
           <Typography variant="h6" gutterBottom m={1} sx={{ ...numberStyle }}>
-            {totalAssoc - seatReservedData.length} {/* MOCK DATA */}
+            {unreservedAssociates["Total unassigned seats"]} {/* MOCK DATA */}
           </Typography>
           <Typography variant="subtitle1" gutterBottom sx={{ ...textStyle }}>
             WITHOUT ASSIGNED SEATS
