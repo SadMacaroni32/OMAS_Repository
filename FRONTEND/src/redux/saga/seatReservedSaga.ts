@@ -3,7 +3,7 @@ import { call, put, takeEvery } from "redux-saga/effects";
 import { getSeatsReservedSuccess } from "../state/seatReservedState";
 
   
-  // Fetch Reserved Seats
+  // Fetch Notes with User Info
   function* fetchReservedSeats(): any {
     try {
 
