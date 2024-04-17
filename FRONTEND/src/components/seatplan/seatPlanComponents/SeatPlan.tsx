@@ -35,6 +35,9 @@ const SeatPlan: React.FC = () => {
   //reset state
   const [reset, setReset] = useState(false);
 
+  // Add a state variable to track whether the effect has already been run
+  const [isEffectRun, setIsEffectRun] = useState(false);
+
   //get users for seat reservation
   const userData = useSelector(
     (state: RootState) => state.reservationReducer.reservationWithUserInfo
@@ -69,6 +72,8 @@ const SeatPlan: React.FC = () => {
     );
   });
 
+  console.log(reservationsData);
+
   // Fetch user information using emp_id
   const getUserInfo = (empId) => {
     const user = userData.find((user) => user.emp_id === empId);
@@ -96,8 +101,6 @@ const SeatPlan: React.FC = () => {
     return startTimeUTC.getUTCHours() >= 12 && startTimeUTC.getUTCHours() < 24; // Check if hours are between 18 (6:00 PM) and 23 (11:59 PM)
   });
 
-
-
   useEffect(() => {
     dispatch(getUsersFetch());
     dispatch(getSeatsFetch());
@@ -105,7 +108,52 @@ const SeatPlan: React.FC = () => {
     dispatch(getReservationsWithUserInfoFetch());
   }, [dispatch]);
 
- 
+  useEffect(() => {
+    const currentTime = new Date();
+
+    // Function to update reservation status to "available" if end time has passed
+    const updateReservationStatus = (reservation: any) => {
+      const endTime = new Date(reservation.end_date);
+      const startTime = new Date(reservation.start_date);
+      const seatId = reservation.seat_id;
+
+      // Convert start and end dates to UTC
+      const utcStartTime = new Date(
+        startTime.getTime() + startTime.getTimezoneOffset() * 60000
+      );
+      const utcEndTime = new Date(
+        endTime.getTime() + endTime.getTimezoneOffset() * 60000
+      );
+
+      if (utcEndTime < currentTime) {
+        // Format dates as strings in the required format
+        const formattedStartTime = utcStartTime.toISOString();
+        const formattedEndTime = utcEndTime.toISOString();
+
+        // Dispatch action to update reservation status to "available"
+        dispatch(
+          updateReservationStatusFetch({
+            seatId,
+            start_date: formattedStartTime,
+            end_date: formattedEndTime,
+          })
+        );
+      }
+    };
+
+    // Run the effect only if it hasn't been run before
+    if (!isEffectRun) {
+      // Update reservations in reservationsAM array
+      reservationsAM.forEach(updateReservationStatus);
+
+      // Update reservations in reservationsPM array
+      reservationsPM.forEach(updateReservationStatus);
+
+      // Set isEffectRun to true to indicate that the effect has been run
+      setIsEffectRun(true);
+    }
+  }, [dispatch, isEffectRun, reservationsAM, reservationsPM]); // Added isEffectRun to dependency array
+
   const currentTime = new Date(); // Get the current time
 
   const columnData = [
