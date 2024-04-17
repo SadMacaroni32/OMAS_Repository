@@ -1,38 +1,63 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BarChart } from "@mui/x-charts/BarChart";
 import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper/Paper";
+import Paper from "@mui/material/Paper";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../redux/store/store";
+import { getTotalSeatsFetch } from "../../../redux/state/Dashboard_State/seatConditionStates/Total_Seats";
+import { getAssignedSeatsFetch } from "../../../redux/state/Dashboard_State/seatConditionStates/Assigned_Seats";
+import { getRepairSeatsFetch } from "../../../redux/state/Dashboard_State/seatConditionStates/Repair_Seats";
 
-interface seatData {
-  occupied: number;
-  available: number;
-  underRepair: number;
-}
+const DashboardSeatCondition = () => {
+  const dispatch = useDispatch();
+  const totalSeats = useSelector((state: RootState) => state.totalSeatsReducer.totalSeats);
+  const totalAssignedSeats = useSelector((state: RootState) => state.assignedSeatsReducer.assignedSeats);
+  const totalRepairSeats = useSelector((state: RootState) => state.repairSeatsReducer.repairSeats);
 
-interface propData {
-  data: seatData;
-}
+  useEffect(() => {
+    dispatch(getTotalSeatsFetch());
+    dispatch(getAssignedSeatsFetch());
+    dispatch(getRepairSeatsFetch());
+  }, [dispatch]);
 
-const DashboardSeatCondition: React.FC<propData> = ({ data }) => {
-  const paperStyle = { m: 1, p: 2, width: "100%", overflow: "hidden" };
+  useEffect(() => {
+    localStorage.setItem("totalSeats", JSON.stringify(totalSeats));
+    localStorage.setItem("totalAssignedSeats", JSON.stringify(totalAssignedSeats));
+    localStorage.setItem("totalRepairSeats", JSON.stringify(totalRepairSeats));
+  }, [totalSeats, totalAssignedSeats, totalRepairSeats]);
 
-  const shadowStyle = { boxShadow: "0px 4px 10px #25476A" };
+  const [data, setData] = useState({
+    available: 0,
+    occupied: 0,
+    underRepair: 0,
+  });
 
-  const chartStyle = { width: "100%", height: "100%" };
+  useEffect(() => {
+    if (totalSeats && totalAssignedSeats) {
+      setData({
+        available: totalSeats.length - totalAssignedSeats.length,
+        occupied: totalAssignedSeats.length,
+        underRepair: totalRepairSeats.length,
+      });
+    }
+  }, [totalSeats, totalAssignedSeats, totalRepairSeats]);
+
+  // console.log("Total Seats", totalSeats);
+  // console.log("Total Assigned Seats", totalAssignedSeats);
+  // console.log("Total Repair Seats", totalRepairSeats);
 
   return (
-    <Paper elevation={6} sx={{ ...paperStyle, ...shadowStyle }}>
-      <Grid item xs={3}>
+    <Paper elevation={6} style={{ margin: 8, padding: 16 }}>
+      <Grid container justifyContent="center">
         <BarChart
           xAxis={[{ scaleType: "band", data: ["Office Seating Status"] }]}
           series={[
-            { data: [data.occupied], label: "Occupied" },
             { data: [data.available], label: "Available" },
+            { data: [data.occupied], label: "Occupied" },
             { data: [data.underRepair], label: "Under Repair" },
           ]}
           width={500}
           height={380}
-          sx={{ ...chartStyle }} // Apply style directly to BarChart
         />
       </Grid>
     </Paper>
