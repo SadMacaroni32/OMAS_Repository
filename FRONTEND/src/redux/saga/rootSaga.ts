@@ -33,7 +33,6 @@ export default function* rootSaga() {
     watchFetchUsers(),
     fetchReservationsDate(),
     reservationsSagaDate(),
-    reservationWithUserInfoSaga(),
     getUserIdSaga(),
 
     getRecentCommentsSaga(),
