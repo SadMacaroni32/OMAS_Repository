@@ -38,7 +38,6 @@ export default function* rootSaga() {
     PrincipalWithReservationInfoSaga(),
     getUserIdSaga(),
 
-    reservationWithUserInfoSaga(),
     addReservationsSaga(),
     getRecentCommentsSaga(),
     getStatusBoxesSaga(),
