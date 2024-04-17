@@ -40,26 +40,30 @@ public class PrincipalRestController {
     @Autowired
     private UserDao userDao;
 
+    // Retrieves the username of the currently authenticated user
     private String getCurrentSession() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getName();
     }
 
-    /*Gets the logged in user's info */
+    /* Gets the logged in user's info */
     @GetMapping("/info")
     public Map<String, Object> getPrincipalInfo() {
+        // Retrieves information about the currently authenticated user
         return principalService.getPrincipalInfo();
     }
 
-    /*Gets the list of users *For admin* */
+    /* Gets the list of users *For admin* */
     @GetMapping("/all")
     public ResponseEntity<List<PrincipalModel>> getAllPrincipalUsers() {
+        // Retrieves the list of all principal users (for admin purposes)
         return principalService.getAllPrincipalUsers();
     }
 
-    /*Get the list of reservations by logged in user */
+    /* Get the list of reservations by logged in user */
     @GetMapping("/reservation")
     public List<ReservationModel> getPrincipalReservation() {
+        // Retrieves reservations associated with the currently authenticated user
         String session = getCurrentSession(); // Get the current session
         if (session == null || session.isEmpty()) {
             // Handle the case where session is empty or null, such as returning an error
@@ -78,10 +82,12 @@ public class PrincipalRestController {
         return reservationService.getReservationByEmpId(empId);
     }
 
-    /*Gets the logged in user's reservation by reservation id */
+    /* Gets the logged in user's reservation by reservation id */
     @PutMapping("/reservation/{reservationId}")
     public ResponseEntity<Map<String, Object>> updateReservation(@PathVariable Long reservationId,
             @RequestBody ReservationInputBodyModel body) {
+        // Updates the reservation details
+        
         // Retrieve the current user based on the session
         UserModel currentUser = userDao.getPrincipal(getCurrentSession());
 

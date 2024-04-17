@@ -10,7 +10,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReservationInputBodyModel {
-    private String emp_id, note;
-    private int seat_id, proj_id;
-    private Timestamp start_date, end_date;
+    private String emp_id; // Employee ID
+    private String note; // Note associated with the reservation
+    private int seat_id; // Seat ID for the reservation
+    private int proj_id; // Project ID for the reservation
+    private Timestamp start_date; // Start date of the reservation
+    private Timestamp end_date; // End date of the reservation
 }

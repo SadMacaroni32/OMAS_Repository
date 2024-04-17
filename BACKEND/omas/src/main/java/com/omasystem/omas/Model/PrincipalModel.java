@@ -8,6 +8,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PrincipalModel {
-    private Long emp_id;
-    private String username, first_name, middle_name, last_name, position_name, project_name, img_src;
+    private Long emp_id; // Employee ID
+    private String username; // Username
+    private String first_name; // First name
+    private String middle_name; // Middle name
+    private String last_name; // Last name
+    private String position_name; // Position name
+    private String project_name; // Project name
+    private String img_src; // Image source
 }

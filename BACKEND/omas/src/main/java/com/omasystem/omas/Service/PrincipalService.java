@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import com.omasystem.omas.Dao.PrincipalDao;
 import com.omasystem.omas.Model.PrincipalModel;
-import com.omasystem.omas.Model.UserModel;
 
 @Service
 public class PrincipalService {

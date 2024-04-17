@@ -29,40 +29,40 @@ import lombok.NoArgsConstructor;
 public class tbl_user implements UserDetails {
 
     @Id
-    private String emp_id;
-    private String username;
-    private String password;
-    private int position_id;
-    private int dept_id;
-    private int section_id;
-    private String status_code;
-    private int role_id;
-    private String img_src;
+    private String emp_id; // Employee ID
+    private String username; // Username
+    private String password; // Password
+    private int position_id; // Position ID
+    private int dept_id; // Department ID
+    private int section_id; // Section ID
+    private String status_code; // Status code
+    private int role_id; // Role ID
+    private String img_src; // Image source
 
     @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return true; // Account non-expiration status
     }
     @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return true; // Account non-locked status
     }
     @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return true; // Credentials non-expiration status
     }
     @JsonIgnore
     @Override
     public boolean isEnabled() {
-        return true;
+        return true; // Account enabled status
     }
     @JsonIgnore
     @Enumerated(EnumType.STRING)
     @Transient
-    private Role role;
+    private Role role; // User role
     
     @JsonIgnore
     @Override
