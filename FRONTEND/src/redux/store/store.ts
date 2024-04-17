@@ -7,8 +7,8 @@ import { reservationReducer, reservationsReducer, reservationsDateReducer } from
 import { seatReducer } from "../state/seatState";
 import { seatReservedReducer } from "../state/seatReservedState";
 
-import  usersReducer  from "../state/usersState";
-import { reservationIdsSlice } from "../state/datesReservedState";
+// import  usersReducer  from "../state/usersState";
+// import { reservationIdsSlice } from "../state/datesReservedState";
 
 import { recentCommentsReducer } from "../state/Dashboard_State/recentCommentsState";
 import { statusBoxesReducer } from "../state/Dashboard_State/statusBoxesState";
@@ -20,6 +20,7 @@ import { repairSeatsReducer } from "../state/Dashboard_State/seatConditionStates
 import { totalAssociatesReducer } from "../state/Dashboard_State/statusBoxesStates/Total_Associates";
 import { reservedAssociatesReducer } from "../state/Dashboard_State/statusBoxesStates/Reserved_Associates";
 import { unreservedAssociatesReducer } from "../state/Dashboard_State/statusBoxesStates/Unreserved_Associates";
+import { viewReservationReducer } from "../state/viewReservationState";
 
 const saga = createSagaMiddleware();
 export const store = configureStore({
@@ -46,6 +47,9 @@ export const store = configureStore({
 
     //reservations state
     // reservationIdsReducer: reservationIdsSlice.reducer,
+
+    //View Appointment
+    viewReservationReducer:viewReservationReducer,
 
     //Dashboard States
     recentCommentsReducer: recentCommentsReducer,
