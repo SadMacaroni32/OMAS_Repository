@@ -13,7 +13,7 @@ import Paper from "@mui/material/Paper";
 import { visuallyHidden } from "@mui/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getReservationsWithUserInfoFetch } from "../../../redux/state/reservationState";
 
 function createData(emp_id: number, client_sn: string, seat_id: number): any {
@@ -64,10 +64,10 @@ function stableSort<T>(
 }
 
 export default function DashboardSummary() {
-  const [order, setOrder] = React.useState<Order>("asc");
-  const [orderBy, setOrderBy] = React.useState<keyof any>("client_sn");
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [order, setOrder] = useState<Order>("asc");
+  const [orderBy, setOrderBy] = useState<keyof any>("client_sn");
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const shadowStyle = { boxShadow: "0px 4px 10px #25476A" };
 
   const dispatch = useDispatch();
