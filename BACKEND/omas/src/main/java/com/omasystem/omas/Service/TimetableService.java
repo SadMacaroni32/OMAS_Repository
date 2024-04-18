@@ -132,13 +132,13 @@ public class TimetableService {
         
                     for (SeatModel seatReservation: seatReservations) {
                         Map<String, Object> startReservationMap = new HashMap<>();
-                        startReservationMap.put("Seat ID", seatReservation.getSeat_id());
-                        startReservationMap.put("Seat Status", seatReservation.getSeat_status());
-                        startReservationMap.put("Department ID", seatReservation.getDept_id());
-                        startReservationMap.put("Project ID", seatReservation.getProj_id());
-                        startReservationMap.put("Registration Date", seatReservation.getReg_date());
-                        startReservationMap.put("Registration ID", seatReservation.getReg_id());
-                        startReservationMap.put("Total Seats Reserved", seatReservation.getTotalSeatsReserved());
+                        startReservationMap.put("seat_id", seatReservation.getSeat_id());
+                        startReservationMap.put("seat_status", seatReservation.getSeat_status());
+                        startReservationMap.put("dept_id", seatReservation.getDept_id());
+                        startReservationMap.put("proj_id", seatReservation.getProj_id());
+                        startReservationMap.put("reg_date", seatReservation.getReg_date());
+                        startReservationMap.put("reg_id", seatReservation.getReg_id());
+                        startReservationMap.put("total_seats_reserved", seatReservation.getTotalSeatsReserved());
                         stringList.add(startReservationMap);
                     }
         
