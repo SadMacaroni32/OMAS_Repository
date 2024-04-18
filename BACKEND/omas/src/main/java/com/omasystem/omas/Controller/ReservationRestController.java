@@ -52,7 +52,7 @@ public class ReservationRestController {
     }
 
     // Updates seat's status into fixed
-    @PutMapping("/{seat_id}/Fixed")
+    @PutMapping("/{seat_id}/fixed")
     public Map<String, Object> FixedSeat( @PathVariable Long seat_id, @RequestBody ReservationInputBodyModel body)
    {
         // Updates seat's status into fixed
