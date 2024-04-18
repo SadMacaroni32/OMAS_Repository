@@ -114,7 +114,7 @@ const YearView = ({ seat_id }) => {
                                   ? dateIndex - firstDayOfMonth + 1
                                   : "";
                               return (
-                                <TableCell1
+                                <TableCell
                                   key={`${day}-${rowIndex}-${columnIndex}`}
                                   align="center"
                                   style={{ cursor: "pointer" }}
