@@ -1,20 +1,9 @@
-// Import React, useEffect, useState, useSelector, useDispatch
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
-// Import fetchReservationsRequest action from reservationState
 import { fetchReservationsRequest } from './../../redux/state/reservationState';
-
-// Import Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField, IconButton, InputAdornment from Material-UI
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField, IconButton, InputAdornment } from '@mui/material';
-
-// Import RootState
 import { RootState } from '../../redux/store/store';
-
-// Import getUsersFetch, getUsersSuccess action from userState
 import { getUsersFetch, getUsersSuccess } from '../../redux/state/userState';
-
-// Import SearchIcon from Material-UI
 import SearchIcon from '@mui/icons-material/Search';
 
 const ReservationList = () => {
@@ -80,8 +69,9 @@ const ReservationList = () => {
                 <TableCell>{`${reservation.first_name} ${reservation.last_name}`}</TableCell>
                 <TableCell>{reservation.seat_id}</TableCell>
                 <TableCell>{reservation.client_sn}</TableCell>
-                <TableCell>{new Date(reservation.start_date).toLocaleString()}</TableCell>
-                <TableCell>{new Date(reservation.end_date).toLocaleString()}</TableCell>
+                <TableCell>{new Date(reservation.start_date).toLocaleString('en-US', { timeZone: 'UTC' })}</TableCell>
+<TableCell>{new Date(reservation.end_date).toLocaleString('en-US', { timeZone: 'UTC' })}</TableCell>
+
                 <TableCell>{reservation.position_sn}</TableCell>
               </TableRow>
             ))}
