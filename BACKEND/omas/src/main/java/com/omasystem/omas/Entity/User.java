@@ -28,9 +28,9 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "tbl_user")
 public class User implements UserDetails {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // User ID
 
     private String username; // Username
     private String password; // Password
