@@ -71,22 +71,15 @@ export default function DashboardSummary() {
   const shadowStyle = { boxShadow: "0px 4px 10px #25476A" };
 
   const dispatch = useDispatch();
-  // const seatData: Data[] = useSelector(
-  //   (state: RootState) => state.seatReducer.seating
-  // );
   const seatData: any = useSelector(
     (state: RootState) => state.reservationReducer.reservationWithUserInfo
   );
 
-  // useEffect(() => {
-  //   dispatch(getSeatsFetch());
-  // }, [dispatch]);
   useEffect(() => {
     dispatch(getReservationsWithUserInfoFetch());
   }, [dispatch]);
 
   useEffect(() => {
-    // Retrieve table state from localStorage
     const storedState = localStorage.getItem("tableState");
     if (storedState) {
       const { order, orderBy, page, rowsPerPage } = JSON.parse(storedState);
@@ -109,7 +102,6 @@ export default function DashboardSummary() {
           seat_count: 0,
         };
       }
-      // Increment seat_count by 1 for each seat encountered
       rowsByDept[item.client_sn].seat_count++;
     });
   }
@@ -151,30 +143,19 @@ export default function DashboardSummary() {
   );
 
   useEffect(() => {
-    // Save table state to localStorage
     localStorage.setItem(
       "tableState",
       JSON.stringify({ order, orderBy, page, rowsPerPage, rows })
     );
   }, [order, orderBy, page, rowsPerPage, rows]);
 
-  //console.log("Dashboard Summary", seatData);
   return (
-    <Box sx={{ width: "100%", borderRadius: "5px", ...shadowStyle }}>
-      <Paper sx={{ borderRadius: "5px" }}>
-        <TableContainer>
-          <Table
-            sx={{ minWidth: 100 }}
-            aria-labelledby="tableTitle"
-            size="medium"
-          >
+    <Box sx={{ width: "38rem", height: "26.4rem", borderRadius: "5px", ...shadowStyle }}>
+      <Paper sx={{ display: "flex", flexDirection: "column", width: "38rem", height: "26.4rem", borderRadius: "5px" }}>
+        <TableContainer component={Box} sx={{ flexGrow: 1 }}>
+          <Table aria-labelledby="tableTitle" size="medium">
             <TableHead>
-              <Typography
-                sx={{ m: 1 }}
-                variant="h6"
-                id="tableTitle"
-                component="div"
-              >
+              <Typography sx={{ m: 1 }} variant="h6" id="tableTitle" component="div">
                 Summary
               </Typography>
               <TableRow>
@@ -187,9 +168,7 @@ export default function DashboardSummary() {
                     Project Name
                     {orderBy === "client_sn" ? (
                       <Box component="span" sx={visuallyHidden}>
-                        {order === "desc"
-                          ? "sorted descending"
-                          : "sorted ascending"}
+                        {order === "desc" ? "sorted descending" : "sorted ascending"}
                       </Box>
                     ) : null}
                   </TableSortLabel>
@@ -203,9 +182,7 @@ export default function DashboardSummary() {
                     Seats
                     {orderBy === "seat_id" ? (
                       <Box component="span" sx={visuallyHidden}>
-                        {order === "desc"
-                          ? "sorted descending"
-                          : "sorted ascending"}
+                        {order === "desc" ? "sorted descending" : "sorted ascending"}
                       </Box>
                     ) : null}
                   </TableSortLabel>
@@ -237,6 +214,7 @@ export default function DashboardSummary() {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
+          sx={{ mt: "auto", borderTop: "1px solid rgba(224, 224, 224, 1)" }}
         />
       </Paper>
     </Box>
