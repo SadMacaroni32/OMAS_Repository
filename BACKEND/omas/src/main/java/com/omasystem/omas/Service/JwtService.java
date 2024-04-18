@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map; 
 import java.util.function.Function; 
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service; 
 
@@ -20,9 +21,13 @@ import io.jsonwebtoken.security.Keys;
 @Service 
 public class JwtService {
 
-        // Constant for secret key
-        private static final String SECRET_KEY = "2DF99D8DD11121113A190E6A0C4BC0959E4A8F686C8A722F159D7B3FB0972EBCFB9AB27A94B1C79E0B833293B959AC2F82597E12F42659C852E73A1A4BB76F60F896193656475852EDC76B5A1A09434E41C491410E933F1E3710026401F6C98E77477B1CE680A9E9580BD5C75DA7845655BAE379E6E46D40E96E5884F8A34202";
+        // Fetching jwt secret from properties
+        @Value("${jwt.secret}")
+        private String jwtSecret;
     
+        public String getJwtSecret() {
+            return jwtSecret;
+        }
         // Method to extract username from token
         public String extractUsername(String token) {
             // Extracting subject from claims
@@ -91,7 +96,7 @@ public class JwtService {
         // Method to get signing key
         private Key getSignInKey() {
             // Decoding secret key, creating HMAC-SHA signing key and returning it
-            byte[] KeyBytes = Decoders.BASE64.decode(SECRET_KEY);
+            byte[] KeyBytes = Decoders.BASE64.decode(jwtSecret);
             return Keys.hmacShaKeyFor(KeyBytes);
         }
     

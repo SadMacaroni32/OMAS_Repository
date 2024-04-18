@@ -29,6 +29,7 @@ import { current } from "@reduxjs/toolkit";
 import { fetchReservationsRequest } from "../../redux/state/reservationState";
 import YearView from "./YearView";
 import AddAppointment from "./AddAppointment";
+import { RootState } from "../../redux/store/store";
 
 const daysOfWeek = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Frid", "Sat"];
 const monthsOfYear = [
@@ -50,7 +51,7 @@ const options = ["Years", "Months", "Weeks", "Reservation List"];
 const Calendar = ({ seat_id, setShowTimeTablePage }) => {
   // Retrieve reservations from Redux store using useSelector
   const reservations = useSelector(
-    (state) => state.reservationsReducer.reservations
+    (state: RootState) => state.reservationsReducer.reservations
   );
 
   // Dispatch action to fetch reservations when component mounts
@@ -62,7 +63,7 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
 
   console.log("mga reserved",(reservations));
 
-  console.log("Redux State:", useSelector((state) => state.reservationsReducer));
+  console.log("Redux State:", useSelector((state: RootState) => state.reservationsReducer));
 
   const [openList, setOpenList] = useState(false);
   const handleOpenList = () => setOpenList(true);
@@ -181,34 +182,30 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
   }
 
   // Generate calendar grid with reservation IDs
-const calendarGridWithReservations = calendarGrid.map((week, i) => (
-  <Grid
-    container
-    item
-    key={i}
-    spacing={1}
-    sx={{ height: 120 }}
-    justifyContent="center"
-  >
-    {week.map((day, index) => {
-      const reservationsForDay = reservations.filter((reservation) => {
-        const reservationDate = new Date(reservation.start_date);
-        // Strip time portion from reservation date
-        reservationDate.setHours(0, 0, 0, 0);
-        const dayDate = day.date;
-        if (dayDate) {
-          // Strip time portion from day date
-          dayDate.setHours(0, 0, 0, 0);
-          return (
-            reservationDate.getTime() === dayDate.getTime() &&
-            reservation.seat_id === seat_id
-          );
-        }
-        return false;
-      });
-
-      return (
-        <Grid
+  const calendarGridWithReservations = calendarGrid.map((week, i) => (
+    <Grid
+      container
+      item
+      key={i}
+      spacing={1}
+      sx={{ height: 120 }}
+      justifyContent="center"
+    >
+      {week.map((day, index) => {
+        const reservationsForDay = reservations.filter((reservation) => {
+          const reservationStartDate = new Date(reservation.start_date);
+          reservationStartDate.setHours(0, 0, 0, 0); // Reset time to midnight
+          const reservationEndDate = new Date(reservation.end_date);
+          reservationEndDate.setHours(0, 0, 0, 0); // Reset time to midnight
+          const dayDate = day.date;
+          if (dayDate && dayDate >= reservationStartDate && dayDate <= reservationEndDate) {
+            return reservation.seat_id === seat_id;
+          }
+          return false;
+        });
+  
+        return (
+          <Grid
           flexWrap={1}
           sx={{
             borderRadius: 4,
@@ -217,6 +214,7 @@ const calendarGridWithReservations = calendarGrid.map((week, i) => (
             borderColor: "#25476A",
             cursor: "pointer",
             width: `${100 / 7}%`, // Distribute equally across 7 days
+            height: "100%", // Full height of the container
             backgroundColor:
               day.date && day.date.getMonth() !== currentMonth
                 ? "#EEEEEE"
@@ -235,19 +233,16 @@ const calendarGridWithReservations = calendarGrid.map((week, i) => (
           {day.dayOfMonth}
           {reservationsForDay.length > 0 && (
             <Typography flexWrap={1}>
-              Reserved IDs:{" "}
-              {reservationsForDay.map((reservation) => reservation.first_name).join(", ")
-              
-              
-              }
-        
+              {reservationsForDay.map((reservation) => reservation.reservation_id).join(", ")}
             </Typography>
           )}
         </Grid>
-      );
-    })}
-  </Grid>
-));
+        );
+      })}
+    </Grid>
+  ));
+  
+  
 
 
   const handleChangeMonth = (event: { target: { value: any } }) => {
@@ -281,6 +276,8 @@ const calendarGridWithReservations = calendarGrid.map((week, i) => (
 
   return (
     <div>
+
+      
     <Grid
       container
       spacing={1}
@@ -301,6 +298,11 @@ const calendarGridWithReservations = calendarGrid.map((week, i) => (
         alignItems: "center", // Center the content vertically
       }}
     >
+      <Grid item xs={12}>
+      <Typography variant="h4">
+        Seat Number: {seat_id}
+      </Typography>
+      </Grid>
       {/* "X" button to close modal */}
       <IconButton
         sx={{
@@ -407,7 +409,8 @@ const calendarGridWithReservations = calendarGrid.map((week, i) => (
 
         <Button onClick={handleOpenAddAppointment} sx={{marginLeft:2}}>Add Appointment</Button>
       </Grid>
-
+      
+      
       <Typography variant="h3" ml={2}>
         {monthsOfYear[currentMonth]} {currentYear}
       </Typography>
@@ -447,7 +450,7 @@ const calendarGridWithReservations = calendarGrid.map((week, i) => (
       >
         <Box
           sx={{
-            width: "90%",
+            width: "70%",
             position: "absolute",
             top: "50%",
             left: "50%",
@@ -471,9 +474,7 @@ const calendarGridWithReservations = calendarGrid.map((week, i) => (
 
       
 
-      <Typography className="text-[3rem] font-bold">
-        ETO YUNG SEAT ID: {seat_id}
-      </Typography>
+      
       
     </Grid>
     <Modal open={openYearView} onClose={handleCloseYearView} >

@@ -151,9 +151,44 @@ public class ReservationService {
             reservationDao.insertReservation(bodyContainer); // Inserting reservation into database
 
             // Update seat status to "occupied"
-            seatDao.updateSeatStatus(seat_id, SeatStatus.occupied); // Updating seat status in DAO
+            // seatDao.updateSeatStatus(seat_id, SeatStatus.available); // Updating seat status in DAO
 
             response.put("message", "Reservation Added Successfully"); // Setting success message in response
+        } catch (Exception e) { // Catching any exceptions
+            response.put("message", e.getMessage()); // Setting error message in response
+        }
+        return response; // Returning response
+    }
+
+      // Seats under restoration
+      public Map<String, Object> ReservedToOccupied (Long seat_id, ReservationInputBodyModel body) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); // Getting authentication information
+
+        ReservationInputBodyModel bodyContainer = new ReservationInputBodyModel(); // Initializing reservation body container
+
+        UserModel principal = userDao.getPrincipal(authentication.getName()); // Retrieving current user details
+
+        UserProjectModel currentProjectOfUser = userProjectDao.getProjectInvolvedOfUser(String.valueOf(principal.getEmp_id())); // Retrieving current user's project
+
+        if (currentProjectOfUser != null) { // Checking if user is associated with a project
+            bodyContainer.setProj_id(currentProjectOfUser.getProj_id()); // Setting project ID in body container
+        } else {
+            bodyContainer.setProj_id(1); // Setting default project ID
+        }
+
+        try {
+            bodyContainer.setEmp_id(String.valueOf(principal.getEmp_id())); // Setting employee ID in body container
+            bodyContainer.setSeat_id(Integer.parseInt(seat_id.toString())); // Setting seat ID in body container
+            bodyContainer.setStart_date(body.getStart_date()); // Setting start date in body container
+            bodyContainer.setEnd_date(body.getEnd_date()); // Setting end date in body container
+            bodyContainer.setNote(body.getNote()); // Setting note in body container
+
+            reservationDao.insertReservation(bodyContainer); // Inserting reservation into database
+
+            // Update seat status to "repairing"
+            seatDao.updateSeatStatus(seat_id, SeatStatus.occupied); // Updating seat status in DAO
+
+            response.put("message", "Seat is occupied"); // Setting success message in response
         } catch (Exception e) { // Catching any exceptions
             response.put("message", e.getMessage()); // Setting error message in response
         }
