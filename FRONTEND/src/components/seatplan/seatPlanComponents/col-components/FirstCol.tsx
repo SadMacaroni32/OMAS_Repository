@@ -2,6 +2,7 @@ const FirstCol: React.FC = ({
   seatPlan,
   getUserInfo,
   currentTime,
+  todayReservations,
   reservationsAM,
   reservationsPM,
   setShowTimeTablePage,
@@ -10,6 +11,7 @@ const FirstCol: React.FC = ({
   occupied,
   underRepair,
 }) => {
+  console.log("This is Column 1 Todays Reservations: ", todayReservations);
   return (
     <div className="flex gap-x-1 h-[90%]">
       <div className="flex flex-col justify-between ">
@@ -52,9 +54,9 @@ const FirstCol: React.FC = ({
                   setSeatId(seat_id);
                 }}
                 className={`w-[6rem] h-[6rem] border-[.1rem] drop-shadow-sm shadow-sm cursor-pointer px-1 relative ${
-                  (available && seat_status === "available") ||
-                  (occupied && seat_status === "occupied") ||
-                  (underRepair && seat_status === "repairing")
+                  (available && !reservationAM) ||
+                  (occupied && reservationAM && !underRepair) ||
+                  (underRepair && reservationAM && underRepair)
                     ? ""
                     : "opacity-50"
                 } `}>
@@ -82,7 +84,7 @@ const FirstCol: React.FC = ({
                                 ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
                                 : ""
                             }></span>
-                          {seat_status}
+                          {todayReservations ? "available" : seat_status}
                         </div>
                       )}
                     </>
@@ -103,7 +105,7 @@ const FirstCol: React.FC = ({
                               ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
                               : ""
                           }></span>
-                        {seat_status}
+                        {todayReservations ? "available" : seat_status}
                       </div>
                     </>
                   )}
@@ -156,9 +158,9 @@ const FirstCol: React.FC = ({
                   setSeatId(seat_id);
                 }}
                 className={`w-[6rem] h-[6rem] border-[.1rem] drop-shadow-sm shadow-sm cursor-pointer px-1 relative ${
-                  (available && seat_status === "available") ||
-                  (occupied && seat_status === "occupied") ||
-                  (underRepair && seat_status === "repairing")
+                  (available && !reservationAM) ||
+                  (occupied && reservationAM && !underRepair) ||
+                  (underRepair && reservationAM && underRepair)
                     ? ""
                     : "opacity-50"
                 }`}>
@@ -186,7 +188,7 @@ const FirstCol: React.FC = ({
                                 ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
                                 : ""
                             }></span>
-                          {seat_status}
+                          {todayReservations ? "available" : seat_status}
                         </div>
                       )}
                     </>
@@ -207,7 +209,7 @@ const FirstCol: React.FC = ({
                               ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
                               : ""
                           }></span>
-                        {seat_status}
+                        {todayReservations ? "available" : seat_status}
                       </div>
                     </>
                   )}
@@ -259,9 +261,9 @@ const FirstCol: React.FC = ({
                   setSeatId(seat_id);
                 }}
                 className={`w-[6rem] h-[6rem] border-[.1rem] drop-shadow-sm shadow-sm cursor-pointer px-1 relative ${
-                  (available && seat_status === "available") ||
-                  (occupied && seat_status === "occupied") ||
-                  (underRepair && seat_status === "repairing")
+                  (available && !reservationAM) ||
+                  (occupied && reservationAM && !underRepair) ||
+                  (underRepair && reservationAM && underRepair)
                     ? ""
                     : "opacity-50"
                 }`}>
@@ -289,7 +291,7 @@ const FirstCol: React.FC = ({
                                 ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
                                 : ""
                             }></span>
-                          {seat_status}
+                          {todayReservations ? "available" : seat_status}
                         </div>
                       )}
                     </>
@@ -310,7 +312,7 @@ const FirstCol: React.FC = ({
                               ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
                               : ""
                           }></span>
-                        {seat_status}
+                        {todayReservations ? "available" : seat_status}
                       </div>
                     </>
                   )}
@@ -365,9 +367,9 @@ const FirstCol: React.FC = ({
                 setSeatId(seat_id);
               }}
               className={`w-[6rem] h-[6rem] border-[.1rem] drop-shadow-sm shadow-sm cursor-pointer px-1 relative ${
-                (available && seat_status === "available") ||
-                (occupied && seat_status === "occupied") ||
-                (underRepair && seat_status === "repairing")
+                (available && !reservationAM) ||
+                (occupied && reservationAM && !underRepair) ||
+                (underRepair && reservationAM && underRepair)
                   ? ""
                   : "opacity-50"
               }`}>
@@ -399,7 +401,7 @@ const FirstCol: React.FC = ({
                               ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
                               : ""
                           }></span>
-                        {seat_status}
+                        {todayReservations ? "available" : seat_status}
                       </div>
                     )}
                   </>
@@ -416,7 +418,7 @@ const FirstCol: React.FC = ({
                             ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
                             : ""
                         }></span>
-                      {seat_status}
+                      {todayReservations ? "available" : seat_status}
                     </div>
                   </>
                 )}
