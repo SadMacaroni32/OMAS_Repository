@@ -20,9 +20,7 @@ public class TimetableService {
 
     // Get the list of all reservations
     Map<String, Object> reservationResponse = new HashMap<String, Object>();
-    public Map<String, Object> getAllReservations()
-
-    {
+    public Map<String, Object> getAllReservations() {
         try {
             List<TimetableModel> reservations = timetableDao.getAllReservations();
 
@@ -33,6 +31,7 @@ public class TimetableService {
 
                 for (TimetableModel reservation : reservations) {
                     Map<String, Object> reservationMap = new HashMap<>();
+                    // Mapping reservation details to map
                     reservationMap.put("Reservation ID", reservation.getReservation_id());
                     reservationMap.put("Seat ID", reservation.getSeat_id());
                     reservationMap.put("Reservation Start Date", reservation.getStart_date());
@@ -63,6 +62,7 @@ public class TimetableService {
                 List<Map<String, Object>> stringList = new ArrayList<>();
                 for (TimetableModel slotReservation : slotReservations) {
                     Map<String, Object> slotReservationMap = new HashMap<>();
+                    // Mapping reservation details to map
                     slotReservationMap.put("Reservation ID", slotReservation.getReservation_id());
                     slotReservationMap.put("Seat ID", slotReservation.getSeat_id());
                     slotReservationMap.put("Reservation Start Date", slotReservation.getStart_date());
@@ -79,11 +79,9 @@ public class TimetableService {
         }
         return timeRangeResponse;
     }
-    
 
     // Get the list of reserved seat based on its start date & seat id
     Map<String, Object> startResponse = new HashMap<String, Object>();
-
     public Map<String, Object> getAllReservationStartDate(String startDate, int seatId) {
         try {
             List<TimetableModel> startReservations = timetableDao.getAllReservationStartDate(startDate, seatId);
@@ -95,6 +93,7 @@ public class TimetableService {
     
                 for (TimetableModel startReservation : startReservations) {
                     Map<String, Object> startReservationMap = new HashMap<>();
+                    // Mapping reservation details to map
                     startReservationMap.put("Reservation ID", startReservation.getReservation_id());
                     startReservationMap.put("Seat ID", startReservation.getSeat_id());
                     startReservationMap.put("Reservation Start Date", startReservation.getStart_date());
@@ -113,7 +112,6 @@ public class TimetableService {
         }
         return startResponse;
     }
-    
 
     // Get all seats based on a reservation
     public Map<String, Object> getAllSeatsInReservation(Long parameter) {
@@ -132,6 +130,7 @@ public class TimetableService {
         
                     for (SeatModel seatReservation: seatReservations) {
                         Map<String, Object> startReservationMap = new HashMap<>();
+                        // Mapping seat details to map
                         startReservationMap.put("Seat ID", seatReservation.getSeat_id());
                         startReservationMap.put("Seat Status", seatReservation.getSeat_status());
                         startReservationMap.put("Department ID", seatReservation.getDept_id());

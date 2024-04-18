@@ -76,7 +76,7 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
     setOpenYearView(false);
     setSelectedIndex(1);
   };
-//Jose Bayola
+
 
 
   const [openAddAppointment, setOpenAddAppointment] = useState(false);
@@ -236,7 +236,11 @@ const calendarGridWithReservations = calendarGrid.map((week, i) => (
           {reservationsForDay.length > 0 && (
             <Typography flexWrap={1}>
               Reserved IDs:{" "}
-              {reservationsForDay.map((reservation) => reservation.reservation_id).join(", ")}
+              {reservationsForDay.map((reservation) => reservation.first_name).join(", ")
+              
+              
+              }
+        
             </Typography>
           )}
         </Grid>
@@ -502,7 +506,7 @@ const calendarGridWithReservations = calendarGrid.map((week, i) => (
           }}
         >
        
-          <AddAppointment/>
+          <AddAppointment seat_id={seat_id}/>
         </Box>
       </Modal>
     </div>

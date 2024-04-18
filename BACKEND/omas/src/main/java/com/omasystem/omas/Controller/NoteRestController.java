@@ -19,10 +19,11 @@ public class NoteRestController {
     @Autowired
     private NoteService noteService;
 
-    /*Gets all notes from reservations */
+    // Retrieves all notes associated with reservations
     @GetMapping("/all")
     public Map<String, Object> getAllNotes()
     {
+        // Returns all notes from reservations
         return noteService.getAllNotes();
     }
 }

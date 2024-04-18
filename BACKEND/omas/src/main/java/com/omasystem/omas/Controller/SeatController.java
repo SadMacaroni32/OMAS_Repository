@@ -17,56 +17,51 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
-@RequestMapping("/api/seats") /* changed from /seat to /api/seats */
+@RequestMapping("/api/seats")
 public class SeatController {
 
     @Autowired
     private SeatService seatService;
 
-    @GetMapping("/all") /* changed from getAll to all */
+    // Retrieves all seats
+    @GetMapping("/all")
     public ResponseEntity<List<SeatModel>> getAllSeats() {
+        // Returns all seats
         return seatService.getAllSeats();
     }
 
-    /* getAllAvaialable seat api */
+    // Retrieves all available seats
     @GetMapping("/available")
     public List<SeatModel> getAvailableSeat() {
+        // Returns all available seats
         return seatService.getAvailableSeat();
     }
 
-    /* getAllOccupied seat api */
+    // Retrieves all occupied seats
     @GetMapping("/occupied")
     public List<SeatModel> getOccupiedSeat() {
+        // Returns all occupied seats
         return seatService.getOccupiedSeat();
     }
 
-    /* getAllUnderRestoration seat api */
+    // Retrieves all seats under restoration
     @GetMapping("/repairing")
     public List<SeatModel> getRepairingSeat() {
+        // Returns all seats under restoration
         return seatService.getRepairingSeat();
     }
 
-    /* get seats by project */
+    // Retrieves seats by project
     @GetMapping("/project")
     public ResponseEntity<Map<String, Object>> getTotalSeatsByProject(@RequestParam Long projectId) {
+        // Returns total seats by project
         return seatService.getTotalSeatsByProject(projectId);
     }
 
-    // @GetMapping("/all-with-project-and-total/{proj_id}")
-    // public ResponseEntity<Map<String, Object>>
-    // getAllSeatsWithProjectName(@PathVariable Long proj_id){
-    // try {
-    // return seatService.getAllSeatsWithProjectName(proj_id);
-    // } catch (Exception e) {
-    // // Log the error
-    // e.printStackTrace();
-    // // Return an error response to the client
-    // throw new RuntimeException("Failed to fetch seats with project and total");
-    // }
-    // }
-
+    // Retrieves all seats with project information
     @GetMapping("/projectInfo/{proj_id}")
     public List<SeatModel> getAllSeatsWithProjectName(@PathVariable("proj_id") Long proj_id) {
+        // Returns all seats with project information
         return seatService.getAllSeatsWithProjectName(proj_id);
     }
 

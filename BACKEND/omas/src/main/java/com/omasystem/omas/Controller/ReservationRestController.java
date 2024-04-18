@@ -27,50 +27,56 @@ public class ReservationRestController {
     @Autowired
     private ReservationService reservationService;
 
-    /*get reservation thru calling seat_id*/
+    // Retrieves all reservations for a specific seat
     @GetMapping("/{seat_id}")
     public Map<String, Object> getAllReservationPerSeat(@PathVariable Long seat_id)
     {
+        // Returns all reservations for a specific seat
         return reservationService.getAllReservationPerSeat(seat_id);
     }
 
-    /*adding reservation to desire seat id*/
+    // Adds a reservation to a desired seat
     @PostMapping("/{seat_id}/add")
     public Map<String, Object> insertReservation(@PathVariable Long seat_id, @RequestBody ReservationInputBodyModel body)
     {
+        // Inserts a reservation to a desired seat
         return reservationService.insertReservation(seat_id, body);
     }
 
-    /*update seat's status into restoration*/
+    // Updates seat's status into restoration
     @PutMapping("/{seat_id}/repair-seat")
-    public Map<String, Object> underRepairing( @PathVariable Long seat_id,
-    @RequestBody ReservationInputBodyModel body)
+    public Map<String, Object> underRepairing( @PathVariable Long seat_id, @RequestBody ReservationInputBodyModel body)
    {
+        // Updates seat's status into restoration
         return reservationService.underRepairing(seat_id, body);
     }
 
+    // Updates seat's status into fixed
     @PutMapping("/{seat_id}/Fixed")
-    public Map<String, Object> FixedSeat( @PathVariable Long seat_id,
-    @RequestBody ReservationInputBodyModel body)
+    public Map<String, Object> FixedSeat( @PathVariable Long seat_id, @RequestBody ReservationInputBodyModel body)
    {
+        // Updates seat's status into fixed
         return reservationService.FixedSeat(seat_id, body);
     }
 
-
+    // Retrieves all reservations
     @GetMapping("/all")
     public List<ReservationModel> getAllReservation()  {
+        // Returns all reservations
         return reservationService.getAllReservation();
     }
 
+    // Retrieves all reservations with user information
     @GetMapping("/allReservationWithUserInfo")
     public List<ReservationPerSeatModel> getAllReservationWithUserInfo() {
+        // Returns all reservations with user information
         return reservationService.getAllReservationWithUserInfo();
     }
 
+    // Archives a reservation
     @PutMapping("/archive/{reservation_id}")
     public String archiveReservation(@PathVariable("reservation_id") Long reservationId) {
+        // Archives a reservation
         return reservationService.ArchiveReservation(reservationId);
-    
     }
-
 }

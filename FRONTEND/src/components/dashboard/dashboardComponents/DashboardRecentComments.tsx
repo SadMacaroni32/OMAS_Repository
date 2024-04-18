@@ -25,7 +25,7 @@ export default function DashboardRecentComments() {
     dispatch(getRecentCommentsFetch());
   }, [dispatch]);
 
-  console.log("Comment", commentData);
+  // console.log("Comment", commentData);
   return (
     <Paper elevation={6} sx={{ ml: 1, ...shadowStyle }}>
       <TableContainer

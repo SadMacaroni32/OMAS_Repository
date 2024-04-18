@@ -27,30 +27,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "tbl_user")
-public class User implements UserDetails{
+public class User implements UserDetails {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    
-    private String username;
-    private String password;
 
-    public String getUsername() {
-        return username;
-    }
+    private String username; // Username
+    private String password; // Password
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    //Roles
+    // User role
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -62,25 +47,28 @@ public class User implements UserDetails{
             return Collections.singleton(new SimpleGrantedAuthority(role.name()));
         }
     }
+
     @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return true; // Account non-expiration status
     }
+
     @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return true; // Account non-locked status
     }
+
     @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return true; // Credentials non-expiration status
     }
+
     @JsonIgnore
     @Override
     public boolean isEnabled() {
-        return true;
+        return true; // Account enabled status
     }
-
 }

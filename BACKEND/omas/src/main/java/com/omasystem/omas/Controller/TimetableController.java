@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import com.omasystem.omas.Service.TimetableService;
 
 @RestController
@@ -23,32 +22,35 @@ public class TimetableController {
         this.timetableService = timetableService;
     }
 
-    /* Get the list of all reservations */
+    /* Retrieves the list of all reservations */
     @GetMapping("/reservations")
     public Map<String, Object> getAllReservations()
     {
+        // Returns the list of all reservations
         return timetableService.getAllReservations();
     }
 
-    /* Get the list of reserved seats based on a specific time range */
+    /* Retrieves the list of reserved seats based on a specific time range */
     @GetMapping("/reservation")
     public Map<String, Object> getAllReservationPerTimeslot(@RequestParam("start_date") String startDate, @RequestParam("end_date") String endDate) {
         Map<String, String> params = new HashMap<>();
         params.put("start_date", startDate);
         params.put("end_date", endDate);
 
+        // Returns the list of reserved seats based on a specific time range
         return timetableService.getAllReservationPerTimeslot(params);
     }
 
 
-    /* Get the list of reserved seats based on its start date and seat id */
+    /* Retrieves the list of reserved seats based on its start date and seat id */
     @GetMapping("/reservation/start")
     public Map<String, Object> getAllReservationStartDate(@RequestParam("startDate") String startDate, @RequestParam("seatId") int seatId) {
+        // Returns the list of reserved seats based on its start date and seat id
         return timetableService.getAllReservationStartDate(startDate, seatId);
     }
     
 
-    /* Get all seats based on a reservation */
+    /* Retrieves all seats based on a reservation */
     @GetMapping("/reservations/seat")
     public Map<String, Object> getAllSeatsInReservation(@RequestParam Long reservationId) {
         Map<String, Object> response = new HashMap<>();
