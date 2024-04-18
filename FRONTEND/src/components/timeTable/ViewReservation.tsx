@@ -10,11 +10,13 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import { Button, ButtonGroup } from '@mui/material';
+import { Box, Button, ButtonGroup } from '@mui/material';
 import { getPrincipalReservationsWithInfoSuccess, getPrincipalReservationsWithInfoFetch} from '../../redux/state/viewReservationState';
 
 
 export default function viewReservation() {
+    const shadowStyle = { boxShadow: "0px 4px 10px #25476A" };
+
     const dispatch = useDispatch();
     const viewReservation = useSelector((state: RootState) => state.viewReservationReducer.viewReservationValue)
     const [page, setPage] = useState<number>(0);
@@ -39,8 +41,9 @@ export default function viewReservation() {
     };
 
     return (
-        <Paper sx={{ width: '100%', overflow: 'hidden', height:'100%' }}>
-            <TableContainer sx={{ maxHeight: 850 }}>
+        <Box sx={{ flexGrow: 1}}>
+        <Paper sx={{ overflow: 'hidden', mr: 15, ml: 15, mt: 6 , ...shadowStyle}}>
+            <TableContainer sx={{ maxHeight: 850, height: 760 }}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
                         <TableRow>
@@ -98,5 +101,6 @@ export default function viewReservation() {
                 onRowsPerPageChange={handleChangeRowsPerPage}
             />
         </Paper>
+        </Box>
     );
 };

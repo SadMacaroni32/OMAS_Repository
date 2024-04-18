@@ -18,6 +18,8 @@ import {
 import WeekDatesGrid from "./WeekDatesGrid"; // Import WeekDatesGrid component
 
 const YearView = ({ seat_id }) => {
+  const shadowStyle = { boxShadow: "0px 4px 10px #25476A" };
+
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [clickedDate, setClickedDate] = useState(null);
   const [openModal, setOpenModal] = useState(false); // State to control modal visibility
@@ -58,7 +60,7 @@ const YearView = ({ seat_id }) => {
   const renderMiniCalendar = () => {
     return (
       <div style={{ overflow: "auto", maxHeight: "75vh" }}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} sx={{ paddingRight: '16px' }}>
           {months.map((month, index) => {
             const daysInMonth = new Date(selectedYear, index + 1, 0).getDate();
             const firstDayOfMonth = new Date(selectedYear, index, 1).getDay();
@@ -66,20 +68,20 @@ const YearView = ({ seat_id }) => {
               { length: daysInMonth },
               (_, idx) => idx + 1
             );
-
+  
             const datesForDaysOfWeek = {};
             const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
             daysOfWeek.forEach((day) => {
               datesForDaysOfWeek[day] = [];
             });
-
+  
             dates.forEach((date) => {
               const dayOfWeek = getDayOfWeek(
                 new Date(selectedYear, index, date)
               );
               datesForDaysOfWeek[dayOfWeek].push(date);
             });
-
+  
             return (
               <Grid item key={month.value} xs={12} sm={6} md={6}>
                 <Box
@@ -87,9 +89,10 @@ const YearView = ({ seat_id }) => {
                   border={1}
                   borderColor="primary.main"
                   borderRadius={5}
+                  sx={{mb: 1}}
                 >
-                  <Typography variant="h6">{month.label}</Typography>
-                  <TableContainer component={Paper}>
+                  <Typography variant="h6" sx={{mb:1, textAlign: "center"}}>{month.label}</Typography>
+                  <TableContainer component={Paper} sx={{...shadowStyle, height: "16.2rem"}}>
                     <Table size="small">
                       <TableHead>
                         <TableRow>
@@ -125,7 +128,9 @@ const YearView = ({ seat_id }) => {
                                     sx={{
                                       background: "",
                                       "&:hover": {
-                                        background: "#25476A",
+                                        background: "#85d9ef",
+                                        borderRadius: "10px",
+                                        fontWeight: "bold",
                                       },
                                     }}
                                   >
@@ -147,6 +152,7 @@ const YearView = ({ seat_id }) => {
       </div>
     );
   };
+  
 
   return (
     <div>
