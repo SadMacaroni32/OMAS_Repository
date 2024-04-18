@@ -58,7 +58,12 @@ public class ReservationRestController {
         // Updates seat's status into fixed
         return reservationService.FixedSeat(seat_id, body);
     }
+    @PutMapping("{seat_id}/occupied")
+    public Map<String, Object> ReservedToOccupied ( @PathVariable Long seat_id, @RequestBody ReservationInputBodyModel body) {
+        return reservationService.ReservedToOccupied(seat_id, body);
+    }
 
+   
     // Retrieves all reservations
     @GetMapping("/all")
     public List<ReservationModel> getAllReservation()  {
