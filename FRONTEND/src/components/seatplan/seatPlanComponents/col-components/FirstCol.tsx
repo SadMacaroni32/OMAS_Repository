@@ -88,7 +88,7 @@ const FirstCol: React.FC = ({
                                 ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
                                 : ""
                             }></span>
-                          {todayReservations ? "available" : seat_status}
+                          {todayReservations ? seat_status : "available"}
                         </div>
                       )}
                     </>
@@ -105,7 +105,7 @@ const FirstCol: React.FC = ({
                               ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
                               : ""
                           }></span>
-                        {todayReservations ? "available" : seat_status}
+                        {todayReservations ? seat_status : "available"}
                       </div>
                     </>
                   )}
@@ -192,7 +192,7 @@ const FirstCol: React.FC = ({
                                 ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
                                 : ""
                             }></span>
-                          {todayReservations ? "available" : seat_status}
+                          {todayReservations ? seat_status : "available"}
                         </div>
                       )}
                     </>
@@ -209,7 +209,7 @@ const FirstCol: React.FC = ({
                               ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
                               : ""
                           }></span>
-                        {todayReservations ? "available" : seat_status}
+                        {todayReservations ? seat_status : "available"}
                       </div>
                     </>
                   )}
@@ -295,7 +295,7 @@ const FirstCol: React.FC = ({
                                 ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
                                 : ""
                             }></span>
-                          {todayReservations ? "available" : seat_status}
+                          {todayReservations ? seat_status : "available"}
                         </div>
                       )}
                     </>
@@ -312,7 +312,7 @@ const FirstCol: React.FC = ({
                               ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
                               : ""
                           }></span>
-                        {todayReservations ? "available" : seat_status}
+                        {todayReservations ? seat_status : "available"}
                       </div>
                     </>
                   )}
@@ -401,7 +401,7 @@ const FirstCol: React.FC = ({
                               ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
                               : ""
                           }></span>
-                        {todayReservations ? "available" : seat_status}
+                        {todayReservations ? seat_status : "available"}
                       </div>
                     )}
                   </>
@@ -418,7 +418,7 @@ const FirstCol: React.FC = ({
                             ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
                             : ""
                         }></span>
-                      {todayReservations ? "available" : seat_status}
+                      {todayReservations ? seat_status : "available"}
                     </div>
                   </>
                 )}
