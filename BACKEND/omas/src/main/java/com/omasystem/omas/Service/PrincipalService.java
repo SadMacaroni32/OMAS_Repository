@@ -16,39 +16,39 @@ import com.omasystem.omas.Model.PrincipalModel;
 
 @Service
 public class PrincipalService {
-    @Autowired
-    private PrincipalDao principalDao;
-
-    Map<String, Object> response = new HashMap<String, Object>();
+    @Autowired // Annotation for automatic dependency injection
+    private PrincipalDao principalDao; // Declaring a field for PrincipalDao injection
     
-    //GET ALL PRINCIPAL INFO
-
-    public Map<String, Object> getPrincipalInfo()
+    Map<String, Object> response = new HashMap<String, Object>(); // Creating a HashMap for response data
+    
+    // GET ALL PRINCIPAL INFO
+    public Map<String, Object> getPrincipalInfo() // Method to get principal info
     {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if(authentication != null && authentication.isAuthenticated())
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); // Getting the authentication object from SecurityContextHolder
+    
+        if(authentication != null && authentication.isAuthenticated()) // Checking if authentication is not null and is authenticated
         try {
-            response.put("message", authentication.getPrincipal());
+            response.put("message", authentication.getPrincipal()); // Adding principal information to the response map
         } catch (Exception e) {
-            response.put("message", e.getMessage());
+            response.put("message", e.getMessage()); // Adding error message to the response map if an exception occurs
         }
-
-        return response;
+    
+        return response; // Returning the response map
     }
-
-    /*GET ALL PRINCIPAL USERS */
-    public ResponseEntity<List<PrincipalModel>> getAllPrincipalUsers() {
+    
+    /* GET ALL PRINCIPAL USERS */
+    public ResponseEntity<List<PrincipalModel>> getAllPrincipalUsers() { // Method to get all principal users
         try {
-            List<PrincipalModel> principals = principalDao.getAllPrincipalUsers();
-            if (principals != null && !principals.isEmpty()) {
-                return ResponseEntity.ok(principals);
+            List<PrincipalModel> principals = principalDao.getAllPrincipalUsers(); // Getting all principal users from PrincipalDao
+            if (principals != null && !principals.isEmpty()) { // Checking if the list of principals is not null and not empty
+                return ResponseEntity.ok(principals); // Returning ResponseEntity with list of principals if found
             } else {
-                return ResponseEntity.notFound().build();
+                return ResponseEntity.notFound().build(); // Returning ResponseEntity with not found status if no principals found
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            e.printStackTrace(); // Printing stack trace if an exception occurs
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // Returning ResponseEntity with internal server error status
         }
-    };
+    }
+    
 }
