@@ -22,19 +22,24 @@ public class PrincipalService {
     Map<String, Object> response = new HashMap<String, Object>(); // Creating a HashMap for response data
     
     // GET ALL PRINCIPAL INFO
-    public Map<String, Object> getPrincipalInfo() // Method to get principal info
-    {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); // Getting the authentication object from SecurityContextHolder
-    
-        if(authentication != null && authentication.isAuthenticated()) // Checking if authentication is not null and is authenticated
-        try {
-            response.put("message", authentication.getPrincipal()); // Adding principal information to the response map
-        } catch (Exception e) {
-            response.put("message", e.getMessage()); // Adding error message to the response map if an exception occurs
-        }
-    
-        return response; // Returning the response map
+    public PrincipalModel getPrincipalInfo(String username) {
+        // Use the username parameter to query the principal information from MyBatis
+        return principalDao.getPrincipal(username);
     }
+    // ##OLD## GET ALL PRINCIPAL INFO
+    // public Map<String, Object> getPrincipalInfo() // Method to get principal info
+    // {
+    //     Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); // Getting the authentication object from SecurityContextHolder
+    
+    //     if(authentication != null && authentication.isAuthenticated()) // Checking if authentication is not null and is authenticated
+    //     try {
+    //         response.put("message", authentication.getPrincipal()); // Adding principal information to the response map
+    //     } catch (Exception e) {
+    //         response.put("message", e.getMessage()); // Adding error message to the response map if an exception occurs
+    //     }
+    
+    //     return response; // Returning the response map
+    // }
     
     /* GET ALL PRINCIPAL USERS */
     public ResponseEntity<List<PrincipalModel>> getAllPrincipalUsers() { // Method to get all principal users
