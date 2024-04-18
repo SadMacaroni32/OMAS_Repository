@@ -66,7 +66,7 @@ const FirstCol: React.FC = ({
                 <span className="text-[.8rem]  w-full left-0  text-center absolute h-full ">
                   {displayReservation ? (
                     <>
-                      {userInfoToDisplay && seat_status === "occupied" ? (
+                      {userInfoToDisplay  ? (
                         <div className="relative flex flex-col justify-between h-full py-1">
                           <span className="h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"></span>
 
@@ -111,7 +111,7 @@ const FirstCol: React.FC = ({
                   )}
                 </span>
                 <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
-                  {userInfoToDisplay && seat_status === "occupied"
+                  {userInfoToDisplay 
                     ? userInfoToDisplay.client
                     : null}
                 </span>
@@ -170,7 +170,7 @@ const FirstCol: React.FC = ({
                 <span className="text-[.8rem]  w-full left-0  text-center absolute h-full ">
                   {displayReservation ? (
                     <>
-                      {userInfoToDisplay && seat_status === "occupied" ? (
+                      {userInfoToDisplay ? (
                         <div className="relative flex flex-col justify-between h-full py-1">
                           <span className="h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"></span>
 
@@ -215,7 +215,7 @@ const FirstCol: React.FC = ({
                   )}
                 </span>
                 <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
-                  {userInfoToDisplay && seat_status === "occupied"
+                  {userInfoToDisplay
                     ? userInfoToDisplay.client
                     : null}
                 </span>
@@ -273,7 +273,7 @@ const FirstCol: React.FC = ({
                 <span className="text-[.8rem]  w-full left-0  text-center absolute h-full ">
                   {displayReservation ? (
                     <>
-                      {userInfoToDisplay && seat_status === "occupied" ? (
+                      {userInfoToDisplay ? (
                         <div className="relative flex flex-col justify-between h-full py-1">
                           <span className="h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"></span>
 
@@ -318,7 +318,7 @@ const FirstCol: React.FC = ({
                   )}
                 </span>
                 <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
-                  {userInfoToDisplay && seat_status === "occupied"
+                  {userInfoToDisplay
                     ? userInfoToDisplay.client
                     : null}
                 </span>
@@ -379,7 +379,7 @@ const FirstCol: React.FC = ({
               <span className="text-[.8rem]  w-full left-0  text-center absolute h-full ">
                 {displayReservation ? (
                   <>
-                    {userInfoToDisplay && seat_status === "occupied" ? (
+                    {userInfoToDisplay ? (
                       <div className="relative flex flex-col justify-between h-full py-1">
                         <span className="h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"></span>
 
@@ -424,7 +424,7 @@ const FirstCol: React.FC = ({
                 )}
               </span>
               <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
-                {userInfoToDisplay && seat_status === "occupied"
+                {userInfoToDisplay
                   ? userInfoToDisplay.client
                   : null}
               </span>
