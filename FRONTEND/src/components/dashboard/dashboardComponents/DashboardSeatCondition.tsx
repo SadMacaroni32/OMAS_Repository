@@ -10,9 +10,15 @@ import { getRepairSeatsFetch } from "../../../redux/state/Dashboard_State/seatCo
 
 const DashboardSeatCondition = () => {
   const dispatch = useDispatch();
-  const totalSeats = useSelector((state: RootState) => state.totalSeatsReducer.totalSeats);
-  const totalAssignedSeats = useSelector((state: RootState) => state.assignedSeatsReducer.assignedSeats);
-  const totalRepairSeats = useSelector((state: RootState) => state.repairSeatsReducer.repairSeats);
+  const totalSeats = useSelector(
+    (state: RootState) => state.totalSeatsReducer.totalSeats
+  );
+  const totalAssignedSeats = useSelector(
+    (state: RootState) => state.assignedSeatsReducer.assignedSeats
+  );
+  const totalRepairSeats = useSelector(
+    (state: RootState) => state.repairSeatsReducer.repairSeats
+  );
 
   useEffect(() => {
     dispatch(getTotalSeatsFetch());

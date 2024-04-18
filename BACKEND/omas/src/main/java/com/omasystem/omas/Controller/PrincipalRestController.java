@@ -48,10 +48,25 @@ public class PrincipalRestController {
 
     /* Gets the logged in user's info */
     @GetMapping("/info")
-    public Map<String, Object> getPrincipalInfo() {
-        // Retrieves information about the currently authenticated user
-        return principalService.getPrincipalInfo();
+    public ResponseEntity<PrincipalModel> getPrincipalInfo() {
+        // Retrieve the authenticated user's username
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+    
+        // Use the PrincipalService to fetch the principal information
+        PrincipalModel principalInfo = principalService.getPrincipalInfo(username);
+    
+        // Return the principal information as a ResponseEntity
+        return ResponseEntity.ok(principalInfo);
     }
+
+    // ##OLD## GET ALL PRINCIPAL INFO
+    // @GetMapping("/info")
+    // public Map<String, Object> getPrincipalInfo() {
+    //     // Retrieves information about the currently authenticated user
+    //     return principalService.getPrincipalInfo();
+    // }
+
 
     /* Gets the list of users *For admin* */
     @GetMapping("/all")
