@@ -111,7 +111,7 @@ export default function DashboardSummary() {
   );
 
   const handleRequestSort = (
-    event: React.MouseEvent<unknown>,
+    _event: React.MouseEvent<unknown>,
     property: keyof any
   ) => {
     const isAsc = orderBy === property && order === "asc";
@@ -119,7 +119,7 @@ export default function DashboardSummary() {
     setOrderBy(property);
   };
 
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (_event: unknown, newPage: number) => {
     setPage(newPage);
   };
 

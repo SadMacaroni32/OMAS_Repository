@@ -476,10 +476,11 @@ const calendarGridWithReservations = calendarGrid.map((week, i) => (
       </Typography>
       
     </Grid>
-    <Modal open={openYearView} onClose={handleCloseYearView}>
+    <Modal open={openYearView} onClose={handleCloseYearView} >
         <Box
           sx={{
             position: "absolute",
+            width: "72rem",
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
