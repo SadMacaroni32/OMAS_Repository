@@ -114,52 +114,7 @@ const SeatPlan: React.FC = () => {
     dispatch(getReservationsWithUserInfoFetch());
   }, [dispatch]);
 
- useEffect(() => {
-   const currentTime = new Date();
 
-   // Function to update reservation status to "available" if end time has passed
-   const updateReservationStatus = (reservation: any) => {
-     const endTime = new Date(reservation.end_date);
-     const startTime = new Date(reservation.start_date);
-     const seatId = reservation.seat_id;
-
-     // Convert start and end dates to UTC
-     const utcStartTime = new Date(
-       startTime.getTime() + startTime.getTimezoneOffset() * 60000
-     );
-     const utcEndTime = new Date(
-       endTime.getTime() + endTime.getTimezoneOffset() * 60000
-     );
-
-     // Check if the end time of the reservation is before the current time
-     if (utcEndTime < currentTime) {
-       // Format dates as strings in the required format
-       const formattedStartTime = utcStartTime.toISOString();
-       const formattedEndTime = utcEndTime.toISOString();
-
-       // Dispatch action to update reservation status to "available"
-       dispatch(
-         updateReservationStatusFetch({
-           seatId,
-           start_date: formattedStartTime,
-           end_date: formattedEndTime,
-         })
-       );
-     }
-   };
-
-   // Run the effect only if it hasn't been run before
-   if (!isEffectRun) {
-     // Update reservations in reservationsAM array
-     reservationsAM.forEach(updateReservationStatus);
-
-     // Update reservations in reservationsPM array
-     reservationsPM.forEach(updateReservationStatus);
-
-     // Set isEffectRun to true to indicate that the effect has been run
-     setIsEffectRun(true);
-   }
- }, [dispatch, isEffectRun, reservationsAM, reservationsPM]);
   const currentTime = new Date(); // Get the current time
 
   const columnData = [
@@ -313,12 +268,12 @@ const SeatPlan: React.FC = () => {
   };
 
   return (
-    <div className="w-full h-[1000px] flex justify-center">
+    <div className="w-full h-[1000px] flex justify-center  ">
       {/* Render loading indicator while loading */}
       {isLoading ? (
         <LinearDeterminate />
       ) : (
-        <div className="flex gap-x-10 h-full mt-[50px]">
+        <div className="flex gap-x-10 h-full mt-[50px] justify-center overflow-x-auto ">
           <div className="flex flex-col text-[.8rem] relative h-full w-full">
             <div
               className="flex items-center cursor-pointer gap-x-2"
@@ -347,9 +302,11 @@ const SeatPlan: React.FC = () => {
               </div>
             )}
           </div>
-          {columnData.map((col, index) => (
-            <col.component key={index} {...col.props} />
-          ))}
+          <div className="w-[250px] md:w-[500px] lg:w-[700px] xl:w-[1080px] 2xl:w-full flex gap-x-10">
+            {columnData.map((col, index) => (
+              <col.component key={index} {...col.props} />
+            ))}
+          </div>
         </div>
       )}
 
