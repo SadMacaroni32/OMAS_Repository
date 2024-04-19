@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-OmasApplication<omas>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.omasystem.omas.OmasApplication",
+      "projectName": "omas",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}

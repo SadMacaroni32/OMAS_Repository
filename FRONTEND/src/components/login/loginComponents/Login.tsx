@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
 import { useEffect, useState } from "react";
 import { getUsersFetch, setUserField } from "../../../redux/state/userState";
+import OmasLogo from "../../../assets/omas.png"
 
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -58,7 +59,7 @@ console.log("login data", userData);
   return (
     <div className="rounded-md shadow-sm drop-shadow-lg border-[.1rem] h-[20rem] w-full  lg:h-[30rem] flex flex-col items-center justify-center">
       <div className="w-full text-[2rem] font-bold lg:h-[10rem] flex items-center justify-center">
-        <p>OMAS LOGO</p>
+        <img src={OmasLogo} className="w-1/2"/>
       </div>
       <form
         className="flex flex-col w-full px-8 lg:h-[15rem] gap-y-5 "
