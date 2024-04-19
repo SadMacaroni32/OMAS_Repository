@@ -9,6 +9,8 @@ import { getAssignedSeatsFetch } from "../../../redux/state/Dashboard_State/seat
 import { getRepairSeatsFetch } from "../../../redux/state/Dashboard_State/seatConditionStates/Repair_Seats";
 
 const DashboardSeatCondition = () => {
+  const shadowStyle = { boxShadow: "0px 4px 10px #25476A" };
+
   const dispatch = useDispatch();
   const totalSeats = useSelector(
     (state: RootState) => state.totalSeatsReducer.totalSeats
@@ -53,7 +55,7 @@ const DashboardSeatCondition = () => {
   // console.log("Total Repair Seats", totalRepairSeats);
 
   return (
-    <Paper elevation={6} style={{ margin: 8, padding: 16 }}>
+    <Paper elevation={6} style={{ margin: 8, padding: 16, ...shadowStyle}}>
       <Grid container justifyContent="center">
         <BarChart
           xAxis={[{ scaleType: "band", data: ["Office Seating Status"] }]}
