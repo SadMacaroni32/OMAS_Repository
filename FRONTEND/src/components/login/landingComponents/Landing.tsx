@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import Modal from "@mui/material/Modal/Modal";
 import Box from "@mui/material/Box/Box";
 import Typography from "@mui/material/Typography/Typography";
+import OmasLogo from "../../../assets/omas-horizontal-blue.png";
 
 const Landing: React.FC = () => {
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ const Landing: React.FC = () => {
             }
           >
             <div className="rounded-md shadow-sm drop-shadow-lg border-[.1rem] lg:w-[600px] py-[10vh] flex flex-col items-center px-5 w-[90%]">
-              <p className="text-[5rem] font-medium">OMAS</p>
+              <img src={OmasLogo} className="w-1/2"/>
               <p className="text-[1.6rem] text-center">
                 Office Table Reservation System
               </p>
