@@ -38,10 +38,22 @@ export default function viewReservation() {
         setPage(0);
     };
 
+
     // const handleDelete = (reservation_id: any) => {
     //     // Dispatch the archiveReservationStart action with the reservationId as payload
     //     dispatch(archiveReservationStart(reservation_id));
     // };
+
+    const handleAction = (action: string, rowData: any) => {
+   
+    };
+
+        {/* To convert time and date to month/dd/yyyy format. */}
+    const formatDate = (dateString) => {
+        const options = { month: 'long', day: '2-digit', year: 'numeric' };
+        return new Date(dateString).toLocaleDateString('en-US', options);
+    };
+
     return (
         <Box sx={{ flexGrow: 1}}>
         <Paper sx={{ overflow: 'hidden', mr: 15, ml: 15, mt: 6 , ...shadowStyle}}>
@@ -76,8 +88,8 @@ export default function viewReservation() {
                                         <TableCell sx={{ textAlign: 'center' }}>{row.last_name}</TableCell>
                                         <TableCell sx={{ textAlign: 'center' }}>{row.reservation_id}</TableCell>
                                         <TableCell sx={{ textAlign: 'center' }}>{row.seat_id}</TableCell>
-                                        <TableCell sx={{ textAlign: 'center' }}>{row.start_date}</TableCell>
-                                        <TableCell sx={{ textAlign: 'center' }}>{row.end_date}</TableCell>
+                                        <TableCell sx={{ textAlign: 'center' }}>{formatDate(row.start_date)}</TableCell>
+                                        <TableCell sx={{ textAlign: 'center' }}>{formatDate(row.end_date)}</TableCell>
                                         <TableCell sx={{ textAlign: 'center' }}>{row.client_sn}</TableCell>
                                         <TableCell sx={{ textAlign: 'center' }}>{row.note}</TableCell>
                                         <TableCell sx={{ textAlign: 'center' }}>

@@ -57,7 +57,48 @@ const WeekDatesGrid = ({ startOfWeek, reserveSlot, seat_id }) => {
     dates.push(new Date(currentDate));
     currentDate.setDate(currentDate.getDate() + 1);
   }
-  console.log("Week View", reservations);
+
+  function getDayName(date) {
+    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Frid", "Sat"];
+    return days[date.getDay()];
+  }
+
+  function getTimeFromDate(dateTimeString) {
+    const dateObj = new Date(dateTimeString);
+    const hours = dateObj.getHours().toString().padStart(2, "0");
+    const minutes = dateObj.getMinutes().toString().padStart(2, "0");
+    return `${hours}:${minutes}`;
+  }
+
+  function isBetween(dateTime, startTime, endTime) {
+    const timeParts = dateTime.split(":");
+    if (!timeParts) return false;
+    const [hours, minutes] = timeParts;
+    const reservationTime = parseInt(hours) + parseInt(minutes) / 60;
+    const [startHours, startMinutes] = startTime.split(":").map(Number);
+    const [endHours, endMinutes] = endTime.split(":").map(Number);
+    const startTimeInHours = startHours + startMinutes / 60;
+    const endTimeInHours = endHours + endMinutes / 60;
+    return reservationTime >= startTimeInHours && reservationTime < endTimeInHours;
+  }
+
+  function getReservationsByTimeRange(reservations, date, seat_id, startTime, endTime) {
+    const matchingReservations = reservations.filter(reservation =>
+      new Date(reservation.start_date).toLocaleDateString("en-US") === date.toLocaleDateString("en-US") &&
+      reservation.seat_id === seat_id &&
+      (
+        (isBetween(getTimeFromDate(reservation.start_date), startTime, endTime)) ||
+        (isBetween(getTimeFromDate(reservation.end_date), startTime, endTime))
+      )
+    );
+
+    return matchingReservations.map((reservation, resIndex) => (
+      <div key={resIndex}>
+        {reservation.client_sn} {reservation.first_name}
+      </div>
+    ));
+  }
+
   return (
     <>
       <WeekDisplay startOfWeek={currentStartOfWeek} endOfWeek={endOfWeek} />
@@ -77,50 +118,49 @@ const WeekDatesGrid = ({ startOfWeek, reserveSlot, seat_id }) => {
               <TableCell style={{ color: "white" }}>Date</TableCell>
               <TableCell style={{ color: "white" }}>6:30AM to 12:30PM</TableCell>
               <TableCell style={{ color: "white" }}>12:30PM to 7:30PM</TableCell>
-             </TableRow>
+            </TableRow>
           </TableHead>
           <TableBody>
-  {dates.map((date, dateIndex) => (
-    <TableRow key={dateIndex}>
-      <TableCell>
-        {getDayName(date)}, {date.toLocaleDateString("en-US", {
-          month: "2-digit",
-          day: "2-digit",
-          year: "2-digit",
-        })}
-      </TableCell>
-      {reservations && reservations.some(reservation => (
-        new Date(reservation.start_date).toLocaleDateString("en-US") === date.toLocaleDateString("en-US") &&
-        reservation.seat_id === seat_id
-      )) ? (
-        reservations.map((reservation, resIndex) => (
-          (new Date(reservation.start_date).toLocaleDateString("en-US") === date.toLocaleDateString("en-US")) &&
-          (reservation.seat_id === seat_id) && (
-            <TableCell key={resIndex} style={{ backgroundColor: 'lightblue' }}>
-             {reservation.client_sn} {reservation.first_name} 
-            </TableCell>
-          )
-        ))
-      ) : (
-        <TableCell>
-          No reservation
-        </TableCell>
-      )}
-    </TableRow>
-  ))}
-</TableBody>
-
-
-
+            {dates.map((date, dateIndex) => (
+              <TableRow key={dateIndex}>
+                <TableCell>
+                  {getDayName(date)}, {date.toLocaleDateString("en-US", {
+                    month: "2-digit",
+                    day: "2-digit",
+                    year: "2-digit",
+                  })}
+                </TableCell>
+                <TableCell
+                  key={dateIndex + "-morning"}
+                  style={{
+                    backgroundColor: getReservationsByTimeRange(reservations, date, seat_id, "06:30", "12:30").length > 0 ? "lightblue" : "inherit"
+                  }}
+                >
+                  {getReservationsByTimeRange(reservations, date, seat_id, "06:30", "12:30").length > 0 ? (
+                    getReservationsByTimeRange(reservations, date, seat_id, "06:30", "12:30")
+                  ) : (
+                    "No reservation"
+                  )}
+                </TableCell>
+                <TableCell
+                  key={dateIndex + "-afternoon"}
+                  style={{
+                    backgroundColor: getReservationsByTimeRange(reservations, date, seat_id, "12:30", "19:30").length > 0 ? "lightblue" : "inherit"
+                  }}
+                >
+                  {getReservationsByTimeRange(reservations, date, seat_id, "12:30", "19:30").length > 0 ? (
+                    getReservationsByTimeRange(reservations, date, seat_id, "12:30", "19:30")
+                  ) : (
+                    "No reservation"
+                  )}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
         </Table>
       </TableContainer>
     </>
   );
-
-  function getDayName(date) {
-    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Frid", "Sat"];
-    return days[date.getDay()];
-  }
 };
 
 export default WeekDatesGrid;
