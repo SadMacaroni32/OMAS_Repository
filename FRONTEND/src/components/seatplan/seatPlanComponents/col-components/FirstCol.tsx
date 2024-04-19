@@ -11,7 +11,7 @@ const FirstCol: React.FC = ({
   occupied,
   underRepair,
 }) => {
-  console.log("This is Column 1 Todays Reservations: ", todayReservations);
+  // console.log("This is Column 1 Todays Reservations: ", todayReservations);
   return (
     <div className="flex gap-x-1 h-[90%]">
       <div className="flex flex-col justify-between ">
