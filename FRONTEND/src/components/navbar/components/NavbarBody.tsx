@@ -8,6 +8,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import OmasLogo from "../../../assets/omas-horizontal-white.png";
 
 import NavbarSearchBox from "./NavbarSearchBox";
 import { useNavigate } from "react-router-dom";
@@ -49,7 +50,9 @@ export default function NavbarBody() {
     <AppBar position="static" >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          <img src={OmasLogo} className="h-10"/>
+          {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          LOGO
           <Typography
             variant="h6"
             noWrap
@@ -64,8 +67,7 @@ export default function NavbarBody() {
               textDecoration: "none",
             }}
           >
-            LOGO
-          </Typography>
+          </Typography> */}
 
           <NavbarSearchBox />
 
@@ -96,7 +98,7 @@ export default function NavbarBody() {
               onClose={handleCloseNavMenu}
               sx={{
                 display: { xs: "block", md: "none" },
-              }}
+              }} 
             ></Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
