@@ -10,7 +10,7 @@ import { getReservedAssociatesSuccess } from "../../../state/Dashboard_State/sta
 
       if (token) {
       const data = yield call(() =>
-        axios.get("http://localhost:8080/api/associates/assigned", {
+        axios.get("http://localhost:8080/api/principal/reservation", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
