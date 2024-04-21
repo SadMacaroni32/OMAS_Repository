@@ -11,7 +11,7 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { Box, Button, ButtonGroup } from '@mui/material';
-import { getPrincipalReservationsWithInfoSuccess, getPrincipalReservationsWithInfoFetch} from '../../redux/state/viewReservationState';
+import { getPrincipalReservationsWithInfoSuccess, getPrincipalReservationsWithInfoFetch, archiveReservationSuccess, archiveReservationStart} from '../../redux/state/viewReservationState';
 
 
 export default function viewReservation() {
@@ -21,6 +21,8 @@ export default function viewReservation() {
     const viewReservation = useSelector((state: RootState) => state.viewReservationReducer.viewReservationValue)
     const [page, setPage] = useState<number>(0);
     const [rowsPerPage, setRowsPerPage] = useState<number>(10);
+    	const [deleteId, setDeleteId] = React.useState(0);
+
 
     useEffect(() => {
         dispatch(getPrincipalReservationsWithInfoFetch()); // Dispatch action to fetch reservations when component mounts
@@ -35,6 +37,12 @@ export default function viewReservation() {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
+
+
+    // const handleDelete = (reservation_id: any) => {
+    //     // Dispatch the archiveReservationStart action with the reservationId as payload
+    //     dispatch(archiveReservationStart(reservation_id));
+    // };
 
     const handleAction = (action: string, rowData: any) => {
    
@@ -68,11 +76,13 @@ export default function viewReservation() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {viewReservation && viewReservation.length > 0 ? (
-                            viewReservation
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((row: any, rowIndex: any) => (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={rowIndex}>
+                    {viewReservation && viewReservation.length > 0 ? (
+                                viewReservation
+                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                    .map((row: any, rowIndex: any) => 
+                                        (
+                                        row.del_flag !== 1 && // Render only if del_flag is not 1
+                                        <TableRow hover role="checkbox" tabIndex={-1} key={rowIndex}>
                                         <TableCell sx={{ textAlign: 'center' }}>{row.emp_id}</TableCell>
                                         <TableCell sx={{ textAlign: 'center' }}>{row.first_name}</TableCell>
                                         <TableCell sx={{ textAlign: 'center' }}>{row.last_name}</TableCell>
@@ -84,7 +94,8 @@ export default function viewReservation() {
                                         <TableCell sx={{ textAlign: 'center' }}>{row.note}</TableCell>
                                         <TableCell sx={{ textAlign: 'center' }}>
                                             <ButtonGroup variant="text" aria-label="Basic button group">
-                                                <Button onClick={() => handleAction('delete', row)}>Delete</Button>
+                                            <Button onClick={() =>{ console.log(row.reservation_id);
+ dispatch(archiveReservationSuccess(row.reservation_id) )}}>Delete</Button>
                                             </ButtonGroup>
                                         </TableCell>
                                     </TableRow>
