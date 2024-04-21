@@ -63,6 +63,7 @@
         reservation.update_date AS update_date,
         reservation.reg_id AS reg_id,
         reservation.reg_date AS reg_date,
+        reservation.del_flag AS del_flag,
         position.position_sh_name AS position_sn,
         pi.fname AS first_name,
         pi.mname AS middle_name,
@@ -86,12 +87,13 @@
         tbl_clients_mst AS client
         ON project.client_id = client.client_id
     WHERE reservation.emp_id = #{emp_id} OR reservation.emp_id IS NULL
+    ORDER BY reservation_id DESC;
 </select>
 
 
     <!--findById statement-->
     <select id="findById" parameterType="java.lang.Long" resultType="com.omasystem.omas.Model.ReservationModel">
-        SELECT * FROM tbl_reservation WHERE reservation_id = #{reservationId}
+        SELECT * FROM tbl_reservation WHERE reservation_id = #{reservationId} 
     </select>
 
     <!-- updateReservation statement -->
