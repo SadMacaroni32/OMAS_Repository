@@ -52,9 +52,11 @@ const SeventhCol: React.FC = ({
                 setSeatId(seat_id);
               }}
               className={`w-[6rem] h-[6rem] border-[.1rem] drop-shadow-sm shadow-sm cursor-pointer px-1 relative ${
-                (available && !reservationAM) ||
-                (occupied && reservationAM && !underRepair) ||
-                (underRepair && reservationAM && underRepair)
+                (available &&
+                  !userInfoToDisplay &&
+                  seat_status !== "repairing") ||
+                (occupied && userInfoToDisplay) ||
+                (underRepair && seat_status === "repairing")
                   ? ""
                   : "opacity-50"
               }`}>
@@ -80,7 +82,7 @@ const SeventhCol: React.FC = ({
                           className={
                             seat_status === "available"
                               ? "h-[.5rem] w-[.5rem]  rounded-full absolute right-[.5rem] top-[.5rem] bg-green-400"
-                              : seat_status === "occupied"
+                              : userInfoToDisplay
                               ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"
                               : seat_status === "repairing"
                               ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
@@ -96,8 +98,8 @@ const SeventhCol: React.FC = ({
                       <span
                         className={
                           seat_status === "available"
-                            ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-green-400"
-                            : seat_status === "occupied"
+                            ? "h-[.5rem] w-[.5rem]  rounded-full absolute right-[.5rem] top-[.5rem] bg-green-400"
+                            : userInfoToDisplay
                             ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"
                             : seat_status === "repairing"
                             ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
@@ -155,9 +157,11 @@ const SeventhCol: React.FC = ({
                 setSeatId(seat_id);
               }}
               className={`w-[6rem] h-[6rem] border-[.1rem] drop-shadow-sm shadow-sm cursor-pointer px-1 relative ${
-                (available && !reservationAM) ||
-                (occupied && reservationAM && !underRepair) ||
-                (underRepair && reservationAM && underRepair)
+                (available &&
+                  !userInfoToDisplay &&
+                  seat_status !== "repairing") ||
+                (occupied && userInfoToDisplay) ||
+                (underRepair && seat_status === "repairing")
                   ? ""
                   : "opacity-50"
               }`}>
@@ -183,7 +187,7 @@ const SeventhCol: React.FC = ({
                           className={
                             seat_status === "available"
                               ? "h-[.5rem] w-[.5rem]  rounded-full absolute right-[.5rem] top-[.5rem] bg-green-400"
-                              : seat_status === "occupied"
+                              : userInfoToDisplay
                               ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"
                               : seat_status === "repairing"
                               ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
@@ -199,8 +203,8 @@ const SeventhCol: React.FC = ({
                       <span
                         className={
                           seat_status === "available"
-                            ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-green-400"
-                            : seat_status === "occupied"
+                            ? "h-[.5rem] w-[.5rem]  rounded-full absolute right-[.5rem] top-[.5rem] bg-green-400"
+                            : userInfoToDisplay
                             ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"
                             : seat_status === "repairing"
                             ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
