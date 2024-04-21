@@ -30,10 +30,10 @@ const SeatPlan: React.FC = () => {
   const [available, setAvailable] = useState(true);
 
   //occupied state
-  const [occupied, setOccupied] = useState(true);
+  const [occupied, setOccupied] = useState(false);
 
   //under-repair state
-  const [underRepair, setUnderRepair] = useState(true);
+  const [underRepair, setUnderRepair] = useState(false);
 
   //reset state
   const [reset, setReset] = useState(false);
@@ -265,8 +265,8 @@ const SeatPlan: React.FC = () => {
   //reset available, occupied and under-repair state to true
   const resetState = () => {
     setAvailable(true);
-    setOccupied(true);
-    setUnderRepair(true);
+    setOccupied(false);
+    setUnderRepair(false);
     setReset(false);
   };
 
