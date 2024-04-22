@@ -59,7 +59,7 @@ const WeekDatesGrid = ({ startOfWeek, reserveSlot, seat_id }) => {
   }
 
   function getDayName(date) {
-    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Frid", "Sat"];
+    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     return days[date.getDay()];
   }
 
@@ -75,29 +75,38 @@ const WeekDatesGrid = ({ startOfWeek, reserveSlot, seat_id }) => {
     if (!timeParts) return false;
     const [hours, minutes] = timeParts;
     const reservationTime = parseInt(hours) + parseInt(minutes) / 60;
+    console.log("Reservation Time (Hours):", reservationTime);
+  
     const [startHours, startMinutes] = startTime.split(":").map(Number);
     const [endHours, endMinutes] = endTime.split(":").map(Number);
     const startTimeInHours = startHours + startMinutes / 60;
     const endTimeInHours = endHours + endMinutes / 60;
+    // console.log("Start Time (Hours):", startTimeInHours);
+    // console.log("End Time (Hours):", endTimeInHours);
+  
     return reservationTime >= startTimeInHours && reservationTime < endTimeInHours;
   }
+  
+function getReservationsByTimeRange(reservations, date, seat_id, startTime, endTime) {
+  const matchingReservations = reservations.filter(reservation =>
+    new Date(reservation.start_date).toLocaleDateString("en-US") === date.toLocaleDateString("en-US") &&
+    reservation.seat_id === seat_id &&
+    (
+      (isBetween(getTimeFromDate(reservation.start_date), startTime, endTime)) ||
+      (isBetween(getTimeFromDate(reservation.end_date), startTime, endTime))
+    )
 
-  function getReservationsByTimeRange(reservations, date, seat_id, startTime, endTime) {
-    const matchingReservations = reservations.filter(reservation =>
-      new Date(reservation.start_date).toLocaleDateString("en-US") === date.toLocaleDateString("en-US") &&
-      reservation.seat_id === seat_id &&
-      (
-        (isBetween(getTimeFromDate(reservation.start_date), startTime, endTime)) ||
-        (isBetween(getTimeFromDate(reservation.end_date), startTime, endTime))
-      )
-    );
+  );
+  console.log("start",startTime);
+  console.log("end",endTime);
 
-    return matchingReservations.map((reservation, resIndex) => (
-      <div key={resIndex}>
-        {reservation.client_sn} {reservation.first_name}
-      </div>
-    ));
-  }
+  return matchingReservations.map((reservation, resIndex) => (
+    <div key={resIndex}>
+      {reservation.client_sn} {reservation.first_name}
+    </div>
+  ));
+}
+
 
   return (
     <>
@@ -121,42 +130,53 @@ const WeekDatesGrid = ({ startOfWeek, reserveSlot, seat_id }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {dates.map((date, dateIndex) => (
-              <TableRow key={dateIndex}>
-                <TableCell>
-                  {getDayName(date)}, {date.toLocaleDateString("en-US", {
-                    month: "2-digit",
-                    day: "2-digit",
-                    year: "2-digit",
-                  })}
-                </TableCell>
-                <TableCell
-                  key={dateIndex + "-morning"}
-                  style={{
-                    backgroundColor: getReservationsByTimeRange(reservations, date, seat_id, "06:30", "12:30").length > 0 ? "lightblue" : "inherit"
-                  }}
-                >
-                  {getReservationsByTimeRange(reservations, date, seat_id, "06:30", "12:30").length > 0 ? (
-                    getReservationsByTimeRange(reservations, date, seat_id, "06:30", "12:30")
-                  ) : (
-                    "No reservation"
-                  )}
-                </TableCell>
-                <TableCell
-                  key={dateIndex + "-afternoon"}
-                  style={{
-                    backgroundColor: getReservationsByTimeRange(reservations, date, seat_id, "12:30", "19:30").length > 0 ? "lightblue" : "inherit"
-                  }}
-                >
-                  {getReservationsByTimeRange(reservations, date, seat_id, "12:30", "19:30").length > 0 ? (
-                    getReservationsByTimeRange(reservations, date, seat_id, "12:30", "19:30")
-                  ) : (
-                    "No reservation"
-                  )}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
+  {dates.map((date, dateIndex) => {
+    console.log("Date:", date.toLocaleDateString("en-US", {
+      month: "2-digit",
+      day: "2-digit",
+      year: "2-digit",
+    }));
+    console.log("Start Time:", "06:30");
+    console.log("End Time:", "12:30");
+
+    return (
+      <TableRow key={dateIndex}>
+        <TableCell>
+          {getDayName(date)}, {date.toLocaleDateString("en-US", {
+            month: "2-digit",
+            day: "2-digit",
+            year: "2-digit",
+          })}
+        </TableCell>
+        <TableCell
+          key={dateIndex + "-morning"}
+          style={{
+            backgroundColor: getReservationsByTimeRange(reservations, date, seat_id, "06:30", "12:30").length > 0 ? "lightblue" : "inherit"
+          }}
+        >
+          {getReservationsByTimeRange(reservations, date, seat_id, "06:30", "12:30").length > 0 ? (
+            getReservationsByTimeRange(reservations, date, seat_id, "06:30", "12:30")
+          ) : (
+            "No reservation"
+          )}
+        </TableCell>
+        <TableCell
+          key={dateIndex + "-afternoon"}
+          style={{
+            backgroundColor: getReservationsByTimeRange(reservations, date, seat_id, "12:30", "19:31").length > 0 ? "lightblue" : "inherit"
+          }}
+        >
+          {getReservationsByTimeRange(reservations, date, seat_id, "12:30", "19:31").length > 0 ? (
+            getReservationsByTimeRange(reservations, date, seat_id, "12:30", "19:31")
+          ) : (
+            "No reservation"
+          )}
+        </TableCell>
+      </TableRow>
+    );
+  })}
+</TableBody>
+
         </Table>
       </TableContainer>
     </>
