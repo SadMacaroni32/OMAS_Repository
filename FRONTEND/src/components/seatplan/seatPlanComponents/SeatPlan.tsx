@@ -20,6 +20,9 @@ import SeventhCol from "./col-components/SeventhCol";
 //import loading animation
 import LinearDeterminate from "./SeatPlanLoading";
 
+//import style for seatPlan
+import seatPlanStyle from '../seatPlan.module.css'
+
 const SeatPlan: React.FC = () => {
   const dispatch = useDispatch();
 
@@ -27,10 +30,10 @@ const SeatPlan: React.FC = () => {
   const [available, setAvailable] = useState(true);
 
   //occupied state
-  const [occupied, setOccupied] = useState(true);
+  const [occupied, setOccupied] = useState(false);
 
   //under-repair state
-  const [underRepair, setUnderRepair] = useState(true);
+  const [underRepair, setUnderRepair] = useState(false);
 
   //reset state
   const [reset, setReset] = useState(false);
@@ -114,52 +117,7 @@ const SeatPlan: React.FC = () => {
     dispatch(getReservationsWithUserInfoFetch());
   }, [dispatch]);
 
- useEffect(() => {
-   const currentTime = new Date();
 
-   // Function to update reservation status to "available" if end time has passed
-   const updateReservationStatus = (reservation: any) => {
-     const endTime = new Date(reservation.end_date);
-     const startTime = new Date(reservation.start_date);
-     const seatId = reservation.seat_id;
-
-     // Convert start and end dates to UTC
-     const utcStartTime = new Date(
-       startTime.getTime() + startTime.getTimezoneOffset() * 60000
-     );
-     const utcEndTime = new Date(
-       endTime.getTime() + endTime.getTimezoneOffset() * 60000
-     );
-
-     // Check if the end time of the reservation is before the current time
-     if (utcEndTime < currentTime) {
-       // Format dates as strings in the required format
-       const formattedStartTime = utcStartTime.toISOString();
-       const formattedEndTime = utcEndTime.toISOString();
-
-       // Dispatch action to update reservation status to "available"
-       dispatch(
-         updateReservationStatusFetch({
-           seatId,
-           start_date: formattedStartTime,
-           end_date: formattedEndTime,
-         })
-       );
-     }
-   };
-
-   // Run the effect only if it hasn't been run before
-   if (!isEffectRun) {
-     // Update reservations in reservationsAM array
-     reservationsAM.forEach(updateReservationStatus);
-
-     // Update reservations in reservationsPM array
-     reservationsPM.forEach(updateReservationStatus);
-
-     // Set isEffectRun to true to indicate that the effect has been run
-     setIsEffectRun(true);
-   }
- }, [dispatch, isEffectRun, reservationsAM, reservationsPM]);
   const currentTime = new Date(); // Get the current time
 
   const columnData = [
@@ -307,49 +265,52 @@ const SeatPlan: React.FC = () => {
   //reset available, occupied and under-repair state to true
   const resetState = () => {
     setAvailable(true);
-    setOccupied(true);
-    setUnderRepair(true);
+    setOccupied(false);
+    setUnderRepair(false);
     setReset(false);
   };
 
   return (
-    <div className="w-full h-[1000px] flex justify-center">
+    <div className={seatPlanStyle.container}>
       {/* Render loading indicator while loading */}
       {isLoading ? (
         <LinearDeterminate />
       ) : (
-        <div className="flex gap-x-10 h-full mt-[50px]">
-          <div className="flex flex-col text-[.8rem] relative h-full w-full">
+        <div className={seatPlanStyle.childContainer}>
+          <div className={seatPlanStyle.toggleContainer}>
             <div
-              className="flex items-center cursor-pointer gap-x-2"
-              onClick={availableHandle}>
+              className={seatPlanStyle.toggleChildContainer}
+              onClick={availableHandle}
+              >
               <div className="h-[.5rem] w-[.5rem] rounded-full  bg-green-400"></div>
               <span>Available</span>
             </div>
             <div
-              className="flex items-center cursor-pointer gap-x-2"
+              className={seatPlanStyle.toggleChildContainer}
               onClick={occupiedHandle}>
               <div className="h-[.5rem] w-[.5rem] rounded-full bg-yellow-400"></div>
               <span>Occupied</span>
             </div>
             <div
-              className="flex items-center cursor-pointer gap-x-2"
+              className={seatPlanStyle.toggleChildContainer}
               onClick={underRepairHandle}>
               <div className="h-[.5rem] w-[.5rem] rounded-full  bg-red-500"></div>
               <span>Under-repair</span>
             </div>
             {reset && (
               <div
-                className="flex items-center cursor-pointer gap-x-2"
+                className={seatPlanStyle.toggleChildContainer}
                 onClick={resetState}>
                 <div className="h-[.5rem] w-[.5rem] rounded-full bg-blue-400"></div>
                 <span>Reset</span>
               </div>
             )}
           </div>
-          {columnData.map((col, index) => (
-            <col.component key={index} {...col.props} />
-          ))}
+          <div className="w-[250px] md:w-[500px] lg:w-[700px] xl:w-[1080px] 2xl:w-full flex gap-x-10">
+            {columnData.map((col, index) => (
+              <col.component key={index} {...col.props} />
+            ))}
+          </div>
         </div>
       )}
 

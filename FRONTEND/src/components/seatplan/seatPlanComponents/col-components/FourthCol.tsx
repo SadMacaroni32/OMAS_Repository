@@ -52,9 +52,11 @@ const FourthCol: React.FC = ({
                 setSeatId(seat_id);
               }}
               className={`w-[6rem] h-[6rem] border-[.1rem] drop-shadow-sm shadow-sm cursor-pointer px-1 relative ${
-                (available && !reservationAM) ||
-                (occupied && reservationAM && !underRepair) ||
-                (underRepair && reservationAM && underRepair)
+                (available &&
+                  !userInfoToDisplay &&
+                  seat_status !== "repairing") ||
+                (occupied && userInfoToDisplay) ||
+                (underRepair && seat_status === "repairing")
                   ? ""
                   : "opacity-50"
               }`}>
@@ -64,7 +66,7 @@ const FourthCol: React.FC = ({
               <span className="text-[.8rem]  w-full left-0  text-center absolute h-full ">
                 {displayReservation ? (
                   <>
-                    {userInfoToDisplay && seat_status === "occupied" ? (
+                    {userInfoToDisplay ? (
                       <div className="relative flex flex-col justify-between h-full py-1">
                         <span className="h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"></span>
 
@@ -80,7 +82,7 @@ const FourthCol: React.FC = ({
                           className={
                             seat_status === "available"
                               ? "h-[.5rem] w-[.5rem]  rounded-full absolute right-[.5rem] top-[.5rem] bg-green-400"
-                              : seat_status === "occupied"
+                              : userInfoToDisplay
                               ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"
                               : seat_status === "repairing"
                               ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
@@ -96,8 +98,8 @@ const FourthCol: React.FC = ({
                       <span
                         className={
                           seat_status === "available"
-                            ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-green-400"
-                            : seat_status === "occupied"
+                            ? "h-[.5rem] w-[.5rem]  rounded-full absolute right-[.5rem] top-[.5rem] bg-green-400"
+                            : userInfoToDisplay
                             ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"
                             : seat_status === "repairing"
                             ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
@@ -109,9 +111,7 @@ const FourthCol: React.FC = ({
                 )}
               </span>
               <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
-                {userInfoToDisplay && seat_status === "occupied"
-                  ? userInfoToDisplay.client
-                  : null}
+                {userInfoToDisplay ? userInfoToDisplay.client : null}
               </span>
             </div>
           );
@@ -157,9 +157,11 @@ const FourthCol: React.FC = ({
                 setSeatId(seat_id);
               }}
               className={`w-[6rem] h-[6rem] border-[.1rem] drop-shadow-sm shadow-sm cursor-pointer px-1 relative ${
-                (available && !reservationAM) ||
-                (occupied && reservationAM && !underRepair) ||
-                (underRepair && reservationAM && underRepair)
+                (available &&
+                  !userInfoToDisplay &&
+                  seat_status !== "repairing") ||
+                (occupied && userInfoToDisplay) ||
+                (underRepair && seat_status === "repairing")
                   ? ""
                   : "opacity-50"
               }`}>
@@ -169,7 +171,7 @@ const FourthCol: React.FC = ({
               <span className="text-[.8rem]  w-full left-0  text-center absolute h-full ">
                 {displayReservation ? (
                   <>
-                    {userInfoToDisplay && seat_status === "occupied" ? (
+                    {userInfoToDisplay ? (
                       <div className="relative flex flex-col justify-between h-full py-1">
                         <span className="h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"></span>
 
@@ -185,7 +187,7 @@ const FourthCol: React.FC = ({
                           className={
                             seat_status === "available"
                               ? "h-[.5rem] w-[.5rem]  rounded-full absolute right-[.5rem] top-[.5rem] bg-green-400"
-                              : seat_status === "occupied"
+                              : userInfoToDisplay
                               ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"
                               : seat_status === "repairing"
                               ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
@@ -202,7 +204,7 @@ const FourthCol: React.FC = ({
                         className={
                           seat_status === "available"
                             ? "h-[.5rem] w-[.5rem]  rounded-full absolute right-[.5rem] top-[.5rem] bg-green-400"
-                            : seat_status === "occupied"
+                            : userInfoToDisplay
                             ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"
                             : seat_status === "repairing"
                             ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
@@ -214,9 +216,7 @@ const FourthCol: React.FC = ({
                 )}
               </span>
               <span className="border-[.1rem] z-[10] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
-                {userInfoToDisplay && seat_status === "occupied"
-                  ? userInfoToDisplay.client
-                  : null}
+                {userInfoToDisplay ? userInfoToDisplay.client : null}
               </span>
             </div>
           );

@@ -6,22 +6,14 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import OmasLogo from "../../../assets/omas-horizontal-white.png";
 
 import NavbarSearchBox from "./NavbarSearchBox";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../redux/store/store";
-import { getUsersFetch } from "../../../redux/state/userState";
-import { useEffect } from "react";
 import NavbarCollapseMenu from "./NavbarCollapseMenu";
 import { ScriptsNav } from "./ScriptsNav";
 import NavbarMenuItems from "./NavbarMenu";
 
-interface dataFormat {
-  emp_id: number;
-}
 
 export default function NavbarBody() {
 
@@ -29,27 +21,16 @@ export default function NavbarBody() {
     anchorElNav,
     handleOpenNavMenu,
     handleCloseNavMenu,
-    handleCloseUserMenu,
-    pageDashboard,
-    pageSeatplan,
-    pageViewAppointments,
   } = ScriptsNav();
-  
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const user: dataFormat [] = useSelector((state: RootState) => state.userReducer.users);
 
-  useEffect(() => {
-    dispatch(getUsersFetch());
-  }, [dispatch]); 
-
-  //console.log("Navbar Body", user)
 
   return (
     <AppBar position="static" >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          <img src={OmasLogo} className="h-10"/>
+          {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          LOGO
           <Typography
             variant="h6"
             noWrap
@@ -64,8 +45,7 @@ export default function NavbarBody() {
               textDecoration: "none",
             }}
           >
-            LOGO
-          </Typography>
+          </Typography> */}
 
           <NavbarSearchBox />
 
@@ -96,7 +76,7 @@ export default function NavbarBody() {
               onClose={handleCloseNavMenu}
               sx={{
                 display: { xs: "block", md: "none" },
-              }}
+              }} 
             ></Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
