@@ -54,7 +54,8 @@ export default function DashboardStatusBoxed() {
     localStorage.setItem("Total Seats", JSON.stringify(totalSeats));
     localStorage.setItem("Assigned Seats", JSON.stringify(assignedSeats));
     localStorage.setItem("Total Associates", JSON.stringify(totalAssociates));
-    localStorage.setItem("Reserved Associates", JSON.stringify(reservedAssociates));
+    localStorage.setItem("Reserved Associates",JSON.stringify(reservedAssociates)
+    );
   }, [totalSeats, assignedSeats, totalAssociates, reservedAssociates]);
 
   // Retrieve seatData and seatReservedData from localStorage on component mount
@@ -63,6 +64,7 @@ export default function DashboardStatusBoxed() {
     const storedAssignedSeats = localStorage.getItem("Assigned Seats");
     const storedTotalAssociates = localStorage.getItem("Total Associates");
     const storedReservedAssociates = localStorage.getItem("Reserved Associates");
+
     if (
       storedTotalSeats &&
       storedAssignedSeats &&
@@ -79,14 +81,14 @@ export default function DashboardStatusBoxed() {
     }
   }, []);
 
-  {
-    /* FOR CHECKING API DATA CONSOLE */
-  }
-  // console.log("Total Seats", totalSeats);
-  // console.log("Assigned Seats", assignedSeats);
-  // console.log("Total Associates", totalAssociates);
-  // console.log("Reserved Associates", reservedAssociates);
-  // console.log("Unreserved Associates", unreservedAssociates);
+  // Count the unique employee IDs in the assignedSeats array
+  const uniqueEmployeeIds = new Set(
+    assignedSeats.map((seat: any) => seat.emp_id)
+  );
+  const uniqueAssignedSeatsCount = uniqueEmployeeIds.size;  
+
+  console.log("Date/Time", assignedSeats);
+
 
   return (
     <Grid container spacing={1}>
@@ -150,7 +152,7 @@ export default function DashboardStatusBoxed() {
         >
           <AirlineSeatReclineNormalIcon sx={{ ...iconStyle }} />
           <Typography variant="h6" gutterBottom m={1} sx={{ ...numberStyle }}>
-            {assignedSeats.length}
+            {uniqueAssignedSeatsCount} {/* Count of unique employee IDs */}
           </Typography>
           <Typography variant="subtitle1" gutterBottom sx={{ ...textStyle }}>
             OCCUPIED SEATS
@@ -171,7 +173,7 @@ export default function DashboardStatusBoxed() {
         >
           <InsertEmoticonIcon sx={{ ...iconStyle }} />
           <Typography variant="h6" gutterBottom m={1} sx={{ ...numberStyle }}>
-            {assignedSeats.length}
+            {uniqueAssignedSeatsCount} {/* Count of unique employee IDs */}
           </Typography>
           <Typography variant="subtitle1" gutterBottom sx={{ ...textStyle }}>
             WITH SEATS ASSIGNED
@@ -194,7 +196,7 @@ export default function DashboardStatusBoxed() {
         >
           <ChairAltIcon sx={{ ...iconStyle }} />
           <Typography variant="h6" gutterBottom m={1} sx={{ ...numberStyle }}>
-            {totalSeats.length - assignedSeats.length} {/* MOCK DATA */}
+            {totalSeats.length - uniqueAssignedSeatsCount} {/* Difference */}
           </Typography>
           <Typography variant="subtitle1" gutterBottom sx={{ ...textStyle }}>
             AVAILABLE SEATS

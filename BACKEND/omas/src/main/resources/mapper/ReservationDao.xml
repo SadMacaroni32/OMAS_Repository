@@ -16,6 +16,7 @@
             reservation.seat_id AS seat_id,
             reservation.start_date AS start_date,
             reservation.end_date AS end_date,
+            reservation.reservation_seat_status,
             position.position_sh_name AS position_sn,
             pi.fname AS first_name,
             pi.mname AS middle_name,
@@ -45,10 +46,17 @@
 
     <insert id="insertReservation" parameterType="com.omasystem.omas.Model.ReservationInputBodyModel">
         INSERT INTO tbl_reservation
-            (emp_id, seat_id, proj_id, start_date, end_date, note)
+            (emp_id, seat_id, proj_id, start_date, end_date, note, reservation_seat_status)
         VALUES
-            (#{emp_id}, #{seat_id}, #{proj_id}, #{start_date}, #{end_date}, #{note});
+            (#{emp_id}, #{seat_id}, #{proj_id}, #{start_date}, #{end_date}, #{note}, #{reservation_seat_status});
     </insert>
+
+
+    <!-- <update id="ReservationSeatStatus">
+    UPDATE tbl_reservation
+    SET reservation_seat_status = #{status}
+    WHERE reservation_id = #{reservationId}
+    </update> -->
 
  <select id="findByEmpId" parameterType="java.lang.String" resultType="com.omasystem.omas.Model.ReservationModel">
     SELECT 
@@ -63,6 +71,7 @@
         reservation.update_date AS update_date,
         reservation.reg_id AS reg_id,
         reservation.reg_date AS reg_date,
+        reservation.del_flag AS del_flag,
         position.position_sh_name AS position_sn,
         pi.fname AS first_name,
         pi.mname AS middle_name,
@@ -86,12 +95,13 @@
         tbl_clients_mst AS client
         ON project.client_id = client.client_id
     WHERE reservation.emp_id = #{emp_id} OR reservation.emp_id IS NULL
+    ORDER BY reservation_id DESC;
 </select>
 
 
     <!--findById statement-->
     <select id="findById" parameterType="java.lang.Long" resultType="com.omasystem.omas.Model.ReservationModel">
-        SELECT * FROM tbl_reservation WHERE reservation_id = #{reservationId}
+        SELECT * FROM tbl_reservation WHERE reservation_id = #{reservationId} 
     </select>
 
     <!-- updateReservation statement -->

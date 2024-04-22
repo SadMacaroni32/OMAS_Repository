@@ -21,7 +21,7 @@ import { getRepairSeatSaga } from "./Dashboard_Saga/seatConditionSagas/Repair_Se
 import { getTotalAssociatesSaga } from "./Dashboard_Saga/statusBoxesSagas/Total_Associates";
 import { getReservedAssociatesSaga } from "./Dashboard_Saga/statusBoxesSagas/Reserved_Associates";
 import { getUnreservedAssociatesSaga } from "./Dashboard_Saga/statusBoxesSagas/Unreserved_Associates";
-import { PrincipalWithReservationInfoSaga } from "./viewReservationSaga";
+import { PrincipalWithReservationInfoSaga, watchArchiveReservation } from "./viewReservationSaga";
 
 
 export default function* rootSaga() {
@@ -36,6 +36,7 @@ export default function* rootSaga() {
     fetchReservationsDate(),
     reservationsSagaDate(),
     PrincipalWithReservationInfoSaga(),
+    watchArchiveReservation(),
     getUserIdSaga(),
     addReservationsSaga(),
     getRecentCommentsSaga(),

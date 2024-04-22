@@ -147,6 +147,7 @@ public class ReservationService {
             bodyContainer.setStart_date(body.getStart_date()); // Setting start date in body container
             bodyContainer.setEnd_date(body.getEnd_date()); // Setting end date in body container
             bodyContainer.setNote(body.getNote()); // Setting note in body container
+            bodyContainer.setReservation_seat_status(body.getReservation_seat_status());
 
             reservationDao.insertReservation(bodyContainer); // Inserting reservation into database
 

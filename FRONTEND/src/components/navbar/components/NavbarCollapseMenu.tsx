@@ -3,8 +3,8 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import Avatar from "@mui/material/Avatar"; // Added Avatar import
-import Tooltip from "@mui/material/Tooltip"; // Added Tooltip import
+import Avatar from "@mui/material/Avatar";
+import Tooltip from "@mui/material/Tooltip";
 import { ScriptsNav } from "./ScriptsNav";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
@@ -13,8 +13,8 @@ import { getUsersFetch } from "../../../redux/state/userState";
 
 export default function NavbarCollapseMenu() {
   const dispatch = useDispatch();
-  const userData: any = useSelector(
-    (state: RootState) => state.userReducer.users
+  const loggedUser: any = useSelector(
+    (state: RootState) => state.userProfileReducer.userProfile
   );
 
   useEffect(() => {
@@ -24,11 +24,12 @@ export default function NavbarCollapseMenu() {
   const { anchorElUser, handleOpenUserMenu, handleCloseUserMenu, pageLogout } =
     ScriptsNav();
 
-  const { emp_id, username, status_code, position_id } = userData.message ?? {};
+  // console.log("Navbar Collapse Menu", loggedUser)
 
   return (
     <>
       {/* COLLAPSE MENU */}
+      {loggedUser && (
       <Box sx={{ flexGrow: 0 }}>
         <Tooltip title="Open settings">
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -51,21 +52,22 @@ export default function NavbarCollapseMenu() {
           open={Boolean(anchorElUser)}
           onClose={handleCloseUserMenu}
         >
-          <MenuItem
+          <Box
+            sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', m: 1 }}
             onClick={() => {
               handleCloseUserMenu();
             }}
           >
-            <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
-            <Typography textAlign="center">
-              {username} {status_code}
+            <Typography id="name" textAlign="center" sx={{fontSize: '1rem', fontWeight: "bold", color: "#25476A"}}>
+              {loggedUser.first_name} {loggedUser.middle_name} {loggedUser.last_name}
             </Typography>
-            <Typography textAlign="center">
-              {emp_id} {position_id}
+            <Typography id="position" textAlign="center" sx={{fontSize: '1rem', color: "#25476A"}}>
+              {loggedUser.position_name}
             </Typography>
-          </MenuItem>
+          </Box>
           {/* Logout */}
           <MenuItem
+          sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
             onClick={() => {
               handleCloseUserMenu();
               pageLogout();
@@ -75,6 +77,7 @@ export default function NavbarCollapseMenu() {
           </MenuItem>
         </Menu>
       </Box>
+      )}
     </>
   );
 }
