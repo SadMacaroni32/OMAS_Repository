@@ -14,4 +14,5 @@ public interface tbl_userRepo extends JpaRepository<tbl_user, String>{ // Declar
     // @param username The username of the user to find.
     // @return An Optional containing the user if found, otherwise empty.
     Optional<tbl_user> findByUsername(String username); // Declaration of the findByUsername method which returns an Optional<tbl_user> based on the username parameter
+
 }

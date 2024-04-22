@@ -1,41 +1,34 @@
-package com.omasystem.omas.Service; 
+package com.omasystem.omas.Service;
 
-import org.springframework.security.authentication.AuthenticationManager; 
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken; 
-import org.springframework.security.crypto.password.PasswordEncoder; 
-import org.springframework.stereotype.Service; 
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
-import com.omasystem.omas.Entity.AuthenticationRequest; 
-import com.omasystem.omas.Entity.AuthenticationResponse; 
-import com.omasystem.omas.Entity.RegisterRequest; 
-import com.omasystem.omas.Entity.tbl_personal_info; 
-import com.omasystem.omas.Entity.tbl_user; 
-import com.omasystem.omas.Repo.tbl_personal_infoRepo; 
-import com.omasystem.omas.Repo.tbl_userRepo; 
+import com.omasystem.omas.Entity.AuthenticationRequest;
+import com.omasystem.omas.Entity.AuthenticationResponse;
+import com.omasystem.omas.Entity.RegisterRequest;
+import com.omasystem.omas.Entity.tbl_personal_info;
+import com.omasystem.omas.Entity.tbl_user;
+import com.omasystem.omas.Repo.tbl_personal_infoRepo;
+import com.omasystem.omas.Repo.tbl_userRepo;
 
-import lombok.RequiredArgsConstructor; 
+import lombok.RequiredArgsConstructor;
 
-@Service 
-@RequiredArgsConstructor 
+@Service
+@RequiredArgsConstructor
 public class AuthenticationService {
 
-    private final tbl_userRepo tbl_userRepository; // Declaring a field for tbl_userRepo injection
-    private final tbl_personal_infoRepo tbl_personal_infoRepo; // Declaring a field for tbl_personal_infoRepo injection
-    private final PasswordEncoder passwordEncoder; // Declaring a field for PasswordEncoder injection
-    private final JwtService jwtService; // Declaring a field for JwtService injection
-    private final AuthenticationManager authenticationManager; // Declaring a field for AuthenticationManager injection
-
-    //Logic for emp_id
-    private String generateEmpId() {
-        // Get the count of existing entries
-        long existingEntriesCount = tbl_userRepository.count();
-        // Increment the count by 100 and convert it to a string
-        return String.valueOf(existingEntriesCount + 100);
-    }
+    private final tbl_userRepo tbl_userRepository;
+    private final tbl_personal_infoRepo tbl_personal_infoRepo;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
+    private final AuthenticationManager authenticationManager;
 
     // Method to register a new user
     public AuthenticationResponse register(RegisterRequest request) {
-        String empId = generateEmpId(); // Generating employee ID
+        // Generating emp_id automatically
+        String empId = generateEmpId();
 
         // Creating a new user entity
         var user = tbl_user.builder()
@@ -48,11 +41,10 @@ public class AuthenticationService {
                 .role_id(1)
                 .img_src("Default")
                 .password(passwordEncoder.encode(request.getPassword()))
-                // .role(Role.USER)
                 .build();
-        
-        if (user != null) { // Checking if user is not null
-            tbl_userRepository.save(user); // Saving user entity
+
+        if (user != null) {
+            tbl_userRepository.save(user);
         }
 
         // Creating a new personal info entity
@@ -64,31 +56,37 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .build();
 
-        if(personal_info != null) { // Checking if personal_info is not null
-            tbl_personal_infoRepo.save(personal_info); // Saving personal info entity
+        if (personal_info != null) {
+            tbl_personal_infoRepo.save(personal_info);
         }
 
-        var jwtToken = jwtService.generateToken(user); // Generating JWT token
+        var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
+    }
+
+    // Method to generate emp_id automatically
+    private String generateEmpId() {
+        // Get the count of existing users
+        long existingUsersCount = tbl_userRepository.count();
+        // Increment the count by 1 to generate the next emp_id
+        return String.valueOf(existingUsersCount + 101);
     }
 
     // Method to authenticate a user
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        authenticationManager.authenticate( // Authenticating user credentials
+        authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getUsername(),
                         request.getPassword()));
 
-        var user = tbl_userRepository.findByUsername(request.getUsername()) // Finding user by username
+        var user = tbl_userRepository.findByUsername(request.getUsername())
                 .orElseThrow();
 
-        var jwtToken = jwtService.generateToken(user); // Generating JWT token
+        var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
     }
-
 }
-
