@@ -1,0 +1,47 @@
+@tailwind base;
+
+@layer base {
+
+  /* COLUMN CHILD STYLES */
+  .container {
+    @apply flex gap-x-1 h-[90%]
+  }
+  .outerContainer {
+    @apply flex flex-col justify-between 
+  }
+  .innerContainer {
+    @apply flex flex-col gap-y-1
+  }
+  .returnValueContainer {
+    @apply w-[6rem] h-[6rem] border-[.1rem] drop-shadow-sm shadow-sm cursor-pointer px-1 relative
+  }
+  .seatIdContainer {
+    @apply border-[.1rem]  px-1 text-[.8rem]
+  }
+  .displayReservationContainer {
+    @apply text-[.8rem]  w-full left-0  text-center absolute h-full
+  }
+  .displayReservationFalseContainer {
+    @apply relative flex flex-col items-center justify-center h-full
+  }
+  .userInfoTrueContainer {
+    @apply relative flex flex-col justify-between h-full py-1
+  }
+  .userInfoFalseContainer {
+    @apply relative flex items-center justify-center h-full
+  }
+  .userInfoClientContainer {
+    @apply border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center
+  }
+
+  /* SEAT STATUS STYLES */
+  .occupiedSeat {
+    @apply h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400
+  }
+  .availableSeat {
+    @apply h-[.5rem] w-[.5rem]  rounded-full absolute right-[.5rem] top-[.5rem] bg-green-400
+  }
+  .underRepairSeat {
+    @apply h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500
+  }
+}

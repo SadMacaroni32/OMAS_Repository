@@ -42,18 +42,20 @@ export function* PrincipalWithReservationInfoSaga() {
   );
 }
 
-function* archiveReservationSaga(action:any): any {
+
+
+
+
+
+function* archiveReservationSaga(action: any): any {
   try {
     const token = localStorage.getItem("token");
-    // if (!token) {
-    //   throw new Error("Token not found in localStorage");
-    // }
-    const { reservation_id } = action.payload; // The action payload is an object, so destructure it
-    // Make API call to delete reservation using PUT method
-    const updateDelFlag = yield call(() =>
+    const { reservation_id } = action.payload;
+
+    yield call(() =>
       axios.put(
         `http://localhost:8080/api/reservations/archive/${reservation_id}`,
-        {}, // Ensure an empty object is sent as data since PUT requests don't require a body
+        {},
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -61,15 +63,45 @@ function* archiveReservationSaga(action:any): any {
         }
       )
     );
-    // yield put(archiveReservationStart(updateDelFlag))?
-    // Dispatch success action to update Redux state
-    yield put(archiveReservationSuccess(updateDelFlag));
+
+    yield put(archiveReservationSuccess(reservation_id));
   } catch (error) {
     console.error("Error archiving reservation:", error);
-    // Dispatch failure action with error message
     yield put(archiveReservationFailure("Error archiving reservation"));
   }
 }
+
+export function* watchArchiveReservation() {
+  yield takeLatest("viewreservation/archiveReservationStart", archiveReservationSaga);
+}
+// function* archiveReservationSaga(action:any): any {
+//   try {
+//     const token = localStorage.getItem("token");
+//     // if (!token) {
+//     //   throw new Error("Token not found in localStorage");
+//     // }
+//     const { reservation_id } = action.payload; // The action payload is an object, so destructure it
+//     // Make API call to delete reservation using PUT method
+//     const updateDelFlag = yield call(() =>
+//       axios.put(
+//         `http://localhost:8080/api/reservations/archive/${reservation_id}`,
+//         {}, // Ensure an empty object is sent as data since PUT requests don't require a body
+//         {
+//           headers: {
+//             Authorization: `Bearer ${token}`,
+//           },
+//         }
+//       )
+//     );
+//     // yield put(archiveReservationStart(updateDelFlag))?
+//     // Dispatch success action to update Redux state
+//     yield put(archiveReservationSuccess(updateDelFlag));
+//   } catch (error) {
+//     console.error("Error archiving reservation:", error);
+//     // Dispatch failure action with error message
+//     yield put(archiveReservationFailure("Error archiving reservation"));
+//   }
+// }
 
 
 
@@ -99,6 +131,6 @@ function* archiveReservationSaga(action:any): any {
 // export function* watchArchiveReservation() {
 //   yield takeLatest(archiveReservationStart.type, archiveReservationSaga);
 // }
-export function* watchArchiveReservation() {
-  yield takeLatest("viewreservation/archiveReservationStart", archiveReservationSaga);
-}
+// export function* watchArchiveReservation() {
+//   yield takeLatest("viewreservation/archiveReservationStart", archiveReservationSaga);
+// }

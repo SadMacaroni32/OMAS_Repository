@@ -43,7 +43,7 @@ const DashboardSeatCondition = () => {
   useEffect(() => {
     if (totalSeats && totalAssignedSeats) {
       setData({
-        available: totalSeats.length - totalAssignedSeats.length,
+        available: totalSeats.length - (totalAssignedSeats.length + totalRepairSeats.length),
         occupied: totalAssignedSeats.length,
         underRepair: totalRepairSeats.length,
       });
