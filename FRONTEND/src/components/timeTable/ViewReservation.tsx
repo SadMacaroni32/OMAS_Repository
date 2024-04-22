@@ -39,11 +39,10 @@ export default function viewReservation() {
     };
 
 
-    // const handleDelete = (reservation_id: any) => {
-    //     // Dispatch the archiveReservationStart action with the reservationId as payload
-    //     dispatch(archiveReservationStart(reservation_id));
-    // };
-
+    const handleDelete = (reservation_id: number) => {
+        dispatch(archiveReservationStart({ reservation_id }));
+    };
+    
     const handleAction = (action: string, rowData: any) => {
    
     };
@@ -94,8 +93,7 @@ export default function viewReservation() {
                                         <TableCell sx={{ textAlign: 'center' }}>{row.note}</TableCell>
                                         <TableCell sx={{ textAlign: 'center' }}>
                                             <ButtonGroup variant="text" aria-label="Basic button group">
-                                            <Button onClick={() =>{ console.log(row.reservation_id);
- dispatch(archiveReservationStart(row.reservation_id) )}}>Delete</Button>
+                                            <Button onClick={() =>{ console.log(row.reservation_id); handleDelete(row.reservation_id)}}>Delete</Button>
                                             </ButtonGroup>
                                         </TableCell>
                                     </TableRow>

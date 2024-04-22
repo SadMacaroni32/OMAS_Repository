@@ -34,20 +34,18 @@ const viewReservationSlice = createSlice({
       state.isLoading = false;
     },
     archiveReservationStart(state) {
-      state.isLoading = true; // Indicate that the deletion process has started
-      state.error = ""; // Clear any previous error messages
+      state.isLoading = true;
+      state.error = "";
     },
     archiveReservationSuccess(state, action: PayloadAction<number>) {
-      console.log("Previous state:", state.viewReservationValue);
+      const reservationIdToDelete = action.payload;
       state.viewReservationValue = state.viewReservationValue.filter(
-        (reservation) => reservation.reservation_id !== action.payload
+        (reservation) => reservation.reservation_id !== reservationIdToDelete
       );
-      state.isdeleteSuccess = false;
-
-      console.log("New state:", state.viewReservationValue);
+      state.isdeleteSuccess = true; // Assuming this indicates successful deletion
     },
     archiveReservationFailure(state, action: PayloadAction<string>) {
-      state.isdeleteSuccess = false;
+      state.isLoading = false;
       state.error = action.payload;
     },
   },
