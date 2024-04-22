@@ -57,8 +57,8 @@ const Login: React.FC = () => {
 
 console.log("login data", userData);
   return (
-    <div className="rounded-md shadow-sm drop-shadow-lg border-[.1rem] h-[20rem] w-full  lg:h-[30rem] flex flex-col items-center justify-center">
-      <div className="w-full text-[2rem] font-bold lg:h-[10rem] flex items-center justify-center">
+    <div className="rounded-md shadow-sm drop-shadow-lg border-[.1rem] h-full py-5 w-full  lg:h-[30rem] flex flex-col items-center justify-center">
+      <div className="w-full text-[2rem] font-bold lg:h-[15rem] flex items-center justify-center">
         <img src={OmasLogo} className="w-1/2"/>
       </div>
       <form

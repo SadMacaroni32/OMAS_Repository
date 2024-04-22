@@ -4,8 +4,7 @@ import { useEffect, useState } from "react";
 import { getSeatsFetch } from "../../../redux/state/seatPlanState";
 import {
   getReservationsFetch,
-  getReservationsWithUserInfoFetch,
-  updateReservationStatusFetch,
+  getReservationsWithUserInfoFetch
 } from "../../../redux/state/reservationState";
 import TimeTablePage from "../../../pages/TimeTablePage";
 import { getUsersFetch } from "../../../redux/state/userState";
@@ -38,8 +37,6 @@ const SeatPlan: React.FC = () => {
   //reset state
   const [reset, setReset] = useState(false);
 
-  // Add a state variable to track whether the effect has already been run
-  const [isEffectRun, setIsEffectRun] = useState(false);
 
   //get users for seat reservation
   const userData = useSelector(
@@ -75,11 +72,11 @@ const SeatPlan: React.FC = () => {
     );
   });
 
-  console.log("this is todays reservation", todayReservations);
+  // console.log("this is todays reservation", todayReservations);
 
   // Fetch user information using emp_id
-  const getUserInfo = (empId) => {
-    const user = userData.find((user) => user.emp_id === empId);
+  const getUserInfo = (empId :any) => {
+    const user : any = userData.find((user: any) => user.emp_id === empId);
 
     return user
       ? {
@@ -91,23 +88,23 @@ const SeatPlan: React.FC = () => {
       : null;
   };
   // Filter reservations starting at 6:00 AM
-  const reservationsAM = todayReservations.filter((reservation) => {
+  const reservationsAM = todayReservations.filter((reservation :any) => {
     const startTimeUTC = new Date(reservation.start_date); // Convert UTC start time to Date object
     return (
       startTimeUTC.getUTCHours() === 6 && startTimeUTC.getUTCMinutes() === 0
     ); // Check if hours and minutes match 6:00 AM
   });
 
-  console.log("this is todays AM reservation", reservationsAM);
+  // console.log("this is todays AM reservation", reservationsAM);
 
 
   // Filter reservations starting after 6:00 PM but before midnight
-  const reservationsPM = todayReservations.filter((reservation) => {
+  const reservationsPM = todayReservations.filter((reservation :any) => {
     const startTimeUTC = new Date(reservation.start_date); // Convert UTC start time to Date object
     return startTimeUTC.getUTCHours() >= 12 && startTimeUTC.getUTCHours() < 24; // Check if hours are between 18 (6:00 PM) and 23 (11:59 PM)
   });
 
-  console.log("this is todays PM reservation", reservationsPM);
+  // console.log("this is todays PM reservation", reservationsPM);
 
 
   useEffect(() => {
@@ -280,33 +277,32 @@ const SeatPlan: React.FC = () => {
           <div className={seatPlanStyle.toggleContainer}>
             <div
               className={seatPlanStyle.toggleChildContainer}
-              onClick={availableHandle}
-              >
-              <div className="h-[.5rem] w-[.5rem] rounded-full  bg-green-400"></div>
+              onClick={availableHandle}>
+              <div className={seatPlanStyle.toggleAvailable}></div>
               <span>Available</span>
             </div>
             <div
               className={seatPlanStyle.toggleChildContainer}
               onClick={occupiedHandle}>
-              <div className="h-[.5rem] w-[.5rem] rounded-full bg-yellow-400"></div>
+              <div className={seatPlanStyle.toggleOccupied}></div>
               <span>Occupied</span>
             </div>
             <div
               className={seatPlanStyle.toggleChildContainer}
               onClick={underRepairHandle}>
-              <div className="h-[.5rem] w-[.5rem] rounded-full  bg-red-500"></div>
+              <div className={seatPlanStyle.toggleUnderRepair}></div>
               <span>Under-repair</span>
             </div>
             {reset && (
               <div
                 className={seatPlanStyle.toggleChildContainer}
                 onClick={resetState}>
-                <div className="h-[.5rem] w-[.5rem] rounded-full bg-blue-400"></div>
+                <div className={seatPlanStyle.toggleReset}></div>
                 <span>Reset</span>
               </div>
             )}
           </div>
-          <div className="w-[250px] md:w-[500px] lg:w-[700px] xl:w-[1080px] 2xl:w-full flex gap-x-10">
+          <div className={seatPlanStyle.columnContainer}>
             {columnData.map((col, index) => (
               <col.component key={index} {...col.props} />
             ))}
