@@ -40,6 +40,10 @@ export default function DashboardStatusBoxed() {
   );
 
   const [dataState, setDataState] = useState<any | null>(null);
+  const [reservationsAMCount, setReservationsAMCount] = useState<number>(0);
+  const [reservationsPMCount, setReservationsPMCount] = useState<number>(0);
+  const [currentReservationCount, setCurrentReservationCount] =
+    useState<number>(0);
 
   useEffect(() => {
     dispatch(getTotalSeatsFetch());
@@ -54,7 +58,9 @@ export default function DashboardStatusBoxed() {
     localStorage.setItem("Total Seats", JSON.stringify(totalSeats));
     localStorage.setItem("Assigned Seats", JSON.stringify(assignedSeats));
     localStorage.setItem("Total Associates", JSON.stringify(totalAssociates));
-    localStorage.setItem("Reserved Associates",JSON.stringify(reservedAssociates)
+    localStorage.setItem(
+      "Reserved Associates",
+      JSON.stringify(reservedAssociates)
     );
   }, [totalSeats, assignedSeats, totalAssociates, reservedAssociates]);
 
@@ -81,15 +87,58 @@ export default function DashboardStatusBoxed() {
     }
   }, []);
 
-  // Count the unique employee IDs in the assignedSeats array
-  const uniqueEmployeeIds = new Set(
-    assignedSeats.map((seat: any) => seat.emp_id)
-  );
-  const uniqueAssignedSeatsCount = uniqueEmployeeIds.size;  
+  // Filter reservations for today
+  const todayReservations = assignedSeats.filter((reservation: any) => {
+    const reservationDate = new Date(reservation.start_date);
+    const today = new Date();
+    return (
+      reservationDate.getDate() === today.getDate() &&
+      reservationDate.getMonth() === today.getMonth() &&
+      reservationDate.getFullYear() === today.getFullYear()
+    );
+  });
 
-  console.log("Date/Time", assignedSeats);
+  // Filter reservations starting at 6:00 AM
+  const reservationsAM = todayReservations.filter((reservation: any) => {
+    const startTimeUTC = new Date(reservation.start_date); // Convert UTC start time to Date object
+    return (
+      startTimeUTC.getUTCHours() === 6 && startTimeUTC.getUTCMinutes() === 0
+    ); // Check if hours and minutes match 6:00 AM
+  });
 
+  {/*console.log("this is todays AM reservation", reservationsAM);*/}
 
+  // Filter reservations starting after 6:00 PM but before midnight
+  const reservationsPM = todayReservations.filter((reservation: any) => {
+    const startTimeUTC = new Date(reservation.start_date); // Convert UTC start time to Date object
+    return startTimeUTC.getUTCHours() >= 12 && startTimeUTC.getUTCHours() < 24; // Check if hours are between 18 (6:00 PM) and 23 (11:59 PM)
+  });
+
+  {/*console.log("this is todays PM reservation", reservationsPM);*/}
+
+  useEffect(() => {
+    setReservationsAMCount(reservationsAM.length);
+    setReservationsPMCount(reservationsPM.length);
+  }, [reservationsAM, reservationsPM]);
+
+  // Function to determine if it's currently AM or PM and set the currentReservationCount accordingly
+  const setCurrentReservationCountBasedOnTime = () => {
+    const currentHour = new Date().getHours();
+    if (currentHour < 12) {
+      // It's AM
+      setCurrentReservationCount(reservationsAMCount);
+    } else {
+      // It's PM
+      setCurrentReservationCount(reservationsPMCount);
+    }
+  };
+
+  // Call the function when the component mounts to initially set the currentReservationCount
+  useEffect(() => {
+    setCurrentReservationCountBasedOnTime();
+  }, [reservationsAMCount, reservationsPMCount]);
+
+  {/*console.log("AM/PM CHECKER", currentReservationCount);*/}
   return (
     <Grid container spacing={1}>
       <Grid item xs={4}>
@@ -152,7 +201,7 @@ export default function DashboardStatusBoxed() {
         >
           <AirlineSeatReclineNormalIcon sx={{ ...iconStyle }} />
           <Typography variant="h6" gutterBottom m={1} sx={{ ...numberStyle }}>
-            {uniqueAssignedSeatsCount} {/* Count of unique employee IDs */}
+            {currentReservationCount} {/* Count of unique employee IDs */}
           </Typography>
           <Typography variant="subtitle1" gutterBottom sx={{ ...textStyle }}>
             OCCUPIED SEATS
@@ -173,7 +222,7 @@ export default function DashboardStatusBoxed() {
         >
           <InsertEmoticonIcon sx={{ ...iconStyle }} />
           <Typography variant="h6" gutterBottom m={1} sx={{ ...numberStyle }}>
-            {uniqueAssignedSeatsCount} {/* Count of unique employee IDs */}
+            {currentReservationCount} {/* Count of unique employee IDs */}
           </Typography>
           <Typography variant="subtitle1" gutterBottom sx={{ ...textStyle }}>
             WITH SEATS ASSIGNED
@@ -196,7 +245,7 @@ export default function DashboardStatusBoxed() {
         >
           <ChairAltIcon sx={{ ...iconStyle }} />
           <Typography variant="h6" gutterBottom m={1} sx={{ ...numberStyle }}>
-            {totalSeats.length - uniqueAssignedSeatsCount} {/* Difference */}
+            {totalSeats.length - currentReservationCount} {/* Difference */}
           </Typography>
           <Typography variant="subtitle1" gutterBottom sx={{ ...textStyle }}>
             AVAILABLE SEATS

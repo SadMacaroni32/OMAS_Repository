@@ -47,15 +47,15 @@ export default function DashboardRecentComments() {
         </Typography>
         <Table>
           <TableBody id="commentContainer" component="div">
-            {commentData.message ? (
-              commentData.message.map((comment: any) => (
-                <Grid
-                  container
-                  alignItems="flex-start"
-                  key={comment.emp_id}
-                  spacing={1}
-                  sx={{ m: 1 }}
-                >
+          {commentData.message ? (
+  commentData.message.map((comment: any, index: number) => (
+    <Grid
+      container
+      alignItems="flex-start"
+      key={`${comment.emp_id}-${index}`} // Ensure unique key by appending index
+      spacing={1}
+      sx={{ m: 1 }}
+    >
                   {/* Set alignItems to "flex-start" */}
                   <Grid item>
                     <Avatar>{getAvatarLetter(comment.first_name)}</Avatar>{" "}
