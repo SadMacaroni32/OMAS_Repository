@@ -27,4 +27,5 @@ public class ReservationModel {
     private String last_name; // Last name of the employee
     private String client_sn; // Client serial number
     private String position_sn; // Position serial number
+    private String reservation_seat_status;
 }
