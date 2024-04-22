@@ -1,16 +1,35 @@
 @tailwind base;
 
 @layer base {
-    .container {
-        @apply  w-full h-[1000px] flex justify-center
-    }
-    .childContainer {
-        @apply flex gap-x-10 h-full mt-[50px] justify-center overflow-x-auto 
-    }
-    .toggleContainer {
-        @apply flex flex-col text-[.8rem] relative h-full w-full
-    }
-    .toggleChildContainer {
-        @apply flex items-center cursor-pointer gap-x-2
-    }
+  .container {
+    @apply w-full h-[1000px] flex justify-center;
+  }
+  .childContainer {
+    @apply flex gap-x-10 h-full mt-[50px] justify-center overflow-x-auto;
+  }
+
+  /* TOGGLE FUNCTIONS STYLE */
+  .toggleContainer {
+    @apply flex flex-col text-[.8rem] relative h-full w-full;
+  }
+  .toggleChildContainer {
+    @apply flex items-center cursor-pointer gap-x-2;
+  }
+  .toggleAvailable {
+    @apply h-[.5rem] w-[.5rem] rounded-full  bg-green-400;
+  }
+  .toggleOccupied {
+    @apply h-[.5rem] w-[.5rem] rounded-full bg-yellow-400;
+  }
+  .toggleUnderRepair {
+    @apply h-[.5rem] w-[.5rem] rounded-full  bg-red-500;
+  }
+  .toggleReset {
+    @apply h-[.5rem] w-[.5rem] rounded-full bg-blue-400;
+  }
+
+  /* COLUMNS CONTAINER STYLE */
+  .columnContainer {
+    @apply w-[250px] md:w-[500px] lg:w-[700px] xl:w-[1080px] 2xl:w-full flex gap-x-10;
+  }
 }
