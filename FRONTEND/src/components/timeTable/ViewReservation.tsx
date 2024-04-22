@@ -95,7 +95,7 @@ export default function viewReservation() {
                                         <TableCell sx={{ textAlign: 'center' }}>
                                             <ButtonGroup variant="text" aria-label="Basic button group">
                                             <Button onClick={() =>{ console.log(row.reservation_id);
- dispatch(archiveReservationSuccess(row.reservation_id) )}}>Delete</Button>
+ dispatch(archiveReservationStart(row.reservation_id) )}}>Delete</Button>
                                             </ButtonGroup>
                                         </TableCell>
                                     </TableRow>
