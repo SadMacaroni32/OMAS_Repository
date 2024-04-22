@@ -68,7 +68,6 @@ export default function DashboardSummary() {
   const [orderBy, setOrderBy] = useState<keyof any>("client_sn");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [visibleRows, setVisibleRows] = useState<any[]>([]); // State for visibleRows
   const shadowStyle = { boxShadow: "0px 4px 10px #25476A" };
 
   const dispatch = useDispatch();
@@ -92,27 +91,28 @@ export default function DashboardSummary() {
   }, []);
 
   const rowsByDept: {
-    [key: string]: { client_sn: string; seat_count: number };
-  } = {};
-  
-  if (Array.isArray(seatData)) {
-    const uniqueEmpIds = new Set<number>(); // To store unique emp_id values
-    seatData.forEach((item) => {
-      // Check if emp_id already counted
-      if (!uniqueEmpIds.has(item.emp_id)) {
-        // If emp_id is unique, add it to the set
-        uniqueEmpIds.add(item.emp_id);
-        // Increment seat count for the corresponding client_sn
-        if (!rowsByDept[item.client_sn]) {
-          rowsByDept[item.client_sn] = {
-            client_sn: item.client_sn,
-            seat_count: 0,
-          };
-        }
-        rowsByDept[item.client_sn].seat_count++;
+  [key: string]: { client_sn: string; seat_count: number };
+} = {};
+
+if (Array.isArray(seatData)) {
+  const uniqueEmpIds = new Set<number>(); // To store unique emp_id values
+  seatData.forEach((item) => {
+    // Check if emp_id already counted
+    if (!uniqueEmpIds.has(item.emp_id)) {
+      // If emp_id is unique, add it to the set
+      uniqueEmpIds.add(item.emp_id);
+      // Increment seat count for the corresponding client_sn
+      if (!rowsByDept[item.client_sn]) {
+        rowsByDept[item.client_sn] = {
+          client_sn: item.client_sn,
+          seat_count: 0,
+        };
       }
-    });
-  }
+      rowsByDept[item.client_sn].seat_count++;
+    }
+  });
+}
+
 
   const rows: any = Object.values(rowsByDept).map((row) =>
     createData(-1, row.client_sn, row.seat_count)
@@ -141,16 +141,21 @@ export default function DashboardSummary() {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
+  const visibleRows = React.useMemo(
+    () =>
+      stableSort(rows, getComparator(order, orderBy)).slice(
+        page * rowsPerPage,
+        page * rowsPerPage + rowsPerPage
+      ),
+    [order, orderBy, page, rowsPerPage]
+  );
+
   useEffect(() => {
-    // Calculate visibleRows when seatData changes
-    const visibleRows = stableSort(rows, getComparator(order, orderBy)).slice(
-      page * rowsPerPage,
-      page * rowsPerPage + rowsPerPage
+    localStorage.setItem(
+      "tableState",
+      JSON.stringify({ order, orderBy, page, rowsPerPage, rows })
     );
-    
-    // Update visibleRows state
-    setVisibleRows(visibleRows);
-  }, [rows, order, orderBy, page, rowsPerPage]);
+  }, [order, orderBy, page, rowsPerPage, rows]);
 
   console.log("Summary", seatData)
 
