@@ -91,28 +91,28 @@ export default function DashboardSummary() {
   }, []);
 
   const rowsByDept: {
-    [key: string]: { client_sn: string; seat_count: number };
-  } = {};
-  
-  if (Array.isArray(seatData)) {
-    const uniqueEmpIds = new Set<number>(); // To store unique emp_id values
-    seatData.forEach((item) => {
-      // Check if emp_id already counted
-      if (!uniqueEmpIds.has(item.emp_id)) {
-        // If emp_id is unique, add it to the set
-        uniqueEmpIds.add(item.emp_id);
-        // Increment seat count for the corresponding client_sn
-        if (!rowsByDept[item.client_sn]) {
-          rowsByDept[item.client_sn] = {
-            client_sn: item.client_sn,
-            seat_count: 0,
-          };
-        }
-        rowsByDept[item.client_sn].seat_count++;
+  [key: string]: { client_sn: string; seat_count: number };
+} = {};
+
+if (Array.isArray(seatData)) {
+  const uniqueEmpIds = new Set<number>(); // To store unique emp_id values
+  seatData.forEach((item) => {
+    // Check if emp_id already counted
+    if (!uniqueEmpIds.has(item.emp_id)) {
+      // If emp_id is unique, add it to the set
+      uniqueEmpIds.add(item.emp_id);
+      // Increment seat count for the corresponding client_sn
+      if (!rowsByDept[item.client_sn]) {
+        rowsByDept[item.client_sn] = {
+          client_sn: item.client_sn,
+          seat_count: 0,
+        };
       }
-    });
-  }
-  
+      rowsByDept[item.client_sn].seat_count++;
+    }
+  });
+}
+
 
   const rows: any = Object.values(rowsByDept).map((row) =>
     createData(-1, row.client_sn, row.seat_count)
@@ -157,7 +157,7 @@ export default function DashboardSummary() {
     );
   }, [order, orderBy, page, rowsPerPage, rows]);
 
-  console.log("Summary", seatData)
+  // console.log("Summary", seatData)
 
   return (
     <Box sx={{ width: "38rem", height: "26.4rem", borderRadius: "5px", ...shadowStyle }}>

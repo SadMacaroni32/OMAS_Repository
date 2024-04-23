@@ -266,7 +266,7 @@ export default function DashboardStatusBoxed() {
         >
           <SentimentVeryDissatisfiedIcon sx={{ ...iconStyle }} />
           <Typography variant="h6" gutterBottom m={1} sx={{ ...numberStyle }}>
-            {unreservedAssociates["Total unassigned seats"]} {/* MOCK DATA */}
+            {totalAssociates["Total Associates"] - currentReservationCount} {/* MOCK DATA */}
           </Typography>
           <Typography variant="subtitle1" gutterBottom sx={{ ...textStyle }}>
             WITHOUT ASSIGNED SEATS
