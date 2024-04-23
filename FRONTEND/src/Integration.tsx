@@ -15,7 +15,8 @@ export default function App() {
     "/dashboard", 
     "/seatplan", 
     "/timetable",
-    "/viewreservation"
+    "/viewreservation",
+    "/testpage",
   ];
   const showNavbar = navbarVisiblePaths.some(path => location.pathname.startsWith(path));
 

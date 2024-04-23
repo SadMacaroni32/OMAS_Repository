@@ -157,7 +157,7 @@ if (Array.isArray(seatData)) {
     );
   }, [order, orderBy, page, rowsPerPage, rows]);
 
-  console.log("Summary", seatData)
+  // console.log("Summary", seatData)
 
   return (
     <Box sx={{ width: "38rem", height: "26.4rem", borderRadius: "5px", ...shadowStyle }}>
