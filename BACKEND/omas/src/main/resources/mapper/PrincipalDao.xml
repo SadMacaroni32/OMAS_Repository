@@ -5,7 +5,6 @@
 <!-- Mapper for PrincipalDao   -->
 <mapper namespace="com.omasystem.omas.Dao.PrincipalDao">
 
-
     <!-- getPrincipal --> 
 
     <select id="getPrincipal" parameterType="java.lang.String" resultType="com.omasystem.omas.Model.PrincipalModel">
@@ -32,7 +31,7 @@
             account.username = #{session};
     </select>
 
-    <!--getAllUsers-->
+    <!-- getAllUsers -->
 
     <select id="getAllPrincipalUsers" resultType="com.omasystem.omas.Model.PrincipalModel">
         SELECT 
@@ -55,4 +54,10 @@
             tbl_user_project AS up
             ON account.emp_id = up.emp_id
     </select>    
+
+    <!-- insertUserProject -->
+    <insert id="insertUserProject" parameterType="com.omasystem.omas.Entity.RegisterRequest">
+        INSERT INTO tbl_user_project (emp_id, proj_id, reg_id, reg_date)
+        VALUES (#{emp_id}, #{proj_id}, #{reg_id}, #{reg_date})
+    </insert>
 </mapper>
