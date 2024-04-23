@@ -238,7 +238,7 @@ const calendarGridWithReservations = calendarGrid.map((week, i) => (
                 ? "#caf0f8" // Background color for dates with reservations
                 : "transparent", // Transparent background for other dates
             "&:hover": {
-              backgroundColor: "#caf0f8", // Hover color for all dates
+              backgroundColor: "#7393B3", // Hover color for all dates
             },
           }}
           item
@@ -253,10 +253,13 @@ const calendarGridWithReservations = calendarGrid.map((week, i) => (
           )}
           {/* Display reservation IDs if there are reservations */}
           {reservationsForDay.length > 0 && (
-            <Typography flexWrap={1}>
+            <Typography flexWrap={1} variant="body2" sx={{ fontSize: "x-small" }}>
               {reservationsForDay.map((reservation) => (
                 <div key={reservation.reservation_id}>
-                  {reservation.reservation_id}
+                
+                 {reservation.client_sn}<br />
+                  {new Date(reservation.start_date).getUTCMonth()}/{new Date(reservation.start_date).getUTCDate()} {new Date(reservation.start_date).getUTCHours()}:{new Date(reservation.start_date).getUTCMinutes()}AM to {new Date(reservation.end_date).getUTCMonth()}/{new Date(reservation.end_date).getUTCDate()}  {new Date(reservation.end_date).getUTCHours()}:{new Date(reservation.end_date).getUTCMinutes()}PM
+                    
                 </div>
               ))}
             </Typography>
