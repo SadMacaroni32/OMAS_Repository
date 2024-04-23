@@ -65,10 +65,11 @@ const WeekDatesGrid = ({ startOfWeek, reserveSlot, seat_id }) => {
 
   function getTimeFromDate(dateTimeString) {
     const dateObj = new Date(dateTimeString);
-    const hours = dateObj.getHours().toString().padStart(2, "0");
-    const minutes = dateObj.getMinutes().toString().padStart(2, "0");
+    const hours = dateObj.getUTCHours().toString().padStart(2, "0");
+    const minutes = dateObj.getUTCMinutes().toString().padStart(2, "0");
     return `${hours}:${minutes}`;
   }
+  
 
   function isBetween(dateTime, startTime, endTime) {
     const timeParts = dateTime.split(":");
