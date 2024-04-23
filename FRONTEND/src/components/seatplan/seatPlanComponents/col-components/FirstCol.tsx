@@ -1,3 +1,5 @@
+import FirstColStyle from "./columns.module.css"
+
 const FirstCol: React.FC = ({
   seatPlan,
   getUserInfo,
@@ -13,9 +15,9 @@ const FirstCol: React.FC = ({
 }) => {
   // console.log("This is Column 1 Todays Reservations: ", todayReservations);
   return (
-    <div className="flex gap-x-1 h-[90%]">
-      <div className="flex flex-col justify-between ">
-        <div className="flex flex-col gap-y-1">
+    <div className={FirstColStyle.container}>
+      <div className={FirstColStyle.outerContainer}>
+        <div className={FirstColStyle.innerContainer}>
           {seatPlan.slice(0, 3).map((sp, idx) => {
             const { seat_id, dept_name, seat_status } = sp;
             // Find reservation for this seat for today AM
@@ -53,7 +55,7 @@ const FirstCol: React.FC = ({
                   setShowTimeTablePage(true);
                   setSeatId(seat_id);
                 }}
-                className={`w-[6rem] h-[6rem] border-[.1rem] drop-shadow-sm shadow-sm cursor-pointer px-1 relative ${
+                className={` ${FirstColStyle.returnValueContainer} ${
                   (available &&
                     !userInfoToDisplay &&
                     seat_status !== "repairing") ||
@@ -62,15 +64,15 @@ const FirstCol: React.FC = ({
                     ? ""
                     : "opacity-50"
                 } `}>
-                <span className="border-[.1rem]  px-1 text-[.8rem]">
+                <span className={FirstColStyle.seatIdContainer}>
                   {seat_id}
                 </span>
-                <span className="text-[.8rem]  w-full left-0  text-center absolute h-full ">
+                <span className={FirstColStyle.displayReservationContainer}>
                   {displayReservation ? (
                     <>
                       {userInfoToDisplay ? (
-                        <div className="relative flex flex-col justify-between h-full py-1">
-                          <span className="h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"></span>
+                        <div className={FirstColStyle.userInfoTrueContainer}>
+                          <span className={FirstColStyle.occupiedSeat}></span>
 
                           <div>{userInfoToDisplay.position}</div>
                           <div>
@@ -79,15 +81,15 @@ const FirstCol: React.FC = ({
                           <div className="h-[1rem]"></div>
                         </div>
                       ) : (
-                        <div className="relative flex items-center justify-center h-full">
+                        <div className={FirstColStyle.userInfoFalseContainer}>
                           <span
                             className={
                               seat_status === "available"
-                                ? "h-[.5rem] w-[.5rem]  rounded-full absolute right-[.5rem] top-[.5rem] bg-green-400"
+                                ? FirstColStyle.availableSeat
                                 : userInfoToDisplay
-                                ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"
+                                ? FirstColStyle.occupiedSeat
                                 : seat_status === "repairing"
-                                ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
+                                ? FirstColStyle.underRepairSeat
                                 : ""
                             }></span>
                           {todayReservations ? seat_status : "available"}
@@ -96,15 +98,15 @@ const FirstCol: React.FC = ({
                     </>
                   ) : (
                     <>
-                      <div className="relative flex flex-col items-center justify-center h-full">
+                      <div className={FirstColStyle.displayReservationFalseContainer}>
                         <span
                           className={
                             seat_status === "available"
-                              ? "h-[.5rem] w-[.5rem]  rounded-full absolute right-[.5rem] top-[.5rem] bg-green-400"
+                              ? FirstColStyle.availableSeat
                               : userInfoToDisplay
-                              ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"
+                              ? FirstColStyle.occupiedSeat
                               : seat_status === "repairing"
-                              ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
+                              ? FirstColStyle.underRepairSeat
                               : ""
                           }></span>
                         {todayReservations ? seat_status : "available"}
@@ -112,14 +114,14 @@ const FirstCol: React.FC = ({
                     </>
                   )}
                 </span>
-                <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
+                <span className={FirstColStyle.userInfoClientContainer}>
                   {userInfoToDisplay ? userInfoToDisplay.client : null}
                 </span>
               </div>
             );
           })}
         </div>
-        <div className="flex flex-col gap-y-1">
+        <div className={FirstColStyle.innerContainer}>
           {seatPlan.slice(3, 4).map((sp, idx) => {
             const { seat_id, dept_name, seat_status } = sp;
             // Find reservation for this seat for today AM
@@ -157,7 +159,7 @@ const FirstCol: React.FC = ({
                   setShowTimeTablePage(true);
                   setSeatId(seat_id);
                 }}
-                className={`w-[6rem] h-[6rem] border-[.1rem] drop-shadow-sm shadow-sm cursor-pointer px-1 relative ${
+                className={` ${FirstColStyle.returnValueContainer} ${
                   (available &&
                     !userInfoToDisplay &&
                     seat_status !== "repairing") ||
@@ -166,15 +168,15 @@ const FirstCol: React.FC = ({
                     ? ""
                     : "opacity-50"
                 }`}>
-                <span className="border-[.1rem]  px-1 text-[.8rem]">
+                <span className={FirstColStyle.seatIdContainer}>
                   {seat_id}
                 </span>
-                <span className="text-[.8rem]  w-full left-0  text-center absolute h-full ">
+                <span className={FirstColStyle.displayReservationContainer}>
                   {displayReservation ? (
                     <>
                       {userInfoToDisplay ? (
-                        <div className="relative flex flex-col justify-between h-full py-1">
-                          <span className="h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"></span>
+                        <div className={FirstColStyle.userInfoTrueContainer}>
+                          <span className={FirstColStyle.occupiedSeat}></span>
 
                           <div>{userInfoToDisplay.position}</div>
                           <div>
@@ -183,15 +185,15 @@ const FirstCol: React.FC = ({
                           <div className="h-[1rem]"></div>
                         </div>
                       ) : (
-                        <div className="relative flex items-center justify-center h-full">
+                        <div className={FirstColStyle.userInfoFalseContainer}>
                           <span
                             className={
                               seat_status === "available"
-                                ? "h-[.5rem] w-[.5rem]  rounded-full absolute right-[.5rem] top-[.5rem] bg-green-400"
+                                ? FirstColStyle.availableSeat
                                 : userInfoToDisplay
-                                ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"
+                                ? FirstColStyle.occupiedSeat
                                 : seat_status === "repairing"
-                                ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
+                                ? FirstColStyle.underRepairSeat
                                 : ""
                             }></span>
                           {todayReservations ? seat_status : "available"}
@@ -200,15 +202,15 @@ const FirstCol: React.FC = ({
                     </>
                   ) : (
                     <>
-                      <div className="relative flex flex-col items-center justify-center h-full">
+                      <div className={FirstColStyle.displayReservationFalseContainer}>
                         <span
                           className={
                             seat_status === "available"
-                              ? "h-[.5rem] w-[.5rem]  rounded-full absolute right-[.5rem] top-[.5rem] bg-green-400"
+                              ? FirstColStyle.availableSeat
                               : userInfoToDisplay
-                              ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"
+                              ? FirstColStyle.occupiedSeat
                               : seat_status === "repairing"
-                              ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
+                              ? FirstColStyle.underRepairSeat
                               : ""
                           }></span>
                         {todayReservations ? seat_status : "available"}
@@ -216,7 +218,7 @@ const FirstCol: React.FC = ({
                     </>
                   )}
                 </span>
-                <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
+                <span className={FirstColStyle.userInfoClientContainer}>
                   {userInfoToDisplay ? userInfoToDisplay.client : null}
                 </span>
               </div>
@@ -260,7 +262,7 @@ const FirstCol: React.FC = ({
                   setShowTimeTablePage(true);
                   setSeatId(seat_id);
                 }}
-                className={`w-[6rem] h-[6rem] border-[.1rem] drop-shadow-sm shadow-sm cursor-pointer px-1 relative ${
+                className={` ${FirstColStyle.returnValueContainer} ${
                   (available &&
                     !userInfoToDisplay &&
                     seat_status !== "repairing") ||
@@ -269,15 +271,15 @@ const FirstCol: React.FC = ({
                     ? ""
                     : "opacity-50"
                 }`}>
-                <span className="border-[.1rem]  px-1 text-[.8rem]">
+                <span className={FirstColStyle.seatIdContainer}>
                   {seat_id}
                 </span>
-                <span className="text-[.8rem]  w-full left-0  text-center absolute h-full ">
+                <span className={FirstColStyle.displayReservationContainer}>
                   {displayReservation ? (
                     <>
                       {userInfoToDisplay ? (
-                        <div className="relative flex flex-col justify-between h-full py-1">
-                          <span className="h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"></span>
+                        <div className={FirstColStyle.userInfoTrueContainer}>
+                          <span className={FirstColStyle.occupiedSeat}></span>
 
                           <div>{userInfoToDisplay.position}</div>
                           <div>
@@ -286,15 +288,15 @@ const FirstCol: React.FC = ({
                           <div className="h-[1rem]"></div>
                         </div>
                       ) : (
-                        <div className="relative flex items-center justify-center h-full">
+                        <div className={FirstColStyle.userInfoFalseContainer}>
                           <span
                             className={
                               seat_status === "available"
-                                ? "h-[.5rem] w-[.5rem]  rounded-full absolute right-[.5rem] top-[.5rem] bg-green-400"
+                                ? FirstColStyle.availableSeat
                                 : userInfoToDisplay
-                                ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"
+                                ? FirstColStyle.occupiedSeat
                                 : seat_status === "repairing"
-                                ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
+                                ? FirstColStyle.underRepairSeat
                                 : ""
                             }></span>
                           {todayReservations ? seat_status : "available"}
@@ -303,15 +305,15 @@ const FirstCol: React.FC = ({
                     </>
                   ) : (
                     <>
-                      <div className="relative flex flex-col items-center justify-center h-full">
+                      <div className={FirstColStyle.displayReservationFalseContainer}>
                         <span
                           className={
                             seat_status === "available"
-                              ? "h-[.5rem] w-[.5rem]  rounded-full absolute right-[.5rem] top-[.5rem] bg-green-400"
+                              ? FirstColStyle.availableSeat
                               : userInfoToDisplay
-                              ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"
+                              ? FirstColStyle.occupiedSeat
                               : seat_status === "repairing"
-                              ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
+                              ? FirstColStyle.underRepairSeat
                               : ""
                           }></span>
                         {todayReservations ? seat_status : "available"}
@@ -319,7 +321,7 @@ const FirstCol: React.FC = ({
                     </>
                   )}
                 </span>
-                <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
+                <span className={FirstColStyle.userInfoClientContainer}>
                   {userInfoToDisplay ? userInfoToDisplay.client : null}
                 </span>
               </div>
@@ -328,7 +330,7 @@ const FirstCol: React.FC = ({
         </div>
       </div>
       <div className="border-[.2rem] border-black h-[18.5rem]"></div>
-      <div className="flex flex-col gap-y-1">
+      <div className={FirstColStyle.innerContainer}>
         {seatPlan.slice(6, 9).map((sp, idx) => {
           const { seat_id, dept_name, seat_status } = sp;
           // Find reservation for this seat for today AM
@@ -366,7 +368,7 @@ const FirstCol: React.FC = ({
                 setShowTimeTablePage(true);
                 setSeatId(seat_id);
               }}
-              className={`w-[6rem] h-[6rem] border-[.1rem] drop-shadow-sm shadow-sm cursor-pointer px-1 relative ${
+              className={` ${FirstColStyle.returnValueContainer} ${
                 (available &&
                   !userInfoToDisplay &&
                   seat_status !== "repairing") ||
@@ -375,15 +377,15 @@ const FirstCol: React.FC = ({
                   ? ""
                   : "opacity-50"
               }`}>
-              <span className="border-[.1rem]  px-1 text-[.8rem]">
+              <span className={FirstColStyle.seatIdContainer}>
                 {seat_id}
               </span>
-              <span className="text-[.8rem]  w-full left-0  text-center absolute h-full ">
+              <span className={FirstColStyle.displayReservationContainer}>
                 {displayReservation ? (
                   <>
                     {userInfoToDisplay ? (
-                      <div className="relative flex flex-col justify-between h-full py-1">
-                        <span className="h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"></span>
+                      <div className={FirstColStyle.userInfoTrueContainer}>
+                        <span className={FirstColStyle.occupiedSeat}></span>
 
                         <div>{userInfoToDisplay.position}</div>
                         <div>
@@ -392,15 +394,15 @@ const FirstCol: React.FC = ({
                         <div className="h-[1rem]"></div>
                       </div>
                     ) : (
-                      <div className="relative flex items-center justify-center h-full">
+                      <div className={FirstColStyle.userInfoFalseContainer}>
                         <span
                           className={
                             seat_status === "available"
-                              ? "h-[.5rem] w-[.5rem]  rounded-full absolute right-[.5rem] top-[.5rem] bg-green-400"
+                              ? FirstColStyle.availableSeat
                               : userInfoToDisplay
-                              ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"
+                              ? FirstColStyle.occupiedSeat
                               : seat_status === "repairing"
-                              ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
+                              ? FirstColStyle.underRepairSeat
                               : ""
                           }></span>
                         {todayReservations ? seat_status : "available"}
@@ -409,15 +411,15 @@ const FirstCol: React.FC = ({
                   </>
                 ) : (
                   <>
-                    <div className="relative flex flex-col items-center justify-center h-full">
+                    <div className={FirstColStyle.displayReservationFalseContainer}>
                       <span
                         className={
                           seat_status === "available"
-                            ? "h-[.5rem] w-[.5rem]  rounded-full absolute right-[.5rem] top-[.5rem] bg-green-400"
+                            ? FirstColStyle.availableSeat
                             : userInfoToDisplay
-                            ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"
+                            ? FirstColStyle.occupiedSeat
                             : seat_status === "repairing"
-                            ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
+                            ? FirstColStyle.underRepairSeat
                             : ""
                         }></span>
                       {todayReservations ? seat_status : "available"}
@@ -425,7 +427,7 @@ const FirstCol: React.FC = ({
                   </>
                 )}
               </span>
-              <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
+              <span className={FirstColStyle.userInfoClientContainer}>
                 {userInfoToDisplay ? userInfoToDisplay.client : null}
               </span>
             </div>

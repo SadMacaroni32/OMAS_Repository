@@ -27,9 +27,9 @@ export default function DashboardRecentComments() {
 
   // console.log("Comment", commentData);
   return (
-    <Paper elevation={6} sx={{ ml: 1, ...shadowStyle }}>
+    <Paper elevation={6} sx={{ height: "26.4rem", width: "45.5rem", borderRadius: "8px", ml: 1, ...shadowStyle }}>
       <TableContainer
-        sx={{ maxHeight: "423px", overflow: "auto", position: "relative" }}
+        sx={{ borderRadius: "8px", maxHeight: "423px", overflow: "auto", position: "relative" }}
       >
         <Typography
           variant="h6"
@@ -47,15 +47,16 @@ export default function DashboardRecentComments() {
         </Typography>
         <Table>
           <TableBody id="commentContainer" component="div">
-          {commentData.message ? (
-  commentData.message.map((comment: any, index: number) => (
-    <Grid
-      container
-      alignItems="flex-start"
-      key={`${comment.emp_id}-${index}`} // Ensure unique key by appending index
-      spacing={1}
-      sx={{ m: 1 }}
-    >
+            {Array.isArray(commentData.message) &&
+            commentData.message.length > 0 ? (
+              commentData.message.map((comment: any, index: number) => (
+                <Grid
+                  container
+                  alignItems="flex-start"
+                  key={`${comment.emp_id}-${index}`} // Ensure unique key by appending index
+                  spacing={1}
+                  sx={{ m: 1 }}
+                >
                   {/* Set alignItems to "flex-start" */}
                   <Grid item>
                     <Avatar>{getAvatarLetter(comment.first_name)}</Avatar>{" "}
@@ -88,7 +89,7 @@ export default function DashboardRecentComments() {
                 </Grid>
               ))
             ) : (
-              <Typography>No recent comments</Typography>
+              <Typography sx={{m:1, fontWeight: "bold", fontSize: "2rem"}}>No recent comments</Typography>
             )}
           </TableBody>
         </Table>

@@ -1,3 +1,4 @@
+import { Box, Paper } from '@mui/material';
 import React from 'react';
 
 export default function TestFile() {
@@ -18,8 +19,8 @@ export default function TestFile() {
     console.log("Message:", message); // Log message
 
     return (
-        <div>
-            <p>{message}</p>
-        </div>
+        <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+            <Paper elevation={6} style={{ textAlign: 'center', padding: '20px', maxWidth: '400px', fontWeight: "bold" }}>{message}</Paper>
+        </Box>
     );
 }
