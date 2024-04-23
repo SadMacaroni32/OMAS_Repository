@@ -58,11 +58,6 @@ const AddAppointment = ({ seat_id }) => {
   const handleEndDateChange = (event) => {
     const selectedEndDate = event.target.value;
     setEndDate(selectedEndDate);
-
-    // Update start date if it's empty or later than the end date
-    if (!startDate || startDate > selectedEndDate) {
-      setStartDate(selectedEndDate);
-    }
   };
 
   const handleEndTimeChange = (event) => {
@@ -107,7 +102,6 @@ const AddAppointment = ({ seat_id }) => {
       const rendDate = new Date(reservation.end_date);
 
       return {
-   
         rstartDate: new Date(
           Date.UTC(
             rstartDate.getFullYear(),
@@ -141,41 +135,36 @@ const AddAppointment = ({ seat_id }) => {
         </Typography>
       </Grid>
       <Grid item xs={12} sm={6}>
-      <TextField
-  label="Start Date"
-  type="date"
-  value={startDate}
-  onChange={handleStartDateChange}
-  InputLabelProps={{
-    shrink: true,
-  }}
-  fullWidth
-  inputProps={{
-    min: new Date().toISOString().split("T")[0], // Set the minimum date to today
-   
-    shouldDisableDate: (date) => {
-      const selectedDate = new Date(date); // Convert the selected date to a Date object
-      console.log('Selected Date:', selectedDate);
-      reservedDates.forEach((reservedDate) => {
-        console.log('Reserved Start Date:', reservedDate.rstartDate);
-        console.log('Reserved End Date:', reservedDate.rendDate);
-      });
-      const shouldDisable = reservedDates.some((reservedDate) => {
-        return (
-          selectedDate >= reservedDate.rstartDate &&
-          selectedDate <= reservedDate.rendDate
-        );
-      });
-      console.log('Should Disable:', shouldDisable);
-      return shouldDisable;
-    },
-  }}
-/>
+        <TextField
+          label="Start Date"
+          type="date"
+          value={startDate}
+          onChange={handleStartDateChange}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          fullWidth
+          inputProps={{
+            min: new Date().toISOString().split("T")[0], // Set the minimum date to today
 
-
-
-
-
+            shouldDisableDate: (date) => {
+              const selectedDate = new Date(date); // Convert the selected date to a Date object
+              console.log("Selected Date:", selectedDate);
+              reservedDates.forEach((reservedDate) => {
+                console.log("Reserved Start Date:", reservedDate.rstartDate);
+                console.log("Reserved End Date:", reservedDate.rendDate);
+              });
+              const shouldDisable = reservedDates.some((reservedDate) => {
+                return (
+                  selectedDate >= reservedDate.rstartDate &&
+                  selectedDate <= reservedDate.rendDate
+                );
+              });
+              console.log("Should Disable:", shouldDisable);
+              return shouldDisable;
+            },
+          }}
+        />
       </Grid>
       <Grid item xs={12} sm={6}>
         <FormControl component="fieldset">
@@ -206,7 +195,7 @@ const AddAppointment = ({ seat_id }) => {
           fullWidth
           inputProps={{
             min: startDate || new Date().toISOString().split("T")[0], // Set the minimum date to today or selected start date
-           }}
+          }}
         />
       </Grid>
       <Grid item xs={12} sm={6}>
