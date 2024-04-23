@@ -138,7 +138,7 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
   const [currentMonth, setCurrentMonth] = useState(currentDate.getMonth());
   const [currentYear, setCurrentYear] = useState(currentDate.getFullYear());
   const [weekInfo, setWeekInfo] = useState(null);
-
+  
   // Get number of days in current month
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
@@ -210,8 +210,13 @@ const calendarGridWithReservations = calendarGrid.map((week, i) => (
           dayDate <= reservationEndDate
         ) {
           return reservation.seat_id === seat_id;
+        } else if (
+          dayDate &&
+          dayDate.toDateString() === reservationStartDate.toDateString() // Compare only dates without time
+        ) {
+          return reservation.seat_id === seat_id;
         }
-        return false;
+        
       });
 
       return (
