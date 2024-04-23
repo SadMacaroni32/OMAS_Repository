@@ -63,7 +63,6 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
 
   console.log("mga reserved",(reservations));
 
-  console.log("Redux State:", useSelector((state: RootState) => state.reservationsReducer));
 
   const [openList, setOpenList] = useState(false);
   const handleOpenList = () => setOpenList(true);
@@ -181,32 +180,44 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
     if (dayCounter > daysInMonth) break;
   }
 
-  // Generate calendar grid with reservation IDs
-  const calendarGridWithReservations = calendarGrid.map((week, i) => (
-    <Grid
-      container
-      item
-      key={i}
-      spacing={1}
-      sx={{ height: 120 }}
-      justifyContent="center"
-    >
-      {week.map((day, index) => {
-        const reservationsForDay = reservations.filter((reservation) => {
-          const reservationStartDate = new Date(reservation.start_date);
-          reservationStartDate.setHours(0, 0, 0, 0); // Reset time to midnight
-          const reservationEndDate = new Date(reservation.end_date);
-          reservationEndDate.setHours(0, 0, 0, 0); // Reset time to midnight
-          const dayDate = day.date;
-          if (dayDate && dayDate >= reservationStartDate && dayDate <= reservationEndDate) {
-            return reservation.seat_id === seat_id;
-          }
-          return false;
-        });
-  
-        return (
-          <Grid
-          flexWrap={1}
+// Generate calendar grid with reservation IDs
+const calendarGridWithReservations = calendarGrid.map((week, i) => (
+  <Grid
+    container
+    item
+    key={i}
+    spacing={1}
+    sx={{ height: 120 }}
+    justifyContent="center"
+  >
+    {week.map((day, index) => {
+      const reservationsForDay = reservations.filter((reservation) => {
+        const reservationStartDate = new Date(reservation.start_date);
+        const reservationEndDate = new Date(reservation.end_date);
+
+        // Convert reservation start and end times to UTC format
+        const reservationStartUTC = reservationStartDate.toISOString();
+        const reservationEndUTC = reservationEndDate.toISOString();
+
+        // Reset time to midnight for comparison
+        reservationStartDate.setUTCHours(0, 0, 0, 0);
+        reservationEndDate.setUTCHours(0, 0, 0, 0);
+        const dayDate = day.date;
+
+        if (
+          dayDate &&
+          dayDate >= reservationStartDate &&
+          dayDate <= reservationEndDate
+        ) {
+          return reservation.seat_id === seat_id;
+        }
+        return false;
+      });
+
+      return (
+        <Grid
+          display="flex"
+          flexDirection="column"
           sx={{
             borderRadius: 4,
             marginLeft: 1,
@@ -230,19 +241,29 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
           xs={1}
           onClick={() => handleDateClick(day.date)}
         >
-          {day.dayOfMonth}
+          {day.date && (
+            <Typography flexWrap={1} fontWeight="bold">
+              {day.dayOfMonth}
+            </Typography>
+          )}
+          {/* Display reservation IDs if there are reservations */}
           {reservationsForDay.length > 0 && (
             <Typography flexWrap={1}>
-              {reservationsForDay.map((reservation) => reservation.reservation_id).join(", ")}
+              {reservationsForDay.map((reservation) => (
+                <div key={reservation.reservation_id}>
+                  {reservation.reservation_id}
+                </div>
+              ))}
             </Typography>
           )}
         </Grid>
-        );
-      })}
-    </Grid>
-  ));
-  
-  
+      );
+    })}
+  </Grid>
+));
+
+
+
 
 
   const handleChangeMonth = (event: { target: { value: any } }) => {
@@ -490,7 +511,7 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
           }}
         >
           <YearView seat_id={seat_id}/>
-          
+   
         </Box>
       </Modal>
 
