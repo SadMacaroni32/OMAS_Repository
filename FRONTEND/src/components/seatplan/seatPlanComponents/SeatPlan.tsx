@@ -59,6 +59,8 @@ const SeatPlan: React.FC = () => {
     (state: RootState) => state.reservationReducer.reservationValue
   );
 
+  console.log("All Reservations", reservationsData);
+
   const [seatId, setSeatId] = useState(null);
   const [showTimeTablePage, setShowTimeTablePage] = useState(false);
 
@@ -73,7 +75,7 @@ const SeatPlan: React.FC = () => {
     );
   });
 
-  // console.log("this is todays reservation", todayReservations);
+  console.log("this is todays reservation", todayReservations);
 
   // Fetch user information using emp_id
   const getUserInfo = (empId :any) => {
@@ -96,7 +98,7 @@ const SeatPlan: React.FC = () => {
     ); // Check if hours and minutes match 6:00 AM
   });
 
-  // console.log("this is todays AM reservation", reservationsAM);
+  console.log("this is todays AM reservation", reservationsAM);
 
 
   // Filter reservations starting after 6:00 PM but before midnight
@@ -105,7 +107,7 @@ const SeatPlan: React.FC = () => {
     return startTimeUTC.getUTCHours() >= 12 && startTimeUTC.getUTCHours() < 24; // Check if hours are between 18 (6:00 PM) and 23 (11:59 PM)
   });
 
-  // console.log("this is todays PM reservation", reservationsPM);
+  console.log("this is todays PM reservation", reservationsPM);
 
 
   useEffect(() => {
