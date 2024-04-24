@@ -4,6 +4,7 @@ import { RootState } from "../../../redux/store/store";
 import { useEffect, useState } from "react";
 import { getUsersFetch, setUserField } from "../../../redux/state/userState";
 import OmasLogo from "../../../assets/omas.png"
+import LoginStyle from "./Login.module.css"
 
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -57,12 +58,13 @@ const Login: React.FC = () => {
 
 console.log("login data", userData);
   return (
-    <div className="rounded-md shadow-sm drop-shadow-lg border-[.1rem] h-full py-5 w-full  lg:h-[30rem] flex flex-col items-center justify-center">
-      <div className="w-full text-[2rem] font-bold lg:h-[15rem] flex items-center justify-center">
-        <img src={OmasLogo} className="w-1/2"/>
+    <div className={LoginStyle.mainContainer}> {/*main div */}
+      <div className={LoginStyle.Logo}> {/*logo div */}
+        <img src={OmasLogo} className={LoginStyle.LogoImg}/>
       </div>
-      <form
-        className="flex flex-col w-full px-8 lg:h-[15rem] gap-y-5 "
+      {/*form div */}
+      <form 
+        className={LoginStyle.form}
         onSubmit={handleLogin}>
         <TextField
           id="outlined-basic"
