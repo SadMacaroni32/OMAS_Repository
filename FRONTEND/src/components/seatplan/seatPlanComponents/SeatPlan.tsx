@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { getSeatsFetch } from "../../../redux/state/seatPlanState";
 import {
   getReservationsFetch,
-  getReservationsWithUserInfoFetch
+  getReservationsWithUserInfoFetch,
 } from "../../../redux/state/reservationState";
 import TimeTablePage from "../../../pages/TimeTablePage";
 import { getUsersFetch } from "../../../redux/state/userState";
@@ -20,8 +20,8 @@ import SeventhCol from "./col-components/SeventhCol";
 import LinearDeterminate from "./SeatPlanLoading";
 
 //import style for seatPlan
-import seatPlanStyle from '../seatPlan.module.css'
-import { Box, Paper } from "@mui/material";
+import seatPlanStyle from "../seatPlan.module.css";
+
 
 const SeatPlan: React.FC = () => {
   const dispatch = useDispatch();
@@ -295,100 +295,94 @@ const SeatPlan: React.FC = () => {
     setReset(false);
   };
 
-  const shadowStyle = { boxShadow: "0px 4px 10px #25476A" };
+
 
   return (
-    <Box>
-      <div className={seatPlanStyle.container}>
-        {/* Render loading indicator while loading */}
-        {isLoading ? (
-          <LinearDeterminate />
-        ) : (
-          <Box className={seatPlanStyle.childContainer}>
-            <Paper
-              className={seatPlanStyle.toggleContainer}
-              sx={{
-                ml: 4,
-                mt: 2,
-                pr: 1,
-                height: "5.9rem",
-                width: "8.7rem",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "left",
-                ...shadowStyle,
-              }}>
-              <div
-                className={seatPlanStyle.toggleChildContainer}
-                onClick={availableHandle}>
-                <Box
-                  className={seatPlanStyle.toggleAvailable}
-                  sx={{ m: 0.6 }}
-                />
-                <span>Available</span>
-              </div>
-              <div
-                className={seatPlanStyle.toggleChildContainer}
-                onClick={occupiedHandle}>
-                <Box className={seatPlanStyle.toggleOccupied} sx={{ m: 0.6 }} />
-                <span>Occupied</span>
-              </div>
-              <div
-                className={seatPlanStyle.toggleChildContainer}
-                onClick={underRepairHandle}>
-                <Box
-                  className={seatPlanStyle.toggleUnderRepair}
-                  sx={{ m: 0.6 }}
-                />
-                <span>Repairing</span>
-              </div>
-              {reset && (
-                <div
-                  className={seatPlanStyle.toggleChildContainer}
-                  onClick={resetState}>
-                  <Box className={seatPlanStyle.toggleReset} sx={{ m: 0.6 }} />
-                  <span>Reset</span>
-                </div>
-              )}
-            </Paper>
-
-            <Box
-              className={seatPlanStyle.columnContainer}
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                width: "107rem",
-                ml: 1,
-                mb: 6,
-                mr: 6,
-                mt: 1,
-                pt: 2,
-                pr: 1,
-                pl: 1,
-                pb: 1,
-              }}>
-              {columnData.map((col, index) => (
-                <col.component key={index} {...col.props} />
-              ))}
-            </Box>
-          </Box>
-        )}
-
-        {seatPlan.map((s, idx) => {
-          const { seat_id } = s;
-          return (
-            <div key={idx}>
-              {showTimeTablePage && seatId === seat_id && (
-                <TimeTablePage
-                  seat_id={seat_id}
-                  setShowTimeTablePage={setShowTimeTablePage}
-                />
-              )}
+    <div className={seatPlanStyle.container}>
+      {/* Render loading indicator while loading */}
+      {isLoading ? (
+        <LinearDeterminate />
+      ) : (
+        <div className={seatPlanStyle.childContainer}>
+          <div className={seatPlanStyle.toggleContainer}>
+            <div
+              className={seatPlanStyle.toggleChildContainer}
+              onClick={availableHandle}>
+              <div className={seatPlanStyle.toggleAvailable} />
+              <span
+                className={
+                  !available
+                    ? seatPlanStyle.seatStatusWidth
+                    : seatPlanStyle.seatStatusWidthTrue
+                }>
+                Available
+              </span>
             </div>
-          );
-        })}
-      </div>
-    </Box>
+            <div
+              className={seatPlanStyle.toggleChildContainer}
+              onClick={occupiedHandle}>
+              <div className={seatPlanStyle.toggleOccupied} />
+              <span
+                className={
+                  !occupied
+                    ? seatPlanStyle.seatStatusWidth
+                    : seatPlanStyle.seatStatusWidthTrue
+                }>
+                Occupied
+              </span>
+            </div>
+            <div
+              className={seatPlanStyle.toggleChildContainer}
+              onClick={underRepairHandle}>
+              <div className={seatPlanStyle.toggleUnderRepair} />
+              <span
+                className={
+                  !underRepair
+                    ? seatPlanStyle.seatStatusWidth
+                    : seatPlanStyle.seatStatusWidthTrue
+                }>
+                Repairing
+              </span>
+            </div>
+            {reset && (
+              <div
+                className={seatPlanStyle.toggleChildContainer}
+                onClick={resetState}>
+                <div className={seatPlanStyle.toggleReset} />
+                <span
+                  className={
+                    reset
+                      ? seatPlanStyle.seatStatusWidth
+                      : seatPlanStyle.seatStatusWidthTrue
+                  }>
+                  Reset
+                </span>
+              </div>
+            )}
+          </div>
+
+          <div className={seatPlanStyle.columnContainer}>
+            {columnData.map((col, index) => (
+              <col.component key={index} {...col.props} />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {seatPlan.map((s, idx) => {
+        const { seat_id } = s;
+        return (
+          <div key={idx}>
+            {showTimeTablePage && seatId === seat_id && (
+              <TimeTablePage
+                seat_id={seat_id}
+                setShowTimeTablePage={setShowTimeTablePage}
+              />
+            )}
+          </div>
+        );
+      })}
+    </div>
   );
 };
 

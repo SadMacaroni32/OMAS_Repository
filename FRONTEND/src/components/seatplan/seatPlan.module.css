@@ -2,7 +2,7 @@
 
 @layer base {
   .container {
-    @apply w-full h-[1000px] flex justify-center;
+    @apply w-full h-full flex justify-center;
   }
   .childContainer {
     @apply flex gap-x-10 h-full mt-[50px] justify-center overflow-x-auto;
@@ -10,11 +10,33 @@
 
   /* TOGGLE FUNCTIONS STYLE */
   .toggleContainer {
-    @apply flex flex-col text-[.8rem] relative h-full w-full;
+    @apply flex flex-col text-[.8rem] relative h-full w-full gap-y-1 transition-all ease-linear;
   }
   .toggleChildContainer {
-    @apply flex items-center cursor-pointer gap-x-2;
+    @apply flex items-center cursor-pointer gap-x-1 w-[5rem] ;
   }
+
+  .seatStatusWidth {
+    @apply w-full hover:bg-[#C9E7F9] py-[.1rem] px-[.1rem] rounded-md  flex items-center transition-all ease-linear
+  }
+  .seatStatusWidthTrue {
+       @apply w-full bg-[#80C6F1] py-[.1rem] px-[.1rem] rounded-md  flex items-center transition-all ease-linear
+  }
+
+ /* .seatStatusAvai {
+    @apply w-full  py-[.1rem] px-[.1rem] rounded-md  flex items-center hover:bg-green-400 
+  }
+  .seatStatusOcc {
+    @apply w-full  py-[.1rem] px-[.15rem] rounded-md  flex items-center hover:bg-yellow-400 
+  }
+  .seatStatusRep {
+    @apply w-full  py-[.1rem] px-[.15rem] rounded-md  flex items-center hover:bg-red-500
+  }
+  .seatStatusRes {
+    @apply w-full  py-[.1rem] px-[.15rem] rounded-md  flex items-center hover:bg-blue-400
+  } */
+
+
   .toggleAvailable {
     @apply h-[.5rem] w-[.5rem] rounded-full  bg-green-400;
   }
