@@ -21,4 +21,5 @@ public class ReservationPerSeatModel {
     private Timestamp start_date; // Start date of the reservation
     private Timestamp end_date; // End date of the reservation
     private String note;
+    private int del_flag;
 }
