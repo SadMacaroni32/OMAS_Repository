@@ -17,7 +17,10 @@ import {
 import { addReservation } from "../../redux/state/addReservationActions";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
-import { fetchReservationsRequest, getReservationsFetch } from "../../redux/state/reservationState";
+import {
+  fetchReservationsRequest,
+  getReservationsFetch,
+} from "../../redux/state/reservationState";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 const AddAppointment = ({ seat_id }) => {
@@ -33,7 +36,7 @@ const AddAppointment = ({ seat_id }) => {
     (state: RootState) => state.reservationsReducer.reservations
   );
 
-  console.log("MIKE Reservations State",reservations);
+  console.log("MIKE Reservations State", reservations);
 
   //get reservation data from state
   const reservationsData = useSelector(
@@ -59,7 +62,6 @@ const AddAppointment = ({ seat_id }) => {
   });
 
   console.log("this is todays PM reservation", reservationsPM);
-
 
   useEffect(() => {
     dispatch(fetchReservationsRequest());
@@ -169,53 +171,50 @@ const AddAppointment = ({ seat_id }) => {
   //   setEndTime("12:30");
   // };
 
-const handleSubmit = () => {
-  console.log("startDate:", startDate);
-  console.log("endDate:", endDate);
-  console.log("startTime:", startTime);
-  console.log("endTime:", endTime);
-  console.log("note:", note);
+  const handleSubmit = () => {
+    console.log("startDate:", startDate);
+    console.log("endDate:", endDate);
+    console.log("startTime:", startTime);
+    console.log("endTime:", endTime);
+    console.log("note:", note);
 
-  if (!startDate || !endDate || !startTime || !endTime || !note) {
-    alert("Please fill in all fields.");
-    return;
-  }
+    if (!startDate || !endDate || !startTime || !endTime || !note) {
+      alert("Please fill in all fields.");
+      return;
+    }
 
-  // Extract and format the date part from startDate and endDate
-  const formattedStartDate = startDate ? formatDate(startDate.$d) : null;
-  const formattedEndDate = endDate ? formatDate(endDate.$d) : null;
+    // Extract and format the date part from startDate and endDate
+    const formattedStartDate = startDate ? formatDate(startDate.$d) : null;
+    const formattedEndDate = endDate ? formatDate(endDate.$d) : null;
 
-  // Dispatch the action with reservation details
-  dispatch(
-    addReservation(
-      seat_id,
-      formattedStartDate,
-      startTime,
-      formattedEndDate,
-      endTime,
-      note
-    )
-  );
+    // Dispatch the action with reservation details
+    dispatch(
+      addReservation(
+        seat_id,
+        formattedStartDate,
+        startTime,
+        formattedEndDate,
+        endTime,
+        note
+      )
+    );
 
-  setOpenModal(true); // Open the modal after submitting
-  // Reset the form fields
-  setStartDate(null);
-  setEndDate(null);
-  setNote("");
-  setStartTime("06:00");
-  setEndTime("12:30");
-};
+    setOpenModal(true); // Open the modal after submitting
+    // Reset the form fields
+    setStartDate(null);
+    setEndDate(null);
+    setNote("");
+    setStartTime("06:00");
+    setEndTime("12:30");
+  };
 
-// Function to format date to "YYYY-MM-DD"
-const formatDate = (date) => {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-};
-
-
-
+  // Function to format date to "YYYY-MM-DD"
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
 
   const handleCloseModal = () => {
     setOpenModal(false); // Close the modal
@@ -295,8 +294,7 @@ const formatDate = (date) => {
           <DatePicker
             label="Start Date"
             renderInput={(props) => <TextField {...props} />}
-            label="DateTimePicker"
-            value={startDate ? startDate : null}
+            value={startDate}
             onChange={(newValue) => {
               setStartDate(newValue);
             }}
@@ -310,13 +308,22 @@ const formatDate = (date) => {
                 return true; // Disable previous days
               }
 
-              // Check if the selected date falls within any existing reservation period
-              const isReserved = reservationsData.some((reservation) => {
+              // Check if there are any reservations for the specific seat_id
+              const reservationsForSeat = reservationsData.filter(
+                (reservation) => reservation.seat_id === seat_id
+              );
+
+              if (reservationsForSeat.length === 0) {
+                return false; // No reservations, so don't disable any dates
+              }
+
+              // Check if the selected date falls within any existing reservation period for the specific seat_id
+              const isReserved = reservationsForSeat.some((reservation) => {
                 const rstartDate = new Date(reservation.start_date);
                 const rendDate = new Date(reservation.end_date);
 
                 // Subtract one day from the end date
-                rendDate.setDate(rendDate.getDate() - 1);
+                rendDate.setDate(rendDate.getDate() - 1); // Subtract one day to make the range inclusive
 
                 // Convert reservation start and end dates to UTC
                 const rstartUTC = new Date(
@@ -334,19 +341,13 @@ const formatDate = (date) => {
                   )
                 );
 
-                // Get the UTC date and time for the selected date
-                const selectedUTCDate = new Date(
-                  Date.UTC(
-                    selectedDate.getFullYear(),
-                    selectedDate.getMonth(),
-                    selectedDate.getDate()
-                  )
-                );
+                // Set hours, minutes, seconds, and milliseconds to 0 for selected date and reservation dates
+                selectedDate.setHours(0, 0, 0, 0);
+                rstartUTC.setHours(0, 0, 0, 0);
+                rendUTC.setHours(0, 0, 0, 0);
 
-                // Check if the selected UTC date falls within the reservation period
-                return (
-                  selectedUTCDate >= rstartUTC && selectedUTCDate <= rendUTC
-                );
+                // Check if the selected date falls within the reservation period
+                return selectedDate >= rstartUTC && selectedDate <= rendUTC;
               });
 
               // Disable the date if it meets any of the conditions
@@ -389,28 +390,32 @@ const formatDate = (date) => {
           <DatePicker
             label="End Date"
             renderInput={(props) => <TextField {...props} />}
-            label="DateTimePicker"
             value={endDate ? endDate : null}
             onChange={(newValue) => {
               setEndDate(newValue);
             }}
-            adapter={AdapterDayjs} // Use the Dayjs adapter
+            adapter={AdapterDayjs}
             shouldDisableDate={(date) => {
               const selectedDate = new Date(date);
               const currentDate = new Date();
 
-              // Check if the selected date is before the current date
-              if (selectedDate < currentDate) {
+              // Check if the selected date is before the current date or before the start date
+              if (selectedDate < currentDate || selectedDate < startDate) {
                 return true; // Disable previous days
               }
 
-              // Check if the selected date falls within any existing reservation period
+              // Check if the selected date falls within any existing reservation period for the specific seat_id
               const isReserved = reservationsData.some((reservation) => {
+                // Check if the reservation is for the specific seat_id
+                if (reservation.seat_id !== seat_id) {
+                  return false;
+                }
+
                 const rstartDate = new Date(reservation.start_date);
                 const rendDate = new Date(reservation.end_date);
 
                 // Subtract one day from the end date
-                rendDate.setDate(rendDate.getDate() - 1);
+                rendDate.setDate(rendDate.getDate() - 1); // Subtract one day to make the range inclusive
 
                 // Convert reservation start and end dates to UTC
                 const rstartUTC = new Date(
@@ -473,7 +478,17 @@ const formatDate = (date) => {
             value={note}
             onChange={handleNoteChange}
             fullWidth
+            inputProps={{
+              maxLength: 255, // Set the maximum character limit to 255
+            }}
           />
+          <Typography
+            variant="body2"
+            sx={{ fontSize: "small", color: "gray" }}
+            color={note.length > 255 ? "error" : "inherit"}
+          >
+            {note.length}/255
+          </Typography>
         </Grid>
         <Grid item xs={12}>
           <Button variant="contained" color="primary" onClick={handleSubmit}>

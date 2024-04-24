@@ -61,8 +61,7 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
     dispatch(fetchReservationsRequest());
   }, [dispatch]);
 
-  console.log("mga reserved",(reservations));
-
+  console.log("mga reserved", reservations);
 
   const [openList, setOpenList] = useState(false);
   const handleOpenList = () => setOpenList(true);
@@ -76,8 +75,6 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
     setOpenYearView(false);
     setSelectedIndex(1);
   };
-
-
 
   const [openAddAppointment, setOpenAddAppointment] = useState(false);
   const handleOpenAddAppointment = () => setOpenAddAppointment(true);
@@ -138,7 +135,7 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
   const [currentMonth, setCurrentMonth] = useState(currentDate.getMonth());
   const [currentYear, setCurrentYear] = useState(currentDate.getFullYear());
   const [weekInfo, setWeekInfo] = useState(null);
-  
+
   // Get number of days in current month
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
@@ -180,99 +177,115 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
     if (dayCounter > daysInMonth) break;
   }
 
-// Generate calendar grid with reservation IDs
-const calendarGridWithReservations = calendarGrid.map((week, i) => (
-  <Grid
-    container
-    item
-    key={i}
-    spacing={1}
-    sx={{ height: 120 }}
-    justifyContent="center"
-  >
-    {week.map((day, index) => {
-      const reservationsForDay = reservations.filter((reservation) => {
-        const reservationStartDate = new Date(reservation.start_date);
-        const reservationEndDate = new Date(reservation.end_date);
+  // Generate calendar grid with reservation IDs
+  const calendarGridWithReservations = calendarGrid.map((week, i) => (
+    <Grid
+      container
+      item
+      key={i}
+      spacing={1}
+      sx={{ height: 120 }}
+      justifyContent="center"
+    >
+      {week.map((day, index) => {
+        const reservationsForDay = reservations.filter((reservation) => {
+          const reservationStartDate = new Date(reservation.start_date);
+          const reservationEndDate = new Date(reservation.end_date);
 
-        // Convert reservation start and end times to UTC format
-        const reservationStartUTC = reservationStartDate.toISOString();
-        const reservationEndUTC = reservationEndDate.toISOString();
+          // Convert reservation start and end times to UTC format
+          const reservationStartUTC = reservationStartDate.toISOString();
+          const reservationEndUTC = reservationEndDate.toISOString();
 
-        // Reset time to midnight for comparison
-        reservationStartDate.setUTCHours(0, 0, 0, 0);
-        reservationEndDate.setUTCHours(0, 0, 0, 0);
-        const dayDate = day.date;
+          // Reset time to midnight for comparison
+          reservationStartDate.setUTCHours(0, 0, 0, 0);
+          reservationEndDate.setUTCHours(0, 0, 0, 0);
+          const dayDate = day.date;
 
-        if (
-          dayDate &&
-          dayDate >= reservationStartDate &&
-          dayDate <= reservationEndDate
-        ) {
-          return reservation.seat_id === seat_id;
-        } else if (
-          dayDate &&
-          dayDate.toDateString() === reservationStartDate.toDateString() // Compare only dates without time
-        ) {
-          return reservation.seat_id === seat_id;
-        }
-        
-      });
+          if (
+            dayDate &&
+            dayDate >= reservationStartDate &&
+            dayDate <= reservationEndDate
+          ) {
+            return reservation.seat_id === seat_id;
+          } else if (
+            dayDate &&
+            dayDate.toDateString() === reservationStartDate.toDateString() // Compare only dates without time
+          ) {
+            return reservation.seat_id === seat_id;
+          }
+        });
 
-      return (
-        <Grid
-          display="flex"
-          flexDirection="column"
-          sx={{
-            borderRadius: 4,
-            marginLeft: 1,
-            border: 1,
-            borderColor: "#25476A",
-            cursor: "pointer",
-            width: `${100 / 7}%`, // Distribute equally across 7 days
-            height: "100%", // Full height of the container
-            backgroundColor:
-              day.date && day.date.getMonth() !== currentMonth
-                ? "#EEEEEE"
-                : reservationsForDay.length > 0
-                ? "#caf0f8" // Background color for dates with reservations
-                : "transparent", // Transparent background for other dates
-            "&:hover": {
-              backgroundColor: "#7393B3", // Hover color for all dates
-            },
-          }}
-          item
-          key={`${i}-${index}`}
-          xs={1}
-          onClick={() => handleDateClick(day.date)}
-        >
-          {day.date && (
-            <Typography flexWrap={1} fontWeight="bold">
-              {day.dayOfMonth}
-            </Typography>
-          )}
-          {/* Display reservation IDs if there are reservations */}
-          {reservationsForDay.length > 0 && (
-            <Typography flexWrap={1} variant="body2" sx={{ fontSize: "x-small" }}>
-              {reservationsForDay.map((reservation) => (
-                <div key={reservation.reservation_id}>
-                
-                 {reservation.client_sn}<br />
-                  {new Date(reservation.start_date).getUTCMonth()}/{new Date(reservation.start_date).getUTCDate()} {new Date(reservation.start_date).getUTCHours()}:{new Date(reservation.start_date).getUTCMinutes()}AM to {new Date(reservation.end_date).getUTCMonth()}/{new Date(reservation.end_date).getUTCDate()}  {new Date(reservation.end_date).getUTCHours()}:{new Date(reservation.end_date).getUTCMinutes()}PM
-                    
-                </div>
-              ))}
-            </Typography>
-          )}
-        </Grid>
-      );
-    })}
-  </Grid>
-));
-
-
-
-
+        return (
+          <Grid
+          
+            display="flex"
+            flexDirection="column"
+            sx={{
+              borderRadius: 4,
+              marginLeft: 1,
+              border: 1,
+              borderColor: "#25476A",
+              cursor: "pointer",
+              width: `${100 / 7}%`, // Distribute equally across 7 days
+              height: "100%", // Full height of the container
+              backgroundColor:
+                day.date && day.date.getMonth() !== currentMonth
+                  ? "#EEEEEE"
+                  : reservationsForDay.length > 0
+                  ? "#caf0f8" // Background color for dates with reservations
+                  : "transparent", // Transparent background for other dates
+              "&:hover": {
+                backgroundColor: "#7393B3", // Hover color for all dates
+              },
+            }}
+            item
+            key={`${i}-${index}`}
+            xs={1.3}
+            onClick={() => handleDateClick(day.date)}
+          >
+            {day.date && (
+              <Typography flexWrap={1} fontWeight="bold">
+                {day.dayOfMonth}
+              </Typography>
+            )}
+            {/* Display reservation IDs if there are reservations */}
+            {reservationsForDay.length > 0 && (
+              <Typography
+                flexWrap={1}
+                variant="body2"
+                sx={{ fontSize: "x-small" }}
+              >
+                {reservationsForDay.map((reservation) => (
+                  <div key={reservation.reservation_id}>
+                    {reservation.client_sn}
+                    <br />
+                    {new Date(reservation.start_date).getUTCMonth()}/
+                    {new Date(reservation.start_date).getUTCDate()}{" "}
+                    {new Date(reservation.start_date).getUTCHours()}:
+                    {String(
+                      new Date(reservation.start_date).getUTCMinutes()
+                    ).padStart(2, "0")}
+                    {new Date(reservation.start_date).getUTCHours() < 12
+                      ? "AM"
+                      : "PM"}{" "}
+                    to {new Date(reservation.end_date).getUTCMonth()}/
+                    {new Date(reservation.end_date).getUTCDate()}{" "}
+                    {new Date(reservation.end_date).getUTCHours()}:
+                    {String(
+                      new Date(reservation.end_date).getUTCMinutes()
+                    ).padStart(2, "0")}
+                    {new Date(reservation.end_date).getUTCHours() < 12
+                      ? " AM"
+                      : " PM"}
+                  </div>
+                ))}
+              </Typography>
+            )}
+          </Grid>
+        );
+      })}
+    </Grid>
+  ));
 
   const handleChangeMonth = (event: { target: { value: any } }) => {
     setCurrentMonth(event.target.value);
@@ -305,208 +318,200 @@ const calendarGridWithReservations = calendarGrid.map((week, i) => (
 
   return (
     <div>
-
-      
-    <Grid
-      container
-      spacing={1}
-      m={1}
-      sx={{
-        overflow: 'auto',
-        width: "95%",
-        height: "100%",
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-        bgcolor: "background.paper",
-        boxShadow: 24,
-        p: 4,
-        borderRadius: 5,
-        justifyContent: "center", // Center the content horizontally
-        alignItems: "center", // Center the content vertically
-      }}
-    >
-      <Grid item xs={12}>
-      <Typography variant="h4">
-        Seat Number: {seat_id}
-      </Typography>
-      </Grid>
-      {/* "X" button to close modal */}
-      <IconButton
+      <Grid
+        container
+        spacing={1}
+        m={1}
         sx={{
+          overflow: "auto",
+          width: "95%",
+          height: "100%",
           position: "absolute",
-          top: 0,
-          right: 0,
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          bgcolor: "background.paper",
+          boxShadow: 24,
+          p: 4,
+          borderRadius: 5,
+          justifyContent: "center", // Center the content horizontally
+          alignItems: "center", // Center the content vertically
         }}
-        onClick={handleClose}
       >
-        <CloseIcon width={150} />
-      </IconButton>
-      <Grid item xs={9}>
-        <Typography variant="h4">
-          <Button onClick={handlePrevMonth}>
-            <ArrowBackIcon />
-          </Button>
-          <Select value={currentMonth} onChange={handleChangeMonth}>
-            {monthsOfYear.map((month, index) => (
-              <MenuItem key={index} value={index}>
-                {month}
-              </MenuItem>
-            ))}
-          </Select>
-
-          <Select
-            sx={{ marginLeft: 2 }}
-            value={currentYear}
-            onChange={handleChangeYear}
-          >
-            {Array.from(
-              { length: 10 },
-              (_, index) => currentYear - 5 + index
-            ).map((year) => (
-              <MenuItem key={year} value={year}>
-                {year}
-              </MenuItem>
-            ))}
-          </Select>
-          <Button onClick={handleNextMonth}>
-            <ArrowForwardIcon />
-          </Button>
-        </Typography>
-      </Grid>
-      <Grid item xs={3}>
-        <React.Fragment>
-          <ButtonGroup
-            variant="contained"
-            ref={anchorRef}
-            aria-label="Button group with a nested menu"
-          >
-            <Button onClick={handleClickButtons}>
-              {options[selectedIndex]}
+        <Grid item xs={12}>
+          <Typography variant="h4">Seat Number: {seat_id}</Typography>
+        </Grid>
+        {/* "X" button to close modal */}
+        <IconButton
+          sx={{
+            position: "absolute",
+            top: 0,
+            right: 0,
+          }}
+          onClick={handleClose}
+        >
+          <CloseIcon width={150} />
+        </IconButton>
+        <Grid item xs={9}>
+          <Typography variant="h4">
+            <Button onClick={handlePrevMonth}>
+              <ArrowBackIcon />
             </Button>
-            <Button
-              size="small"
-              aria-controls={openButtons ? "split-button-menu" : undefined}
-              aria-expanded={openButtons ? "true" : undefined}
-              aria-label="select merge strategy"
-              aria-haspopup="menu"
-              onClick={handleToggleButtons}
+            <Select value={currentMonth} onChange={handleChangeMonth}>
+              {monthsOfYear.map((month, index) => (
+                <MenuItem key={index} value={index}>
+                  {month}
+                </MenuItem>
+              ))}
+            </Select>
+
+            <Select
+              sx={{ marginLeft: 2 }}
+              value={currentYear}
+              onChange={handleChangeYear}
             >
-              <ArrowDropDownIcon />
+              {Array.from(
+                { length: 10 },
+                (_, index) => currentYear - 5 + index
+              ).map((year) => (
+                <MenuItem key={year} value={year}>
+                  {year}
+                </MenuItem>
+              ))}
+            </Select>
+            <Button onClick={handleNextMonth}>
+              <ArrowForwardIcon />
             </Button>
-          </ButtonGroup>
-          <Popper
-            sx={{
-              zIndex: 1,
-            }}
-            open={openButtons}
-            anchorEl={anchorRef.current}
-            role={undefined}
-            transition
-            disablePortal
-          >
-            {({ TransitionProps, placement }) => (
-              <Grow
-                {...TransitionProps}
-                style={{
-                  transformOrigin:
-                    placement === "bottom" ? "center top" : "center bottom",
-                }}
-              >
-                <Paper>
-                  <ClickAwayListener onClickAway={handleCloseButtons}>
-                    <MenuList id="split-button-menu" autoFocusItem>
-                      {options.map((option, index) => (
-                        <MenuItem
-                          key={option}
-                          selected={index === selectedIndex}
-                          onClick={(event: any) => {
-                            handleMenuItemClick(event, index);
-                          }}
-                        >
-                          {option}
-                        </MenuItem>
-                      ))}
-                    </MenuList>
-                  </ClickAwayListener>
-                </Paper>
-              </Grow>
-            )}
-          </Popper>
-        </React.Fragment>
-
-        <Button onClick={handleOpenAddAppointment} sx={{marginLeft:2}}>Add Appointment</Button>
-      </Grid>
-      
-      
-      <Typography variant="h3" ml={2}>
-        {monthsOfYear[currentMonth]} {currentYear}
-      </Typography>
-
-      {/* Modal to display the ReservationList */}
-      <Modal open={openList} onClose={handleCloseList}>
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            bgcolor: "white",
-            p: 4,
-          }}
-        >
-          <Typography variant="h6" gutterBottom>
-            Reservation List
           </Typography>
-          <ReservationList />
-        </Box>
-      </Modal>
+        </Grid>
+        <Grid item xs={3}>
+          <React.Fragment>
+            <ButtonGroup
+              variant="contained"
+              ref={anchorRef}
+              aria-label="Button group with a nested menu"
+            >
+              <Button onClick={handleClickButtons}>
+                {options[selectedIndex]}
+              </Button>
+              <Button
+                size="small"
+                aria-controls={openButtons ? "split-button-menu" : undefined}
+                aria-expanded={openButtons ? "true" : undefined}
+                aria-label="select merge strategy"
+                aria-haspopup="menu"
+                onClick={handleToggleButtons}
+              >
+                <ArrowDropDownIcon />
+              </Button>
+            </ButtonGroup>
+            <Popper
+              sx={{
+                zIndex: 1,
+              }}
+              open={openButtons}
+              anchorEl={anchorRef.current}
+              role={undefined}
+              transition
+              disablePortal
+            >
+              {({ TransitionProps, placement }) => (
+                <Grow
+                  {...TransitionProps}
+                  style={{
+                    transformOrigin:
+                      placement === "bottom" ? "center top" : "center bottom",
+                  }}
+                >
+                  <Paper>
+                    <ClickAwayListener onClickAway={handleCloseButtons}>
+                      <MenuList id="split-button-menu" autoFocusItem>
+                        {options.map((option, index) => (
+                          <MenuItem
+                            key={option}
+                            selected={index === selectedIndex}
+                            onClick={(event: any) => {
+                              handleMenuItemClick(event, index);
+                            }}
+                          >
+                            {option}
+                          </MenuItem>
+                        ))}
+                      </MenuList>
+                    </ClickAwayListener>
+                  </Paper>
+                </Grow>
+              )}
+            </Popper>
+          </React.Fragment>
 
-      <Grid container item xs={12} spacing={1} justifyContent="center">
-        {daysOfWeek.map((day) => (
-          <Grid item key={day} xs={1} marginLeft={1}>
-            <Typography align="center">{day}</Typography>
-          </Grid>
-        ))}
-      </Grid>
-      {calendarGridWithReservations}
-      <Modal
-        open={open}
-        onClose={handleCloseWeeks}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box
-          sx={{
-            width: "70%",
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            bgcolor: "background.paper",
-            boxShadow: 24,
-            p: 4,
-            borderRadius: 5,
-          }}
+          <Button onClick={handleOpenAddAppointment} sx={{ marginLeft: 2 }}>
+            Add Appointment
+          </Button>
+        </Grid>
+
+        <Typography variant="h3" ml={2}>
+          {monthsOfYear[currentMonth]} {currentYear}
+        </Typography>
+
+        {/* Modal to display the ReservationList */}
+        <Modal open={openList} onClose={handleCloseList}>
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              bgcolor: "white",
+              p: 4,
+            }}
+          >
+            <Typography variant="h6" gutterBottom>
+              Reservation List
+            </Typography>
+            <ReservationList />
+          </Box>
+        </Modal>
+
+        <Grid container item xs={12} spacing={1} justifyContent="center">
+          {daysOfWeek.map((day) => (
+            <Grid item key={day} xs={1} marginLeft={1}>
+              <Typography align="center">{day}</Typography>
+            </Grid>
+          ))}
+        </Grid>
+        {calendarGridWithReservations}
+        <Modal
+          open={open}
+          onClose={handleCloseWeeks}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
         >
-          {weekInfo && (
-            <WeekDatesGrid
-              startOfWeek={weekInfo.startOfWeek}
-              endOfWeek={weekInfo.endOfWeek}
-              reserveSlot={reserveSlot}
-              seat_id={seat_id}
-            />
-          )}
-        </Box>
-      </Modal>
-
-      
-
-      
-      
-    </Grid>
-    <Modal open={openYearView} onClose={handleCloseYearView} >
+          <Box
+            sx={{
+              width: "70%",
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              bgcolor: "background.paper",
+              boxShadow: 24,
+              p: 4,
+              borderRadius: 5,
+            }}
+          >
+            {weekInfo && (
+              <WeekDatesGrid
+                startOfWeek={weekInfo.startOfWeek}
+                endOfWeek={weekInfo.endOfWeek}
+                reserveSlot={reserveSlot}
+                seat_id={seat_id}
+              />
+            )}
+          </Box>
+        </Modal>
+      </Grid>
+      <Modal open={openYearView} onClose={handleCloseYearView}>
         <Box
           sx={{
             position: "absolute",
@@ -518,8 +523,7 @@ const calendarGridWithReservations = calendarGrid.map((week, i) => (
             p: 4,
           }}
         >
-          <YearView seat_id={seat_id}/>
-   
+          <YearView seat_id={seat_id} />
         </Box>
       </Modal>
 
@@ -536,8 +540,7 @@ const calendarGridWithReservations = calendarGrid.map((week, i) => (
             borderRadius: 5,
           }}
         >
-       
-          <AddAppointment seat_id={seat_id}/>
+          <AddAppointment seat_id={seat_id} />
         </Box>
       </Modal>
     </div>
