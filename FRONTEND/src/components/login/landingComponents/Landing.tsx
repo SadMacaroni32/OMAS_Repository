@@ -5,6 +5,8 @@ import Modal from "@mui/material/Modal/Modal";
 import Box from "@mui/material/Box/Box";
 import Typography from "@mui/material/Typography/Typography";
 import OmasLogo from "../../../assets/omas-horizontal-blue.png";
+import LandingStyle from "./Landing.module.css"
+
 
 const Landing: React.FC = () => {
   const navigate = useNavigate();
@@ -20,26 +22,26 @@ const Landing: React.FC = () => {
 
   return (
     <>
-      <div className="flex flex-col w-full h-[100vh] items-center overflow-auto no-scrollbar no-scrollbar">
-        <div className="flex justify-end w-full px-5 py-3">
+      <div className={LandingStyle.mainContainer}>
+        <div className={LandingStyle.SignInDiv}>
           <button
-            className="rounded-md shadow-sm drop-shadow-lg border-[.1rem] py-2 px-8 text-[1.2rem]"
+            className={LandingStyle.SignInButton}
             onClick={() => setLoginShow((prev) => !prev)}
           >
             SIGN IN
           </button>
         </div>
-        <div className="flex flex-col items-center w-full transition-all ease-linear lg:flex-row justify-evenly">
+        <div className={LandingStyle.ShowLoginForm}>
           <div
             className={
               loginShow
-                ? "flex flex-col items-center justify-between mt-[10rem] gap-y-[10rem] w-[40%]  transition-all ease-linear "
-                : "flex flex-col items-center justify-between mt-[10rem] gap-y-[10rem] w-[100%]  transition-all ease-linear"
+                ? LandingStyle.landingTransitionTrue
+                : LandingStyle.landingTransitionFalse
             }
           >
-            <div className="rounded-md shadow-sm drop-shadow-lg border-[.1rem] lg:w-[600px] py-[10vh] flex flex-col items-center px-5 w-[90%]">
-              <img src={OmasLogo} className="w-1/2"/>
-              <p className="text-[1.6rem] text-center">
+            <div className={LandingStyle.Logo}>
+              <img src={OmasLogo} className={LandingStyle.LogoImg}/>
+              <p className={LandingStyle.SystemName}>
                 Office Table Reservation System
               </p>
             </div>
@@ -47,7 +49,7 @@ const Landing: React.FC = () => {
               className={
                 loginShow
                   ? ""
-                  : "rounded-full shadow-sm drop-shadow-lg border-[.1rem] py-3 px-12 text-[1.5rem] "
+                  : LandingStyle.loginShow
               }
             >
               {!loginShow && (
@@ -58,8 +60,8 @@ const Landing: React.FC = () => {
           <div
             className={
               loginShow
-                ? "w-[90%] flex justify-center items-center py-5 lg:justify-normal lg:items-start lg:py-0 lg:w-[20%]  transition-all ease-linear"
-                : "w-[0%] transition-all ease-linear"
+                ? LandingStyle.ShowLoginTrue
+                : LandingStyle.ShowLoginFalse
             }
           >
             {loginShow && <Login />}

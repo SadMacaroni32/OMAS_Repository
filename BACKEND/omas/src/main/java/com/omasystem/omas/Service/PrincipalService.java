@@ -41,6 +41,13 @@ public class PrincipalService {
     //     return response; // Returning the response map
     // }
     
+ // ## GET ALL PRINCIPAL INFO fetchdata from personal info OMAS_db_V8 -gem
+    // public PrincipalModel getPrincipalInfo(String username) {
+    //     // Use the username parameter to query the principal information from MyBatis
+    //     return principalDao.getPrincipalInfo(username);
+    // }
+   
+
     /* GET ALL PRINCIPAL USERS */
     public ResponseEntity<List<PrincipalModel>> getAllPrincipalUsers() { // Method to get all principal users
         try {
