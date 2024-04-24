@@ -38,7 +38,6 @@ const SeatPlan: React.FC = () => {
   //reset state
   const [reset, setReset] = useState(false);
 
-
   //get users for seat reservation
   const userData = useSelector(
     (state: RootState) => state.reservationReducer.reservationWithUserInfo
@@ -77,9 +76,32 @@ const SeatPlan: React.FC = () => {
 
   console.log("this is todays reservation", todayReservations);
 
+  // Filter reservations where start_date starts at 6:00:00 and end_date is at 19:30:00
+  const reservationsBetween6To1930 = todayReservations.filter(
+    (reservation: any) => {
+      const startTimeUTC = new Date(reservation.start_date); // Convert UTC start time to Date object
+      const endTimeUTC = new Date(reservation.end_date); // Convert UTC end time to Date object
+
+      // Check if start_date starts at 6:00:00 and end_date is at 19:30:00
+      return (
+        startTimeUTC.getUTCHours() === 6 &&
+        startTimeUTC.getUTCMinutes() === 0 &&
+        startTimeUTC.getUTCSeconds() === 0 &&
+        endTimeUTC.getUTCHours() === 19 &&
+        endTimeUTC.getUTCMinutes() === 30 &&
+        endTimeUTC.getUTCSeconds() === 0
+      );
+    }
+  );
+
+  console.log(
+    "Reservations where start_date starts at 6:00:00 and end_date is at 19:30:00",
+    reservationsBetween6To1930
+  );
+
   // Fetch user information using emp_id
-  const getUserInfo = (empId :any) => {
-    const user : any = userData.find((user: any) => user.emp_id === empId);
+  const getUserInfo = (empId: any) => {
+    const user: any = userData.find((user: any) => user.emp_id === empId);
 
     return user
       ? {
@@ -91,7 +113,7 @@ const SeatPlan: React.FC = () => {
       : null;
   };
   // Filter reservations starting at 6:00 AM
-  const reservationsAM = todayReservations.filter((reservation :any) => {
+  const reservationsAM = todayReservations.filter((reservation: any) => {
     const startTimeUTC = new Date(reservation.start_date); // Convert UTC start time to Date object
     return (
       startTimeUTC.getUTCHours() === 6 && startTimeUTC.getUTCMinutes() === 0
@@ -100,15 +122,13 @@ const SeatPlan: React.FC = () => {
 
   console.log("this is todays AM reservation", reservationsAM);
 
-
   // Filter reservations starting after 6:00 PM but before midnight
-  const reservationsPM = todayReservations.filter((reservation :any) => {
+  const reservationsPM = todayReservations.filter((reservation: any) => {
     const startTimeUTC = new Date(reservation.start_date); // Convert UTC start time to Date object
     return startTimeUTC.getUTCHours() >= 12 && startTimeUTC.getUTCHours() < 24; // Check if hours are between 18 (6:00 PM) and 23 (11:59 PM)
   });
 
   console.log("this is todays PM reservation", reservationsPM);
-
 
   useEffect(() => {
     dispatch(getUsersFetch());
@@ -116,7 +136,6 @@ const SeatPlan: React.FC = () => {
     dispatch(getReservationsFetch());
     dispatch(getReservationsWithUserInfoFetch());
   }, [dispatch]);
-
 
   const currentTime = new Date(); // Get the current time
 
@@ -130,6 +149,7 @@ const SeatPlan: React.FC = () => {
         todayReservations,
         reservationsAM,
         reservationsPM,
+        reservationsBetween6To1930,
         setShowTimeTablePage,
         setSeatId,
         available,
@@ -146,6 +166,7 @@ const SeatPlan: React.FC = () => {
         todayReservations,
         reservationsAM,
         reservationsPM,
+        reservationsBetween6To1930,
         setShowTimeTablePage,
         setSeatId,
         available,
@@ -163,6 +184,7 @@ const SeatPlan: React.FC = () => {
         todayReservations,
         reservationsAM,
         reservationsPM,
+        reservationsBetween6To1930,
         setShowTimeTablePage,
         setSeatId,
         available,
@@ -179,6 +201,7 @@ const SeatPlan: React.FC = () => {
         todayReservations,
         reservationsAM,
         reservationsPM,
+        reservationsBetween6To1930,
         setShowTimeTablePage,
         setSeatId,
         available,
@@ -195,6 +218,7 @@ const SeatPlan: React.FC = () => {
         todayReservations,
         reservationsAM,
         reservationsPM,
+        reservationsBetween6To1930,
         setShowTimeTablePage,
         setSeatId,
         available,
@@ -211,6 +235,7 @@ const SeatPlan: React.FC = () => {
         todayReservations,
         reservationsAM,
         reservationsPM,
+        reservationsBetween6To1930,
         setShowTimeTablePage,
         setSeatId,
         available,
@@ -227,6 +252,7 @@ const SeatPlan: React.FC = () => {
         todayReservations,
         reservationsAM,
         reservationsPM,
+        reservationsBetween6To1930,
         setShowTimeTablePage,
         setSeatId,
         available,
@@ -236,7 +262,6 @@ const SeatPlan: React.FC = () => {
     },
     // Add more objects for other columns as needed
   ];
-
 
   //available handle function
   const availableHandle = () => {
@@ -274,87 +299,95 @@ const SeatPlan: React.FC = () => {
 
   return (
     <Box>
-    <div className={seatPlanStyle.container}>
-      {/* Render loading indicator while loading */}
-      {isLoading ? (
-        <LinearDeterminate />
-      ) : (
-        <Box className={seatPlanStyle.childContainer} >
-          <Paper 
-            className={seatPlanStyle.toggleContainer} 
-            sx={{
-              ml: 4,
-              mt: 2,
-              pr: 1,
-              height: "5.9rem",
-              width: "8.7rem",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "left",
-              ...shadowStyle,
-            }}
-          >
-            <div
-              className={seatPlanStyle.toggleChildContainer}
-              onClick={availableHandle}
-            >
-              <Box className={seatPlanStyle.toggleAvailable} sx={{m: 0.6}} />
-              <span>Available</span>
-            </div>
-            <div
-              className={seatPlanStyle.toggleChildContainer}
-              onClick={occupiedHandle}
-            >
-              <Box className={seatPlanStyle.toggleOccupied} sx={{m: 0.6}} />
-              <span>Occupied</span>
-            </div>
-            <div
-              className={seatPlanStyle.toggleChildContainer}
-              onClick={underRepairHandle}
-            >
-              <Box className={seatPlanStyle.toggleUnderRepair} sx={{m: 0.6}} />
-              <span>Repairing</span>
-            </div>
-            {reset && (
+      <div className={seatPlanStyle.container}>
+        {/* Render loading indicator while loading */}
+        {isLoading ? (
+          <LinearDeterminate />
+        ) : (
+          <Box className={seatPlanStyle.childContainer}>
+            <Paper
+              className={seatPlanStyle.toggleContainer}
+              sx={{
+                ml: 4,
+                mt: 2,
+                pr: 1,
+                height: "5.9rem",
+                width: "8.7rem",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "left",
+                ...shadowStyle,
+              }}>
               <div
                 className={seatPlanStyle.toggleChildContainer}
-                onClick={resetState}
-              >
-                <Box className={seatPlanStyle.toggleReset} sx={{m: 0.6}} />
-                <span>Reset</span>
+                onClick={availableHandle}>
+                <Box
+                  className={seatPlanStyle.toggleAvailable}
+                  sx={{ m: 0.6 }}
+                />
+                <span>Available</span>
               </div>
-            )}
-          </Paper>
+              <div
+                className={seatPlanStyle.toggleChildContainer}
+                onClick={occupiedHandle}>
+                <Box className={seatPlanStyle.toggleOccupied} sx={{ m: 0.6 }} />
+                <span>Occupied</span>
+              </div>
+              <div
+                className={seatPlanStyle.toggleChildContainer}
+                onClick={underRepairHandle}>
+                <Box
+                  className={seatPlanStyle.toggleUnderRepair}
+                  sx={{ m: 0.6 }}
+                />
+                <span>Repairing</span>
+              </div>
+              {reset && (
+                <div
+                  className={seatPlanStyle.toggleChildContainer}
+                  onClick={resetState}>
+                  <Box className={seatPlanStyle.toggleReset} sx={{ m: 0.6 }} />
+                  <span>Reset</span>
+                </div>
+              )}
+            </Paper>
 
-          <Box className={seatPlanStyle.columnContainer}
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            width: "107rem",
-            ml: 1, mb: 6, mr: 6, mt: 1,
-            pt: 2, pr:1, pl: 1, pb: 1,
-          }}>
-            {columnData.map((col, index) => (
-              <col.component key={index} {...col.props} />
-            ))}
+            <Box
+              className={seatPlanStyle.columnContainer}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                width: "107rem",
+                ml: 1,
+                mb: 6,
+                mr: 6,
+                mt: 1,
+                pt: 2,
+                pr: 1,
+                pl: 1,
+                pb: 1,
+              }}>
+              {columnData.map((col, index) => (
+                <col.component key={index} {...col.props} />
+              ))}
+            </Box>
           </Box>
-        </Box>
-      )}
+        )}
 
-      {seatPlan.map((s, idx) => {
-        const { seat_id } = s;
-        return (
-          <div key={idx}>
-            {showTimeTablePage && seatId === seat_id && (
-              <TimeTablePage
-                seat_id={seat_id}
-                setShowTimeTablePage={setShowTimeTablePage}
-              />
-            )}
-          </div>
-        );
-      })}
-    </div>
+        {seatPlan.map((s, idx) => {
+          const { seat_id } = s;
+          return (
+            <div key={idx}>
+              {showTimeTablePage && seatId === seat_id && (
+                <TimeTablePage
+                  seat_id={seat_id}
+                  setShowTimeTablePage={setShowTimeTablePage}
+                />
+              )}
+            </div>
+          );
+        })}
+      </div>
     </Box>
   );
 };
