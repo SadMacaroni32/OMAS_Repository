@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   Avatar,
   Grid,
@@ -10,26 +10,69 @@ import {
 import Paper from "@mui/material/Paper";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
-import { ScriptsDashboard } from "./ScriptsDashboard";
 import { getRecentCommentsFetch } from "../../../redux/state/Dashboard_State/recentCommentsState";
 
 export default function DashboardRecentComments() {
   const shadowStyle = { boxShadow: "0px 4px 10px #25476A" };
-  const { getAvatarLetter, formatDateTime } = ScriptsDashboard();
   const dispatch = useDispatch();
   const commentData: any = useSelector(
     (state: RootState) => state.recentCommentsReducer.recentComments
   );
 
+  const getAvatarLetter = (name: string | string[]) => {
+    if (!name) return "";
+    return name[0].toUpperCase();
+  };
+
+  const formatDateTime = (dateTimeString: string) => {
+    const date = new Date(dateTimeString);
+    const options = { month: "long", day: "2-digit", year: "numeric" };
+    const formattedDate = date.toLocaleDateString("en-US", options);
+    const hour = date.getHours();
+    let formattedHour = hour % 12;
+    formattedHour = formattedHour === 0 ? 12 : formattedHour; // Convert 0 to 12
+    const meridiem = hour >= 12 ? "PM" : "AM";
+    const formattedTime = `${formattedHour}:${String(
+      date.getMinutes()
+    ).padStart(2, "0")}`;
+    return `${formattedDate} at ${formattedTime} ${meridiem}`;
+  };
+  
   useEffect(() => {
     dispatch(getRecentCommentsFetch());
   }, [dispatch]);
 
-  // console.log("Comment", commentData);
+  const [recentComments, setRecentComments] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (commentData.message) {
+      const currentDate = new Date();
+      const twoDaysAgo = new Date(currentDate);
+      twoDaysAgo.setDate(currentDate.getDate() - 2);
+  
+      const filteredComments = commentData.message.filter((comment: any) => {
+        const commentDate = new Date(comment.noted_at); // Assuming comment.noted_at is the date of the comment
+        return (
+          (commentDate >= twoDaysAgo && commentDate <= currentDate) || // Comments from 2 days ago
+          (commentDate.toDateString() === currentDate.toDateString()) // Comments from the current date
+        );
+      });
+      setRecentComments(filteredComments);
+    }
+  }, [commentData.message]);
+  
+
   return (
-    <Paper elevation={6} sx={{ height: "26.4rem", width: "45.5rem", borderRadius: "8px", ml: 1, ...shadowStyle }}>
+    <Paper
+      elevation={6}
+      sx={{ height: "26.4rem", width: "45.5rem", borderRadius: "8px", ml: 1, ...shadowStyle }}
+    >
       <TableContainer
-        sx={{ borderRadius: "8px", maxHeight: "423px", overflow: "auto", position: "relative" }}
+        sx={{
+          borderRadius: "8px",
+          height: "100%", // Stretch the TableContainer to 100% of the Paper's height
+          position: "relative",
+        }}
       >
         <Typography
           variant="h6"
@@ -43,19 +86,18 @@ export default function DashboardRecentComments() {
             padding: "8px",
           }}
         >
-          Recent Comments
+          Recent Comments 
         </Typography>
         <Table>
           <TableBody id="commentContainer" component="div">
-            {Array.isArray(commentData.message) &&
-            commentData.message.length > 0 ? (
-              commentData.message.map((comment: any, index: number) => (
+            {Array.isArray(recentComments) && recentComments.length > 0 ? (
+              recentComments.map((comment: any, index: number) => (
                 <Grid
                   container
                   alignItems="flex-start"
                   key={`${comment.emp_id}-${index}`} // Ensure unique key by appending index
                   spacing={1}
-                  sx={{ m: 1 }}
+                  sx={{ m: 1, width: "35rem" }}
                 >
                   {/* Set alignItems to "flex-start" */}
                   <Grid item>
