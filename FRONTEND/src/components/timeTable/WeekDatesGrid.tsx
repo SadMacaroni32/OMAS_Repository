@@ -9,6 +9,7 @@ import {
   Paper,
   IconButton,
   Box,
+  Typography,
 } from "@mui/material";
 import { NavigateNext, NavigateBefore, ConstructionOutlined } from "@mui/icons-material";
 import WeekDisplay from "./WeekDisplay"; 
@@ -102,7 +103,9 @@ function getReservationsByTimeRange(reservations, date, seat_id, startTime, endT
 
   return matchingReservations.map((reservation, resIndex) => (
     <div key={resIndex}>
-      {reservation.client_sn} {reservation.first_name}
+      <Typography flexWrap={1} variant="body2" sx={{ fontSize: "small" }}>
+      {reservation.client_sn} {reservation.note}
+      </Typography>
     </div>
   ));
 }
@@ -157,7 +160,9 @@ function getReservationsByTimeRange(reservations, date, seat_id, startTime, endT
           {getReservationsByTimeRange(reservations, date, seat_id, "06:00", "12:30").length > 0 ? (
             getReservationsByTimeRange(reservations, date, seat_id, "06:00", "12:30")
           ) : (
-            "No reservation"
+            <Typography flexWrap={1} variant="body2" sx={{ fontSize: "small" }}>
+            No reservation
+            </Typography>
           )}
         </TableCell>
         <TableCell
@@ -169,7 +174,9 @@ function getReservationsByTimeRange(reservations, date, seat_id, startTime, endT
           {getReservationsByTimeRange(reservations, date, seat_id, "12:30", "19:30").length > 0 ? (
             getReservationsByTimeRange(reservations, date, seat_id, "12:30", "19:30")
           ) : (
-            "No reservation"
+            <Typography flexWrap={1} variant="body2" sx={{ fontSize: "small" }}>
+            No reservation
+            </Typography>
           )}
         </TableCell>
       </TableRow>
