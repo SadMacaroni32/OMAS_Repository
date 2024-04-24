@@ -75,21 +75,6 @@ export default function DashboardSummary() {
     (state: RootState) => state.reservationReducer.reservationWithUserInfo
   );
 
-  useEffect(() => {
-    dispatch(getReservationsWithUserInfoFetch());
-  }, [dispatch]);
-
-  useEffect(() => {
-    const storedState = localStorage.getItem("tableState");
-    if (storedState) {
-      const { order, orderBy, page, rowsPerPage } = JSON.parse(storedState);
-      setOrder(order);
-      setOrderBy(orderBy);
-      setPage(page);
-      setRowsPerPage(rowsPerPage);
-    }
-  }, []);
-
   const rowsByDept: {
   [key: string]: { client_sn: string; seat_count: number };
 } = {};
@@ -112,7 +97,6 @@ if (Array.isArray(seatData)) {
     }
   });
 }
-
 
   const rows: any = Object.values(rowsByDept).map((row) =>
     createData(-1, row.client_sn, row.seat_count)
@@ -150,12 +134,24 @@ if (Array.isArray(seatData)) {
     [order, orderBy, page, rowsPerPage]
   );
 
-  useEffect(() => {
+    useEffect(() => {
+    dispatch(getReservationsWithUserInfoFetch());    
+    
+    const storedState = localStorage.getItem("tableState");
+    if (storedState) {
+      const { order, orderBy, page, rowsPerPage } = JSON.parse(storedState);
+      setOrder(order);
+      setOrderBy(orderBy);
+      setPage(page);
+      setRowsPerPage(rowsPerPage);
+    }
+
     localStorage.setItem(
       "tableState",
       JSON.stringify({ order, orderBy, page, rowsPerPage, rows })
     );
-  }, [order, orderBy, page, rowsPerPage, rows]);
+
+  }, [dispatch, order, orderBy, page, rowsPerPage, rows]);
 
   // console.log("Summary", seatData)
 

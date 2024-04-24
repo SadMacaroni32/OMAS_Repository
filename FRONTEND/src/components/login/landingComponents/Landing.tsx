@@ -9,10 +9,14 @@ import LandingStyle from "./Landing.module.css"
 
 
 const Landing: React.FC = () => {
+
+  const shadowStyle = { boxShadow: "0px 4px 10px #25476A" };
+
   const navigate = useNavigate();
-  const navigateSeatPlanHandle = () => {
-    navigate("/seatplan");
-  };
+  // const navigateSeatPlanHandle = () => {
+  //   navigate("/seatplan");
+  // };
+
   //state for login
   const [loginShow, setLoginShow] = useState(false);
 
