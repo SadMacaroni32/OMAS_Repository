@@ -55,7 +55,7 @@ export default function viewReservation() {
 
     return (
         <Box sx={{ flexGrow: 1}}>
-        <Paper sx={{ overflow: 'hidden', mr: 15, ml: 15, mt: 6 , ...shadowStyle}}>
+        <Paper sx={{ overflow: 'hidden', mr: 15, ml: 15, mb: 5, mt: 6 , ...shadowStyle}}>
             <TableContainer sx={{ maxHeight: 850, height: 760 }}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>

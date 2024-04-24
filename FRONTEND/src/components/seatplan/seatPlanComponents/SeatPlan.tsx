@@ -21,6 +21,7 @@ import LinearDeterminate from "./SeatPlanLoading";
 
 //import style for seatPlan
 import seatPlanStyle from '../seatPlan.module.css'
+import { Box, Paper } from "@mui/material";
 
 const SeatPlan: React.FC = () => {
   const dispatch = useDispatch();
@@ -267,47 +268,75 @@ const SeatPlan: React.FC = () => {
     setReset(false);
   };
 
+  const shadowStyle = { boxShadow: "0px 4px 10px #25476A" };
+
   return (
+    <Box>
     <div className={seatPlanStyle.container}>
       {/* Render loading indicator while loading */}
       {isLoading ? (
         <LinearDeterminate />
       ) : (
-        <div className={seatPlanStyle.childContainer}>
-          <div className={seatPlanStyle.toggleContainer}>
+        <Box className={seatPlanStyle.childContainer} >
+          <Paper 
+            className={seatPlanStyle.toggleContainer} 
+            sx={{
+              ml: 4,
+              mt: 2,
+              pr: 1,
+              height: "5.9rem",
+              width: "8.7rem",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "left",
+              ...shadowStyle,
+            }}
+          >
             <div
               className={seatPlanStyle.toggleChildContainer}
-              onClick={availableHandle}>
-              <div className={seatPlanStyle.toggleAvailable}></div>
+              onClick={availableHandle}
+            >
+              <Box className={seatPlanStyle.toggleAvailable} sx={{m: 0.6}} />
               <span>Available</span>
             </div>
             <div
               className={seatPlanStyle.toggleChildContainer}
-              onClick={occupiedHandle}>
-              <div className={seatPlanStyle.toggleOccupied}></div>
+              onClick={occupiedHandle}
+            >
+              <Box className={seatPlanStyle.toggleOccupied} sx={{m: 0.6}} />
               <span>Occupied</span>
             </div>
             <div
               className={seatPlanStyle.toggleChildContainer}
-              onClick={underRepairHandle}>
-              <div className={seatPlanStyle.toggleUnderRepair}></div>
-              <span>Under-repair</span>
+              onClick={underRepairHandle}
+            >
+              <Box className={seatPlanStyle.toggleUnderRepair} sx={{m: 0.6}} />
+              <span>Repairing</span>
             </div>
             {reset && (
               <div
                 className={seatPlanStyle.toggleChildContainer}
-                onClick={resetState}>
-                <div className={seatPlanStyle.toggleReset}></div>
+                onClick={resetState}
+              >
+                <Box className={seatPlanStyle.toggleReset} sx={{m: 0.6}} />
                 <span>Reset</span>
               </div>
             )}
-          </div>
-          <div className={seatPlanStyle.columnContainer}>
+          </Paper>
+
+          <Box className={seatPlanStyle.columnContainer}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            width: "107rem",
+            ml: 1, mb: 6, mr: 6, mt: 1,
+            pt: 2, pr:1, pl: 1, pb: 1,
+          }}>
             {columnData.map((col, index) => (
               <col.component key={index} {...col.props} />
             ))}
-          </div>
-        </div>
+          </Box>
+        </Box>
       )}
 
       {seatPlan.map((s, idx) => {
@@ -324,6 +353,7 @@ const SeatPlan: React.FC = () => {
         );
       })}
     </div>
+    </Box>
   );
 };
 

@@ -4,7 +4,7 @@
 
   /* COLUMN CHILD STYLES */
   .container {
-    @apply flex gap-x-1 h-[90%]
+    @apply flex gap-x-1 h-[90%] 
   }
   .outerContainer {
     @apply flex flex-col justify-between 
