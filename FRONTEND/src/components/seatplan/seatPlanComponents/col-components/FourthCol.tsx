@@ -7,6 +7,7 @@ const FourthCol: React.FC = ({
   todayReservations,
   reservationsAM,
   reservationsPM,
+  reservationsBetween6To1930,
   setShowTimeTablePage,
   setSeatId,
   available,
@@ -15,7 +16,7 @@ const FourthCol: React.FC = ({
 }) => {
   return (
     <div className="flex gap-x-1">
-      <div className={FouColStyle.innerContainer} >
+      <div className={FouColStyle.innerContainer}>
         {seatPlan.slice(36, 44).map((sp, idx) => {
           const { seat_id, dept_name, seat_status } = sp;
           // Find reservation for this seat for today AM
@@ -28,6 +29,12 @@ const FourthCol: React.FC = ({
             (res: any) => res.seat_id === seat_id
           );
 
+          // Find reservation for this seat between 6:00 AM to 7:30 PM
+          const reservationBetween6To1930: any =
+            reservationsBetween6To1930.find(
+              (res: any) => res.seat_id === seat_id
+            );
+
           // Determine which reservation to display based on current time
           let displayReservation;
           if (
@@ -36,15 +43,22 @@ const FourthCol: React.FC = ({
           ) {
             // Display AM reservation if current time is before 12:30
             displayReservation = reservationAM;
+          } else if (!reservationAM || !reservationPM) {
+            // Display reservation between 6:00 AM and 7:30 PM
+            displayReservation = reservationBetween6To1930;
           } else {
-            // Display PM reservation if current time is 12:30 or later
+            // Display PM reservation if current time is 7:30 or later
             displayReservation = reservationPM;
           }
 
           // Fetch user information based on the reservation to display
-          const userInfoToDisplay = displayReservation
+          let userInfoToDisplay = displayReservation
             ? getUserInfo(displayReservation.emp_id)
             : null;
+
+          if (!userInfoToDisplay && reservationBetween6To1930) {
+            userInfoToDisplay = getUserInfo(reservationBetween6To1930.emp_id);
+          }
 
           return (
             <div
@@ -62,14 +76,12 @@ const FourthCol: React.FC = ({
                   ? ""
                   : "opacity-50"
               }`}>
-              <span className={FouColStyle.seatIdContainer} >
-                {seat_id}
-              </span>
-              <span className={FouColStyle.displayReservationContainer} >
+              <span className={FouColStyle.seatIdContainer}>{seat_id}</span>
+              <span className={FouColStyle.displayReservationContainer}>
                 {displayReservation ? (
                   <>
                     {userInfoToDisplay ? (
-                      <div className={FouColStyle.userInfoTrueContainer} >
+                      <div className={FouColStyle.userInfoTrueContainer}>
                         <span className={FouColStyle.occupiedSeat}></span>
 
                         <div>{userInfoToDisplay.position}</div>
@@ -83,7 +95,7 @@ const FourthCol: React.FC = ({
                         <span
                           className={
                             seat_status === "available"
-                              ?FouColStyle.availableSeat
+                              ? FouColStyle.availableSeat
                               : userInfoToDisplay
                               ? FouColStyle.occupiedSeat
                               : seat_status === "repairing"
@@ -96,11 +108,12 @@ const FourthCol: React.FC = ({
                   </>
                 ) : (
                   <>
-                    <div className={FouColStyle.displayReservationFalseContainer}>
+                    <div
+                      className={FouColStyle.displayReservationFalseContainer}>
                       <span
                         className={
                           seat_status === "available"
-                            ?FouColStyle.availableSeat
+                            ? FouColStyle.availableSeat
                             : userInfoToDisplay
                             ? FouColStyle.occupiedSeat
                             : seat_status === "repairing"
@@ -120,7 +133,7 @@ const FourthCol: React.FC = ({
         })}
       </div>
       <div className="border-[.2rem] border-black h-[49.8rem]"></div>
-      <div className={FouColStyle.innerContainer} >
+      <div className={FouColStyle.innerContainer}>
         {seatPlan.slice(44, 52).map((sp, idx) => {
           const { seat_id, dept_name, seat_status } = sp;
           // Find reservation for this seat for today AM
@@ -133,6 +146,12 @@ const FourthCol: React.FC = ({
             (res: any) => res.seat_id === seat_id
           );
 
+          // Find reservation for this seat between 6:00 AM to 7:30 PM
+          const reservationBetween6To1930: any =
+            reservationsBetween6To1930.find(
+              (res: any) => res.seat_id === seat_id
+            );
+
           // Determine which reservation to display based on current time
           let displayReservation;
           if (
@@ -141,15 +160,22 @@ const FourthCol: React.FC = ({
           ) {
             // Display AM reservation if current time is before 12:30
             displayReservation = reservationAM;
+          } else if (!reservationAM || !reservationPM) {
+            // Display reservation between 6:00 AM and 7:30 PM
+            displayReservation = reservationBetween6To1930;
           } else {
-            // Display PM reservation if current time is 12:30 or later
+            // Display PM reservation if current time is 7:30 or later
             displayReservation = reservationPM;
           }
 
           // Fetch user information based on the reservation to display
-          const userInfoToDisplay = displayReservation
+          let userInfoToDisplay = displayReservation
             ? getUserInfo(displayReservation.emp_id)
             : null;
+
+          if (!userInfoToDisplay && reservationBetween6To1930) {
+            userInfoToDisplay = getUserInfo(reservationBetween6To1930.emp_id);
+          }
 
           return (
             <div
@@ -167,14 +193,12 @@ const FourthCol: React.FC = ({
                   ? ""
                   : "opacity-50"
               }`}>
-              <span className={FouColStyle.seatIdContainer} >
-                {seat_id}
-              </span>
-              <span className={FouColStyle.displayReservationContainer} >
+              <span className={FouColStyle.seatIdContainer}>{seat_id}</span>
+              <span className={FouColStyle.displayReservationContainer}>
                 {displayReservation ? (
                   <>
                     {userInfoToDisplay ? (
-                      <div className={FouColStyle.userInfoTrueContainer} >
+                      <div className={FouColStyle.userInfoTrueContainer}>
                         <span className={FouColStyle.occupiedSeat}></span>
 
                         <div>{userInfoToDisplay.position}</div>
@@ -188,7 +212,7 @@ const FourthCol: React.FC = ({
                         <span
                           className={
                             seat_status === "available"
-                              ?FouColStyle.availableSeat
+                              ? FouColStyle.availableSeat
                               : userInfoToDisplay
                               ? FouColStyle.occupiedSeat
                               : seat_status === "repairing"
@@ -201,11 +225,12 @@ const FourthCol: React.FC = ({
                   </>
                 ) : (
                   <>
-                    <div className={FouColStyle.displayReservationFalseContainer}>
+                    <div
+                      className={FouColStyle.displayReservationFalseContainer}>
                       <span
                         className={
                           seat_status === "available"
-                            ?FouColStyle.availableSeat
+                            ? FouColStyle.availableSeat
                             : userInfoToDisplay
                             ? FouColStyle.occupiedSeat
                             : seat_status === "repairing"
