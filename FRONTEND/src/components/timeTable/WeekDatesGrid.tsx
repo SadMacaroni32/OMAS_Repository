@@ -65,8 +65,8 @@ const WeekDatesGrid = ({ startOfWeek, reserveSlot, seat_id }) => {
 
   function getTimeFromDate(dateTimeString) {
     const dateObj = new Date(dateTimeString);
-    const hours = dateObj.getHours().toString().padStart(2, "0");
-    const minutes = dateObj.getMinutes().toString().padStart(2, "0");
+    const hours = dateObj.getUTCHours().toString().padStart(2, "0");
+    const minutes = dateObj.getUTCMinutes().toString().padStart(2, "0");
     return `${hours}:${minutes}`;
   }
 
@@ -84,7 +84,7 @@ const WeekDatesGrid = ({ startOfWeek, reserveSlot, seat_id }) => {
     // console.log("Start Time (Hours):", startTimeInHours);
     // console.log("End Time (Hours):", endTimeInHours);
   
-    return reservationTime >= startTimeInHours && reservationTime < endTimeInHours;
+    return reservationTime >= startTimeInHours && reservationTime <= endTimeInHours;
   }
   
 function getReservationsByTimeRange(reservations, date, seat_id, startTime, endTime) {
@@ -125,7 +125,7 @@ function getReservationsByTimeRange(reservations, date, seat_id, startTime, endT
           <TableHead>
             <TableRow sx={{ background: "#468faf" }}>
               <TableCell style={{ color: "white" }}>Date</TableCell>
-              <TableCell style={{ color: "white" }}>6:30AM to 12:30PM</TableCell>
+              <TableCell style={{ color: "white" }}>6:00AM to 12:30PM</TableCell>
               <TableCell style={{ color: "white" }}>12:30PM to 7:30PM</TableCell>
             </TableRow>
           </TableHead>
@@ -136,7 +136,7 @@ function getReservationsByTimeRange(reservations, date, seat_id, startTime, endT
       day: "2-digit",
       year: "2-digit",
     }));
-    console.log("Start Time:", "06:30");
+    console.log("Start Time:", "06:00");
     console.log("End Time:", "12:30");
 
     return (
@@ -151,11 +151,11 @@ function getReservationsByTimeRange(reservations, date, seat_id, startTime, endT
         <TableCell
           key={dateIndex + "-morning"}
           style={{
-            backgroundColor: getReservationsByTimeRange(reservations, date, seat_id, "06:30", "12:30").length > 0 ? "lightblue" : "inherit"
+            backgroundColor: getReservationsByTimeRange(reservations, date, seat_id, "06:00", "12:30").length > 0 ? "lightblue" : "inherit"
           }}
         >
-          {getReservationsByTimeRange(reservations, date, seat_id, "06:30", "12:30").length > 0 ? (
-            getReservationsByTimeRange(reservations, date, seat_id, "06:30", "12:30")
+          {getReservationsByTimeRange(reservations, date, seat_id, "06:00", "12:30").length > 0 ? (
+            getReservationsByTimeRange(reservations, date, seat_id, "06:00", "12:30")
           ) : (
             "No reservation"
           )}
@@ -163,11 +163,11 @@ function getReservationsByTimeRange(reservations, date, seat_id, startTime, endT
         <TableCell
           key={dateIndex + "-afternoon"}
           style={{
-            backgroundColor: getReservationsByTimeRange(reservations, date, seat_id, "12:30", "19:31").length > 0 ? "lightblue" : "inherit"
+            backgroundColor: getReservationsByTimeRange(reservations, date, seat_id, "12:30", "19:30").length > 0 ? "lightblue" : "inherit"
           }}
         >
-          {getReservationsByTimeRange(reservations, date, seat_id, "12:30", "19:31").length > 0 ? (
-            getReservationsByTimeRange(reservations, date, seat_id, "12:30", "19:31")
+          {getReservationsByTimeRange(reservations, date, seat_id, "12:30", "19:30").length > 0 ? (
+            getReservationsByTimeRange(reservations, date, seat_id, "12:30", "19:30")
           ) : (
             "No reservation"
           )}

@@ -1,5 +1,9 @@
 package com.omasystem.omas.Service;
 
+
+import java.sql.Timestamp;
+import java.util.Date;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,8 +14,10 @@ import com.omasystem.omas.Entity.AuthenticationResponse;
 import com.omasystem.omas.Entity.RegisterRequest;
 import com.omasystem.omas.Entity.tbl_personal_info;
 import com.omasystem.omas.Entity.tbl_user;
+import com.omasystem.omas.Entity.tbl_user_project;
 import com.omasystem.omas.Repo.tbl_personal_infoRepo;
 import com.omasystem.omas.Repo.tbl_userRepo;
+import com.omasystem.omas.Repo.tbl_user_projectRepo;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,6 +27,7 @@ public class AuthenticationService {
 
     private final tbl_userRepo tbl_userRepository;
     private final tbl_personal_infoRepo tbl_personal_infoRepo;
+    private final tbl_user_projectRepo tbl_user_projectRepo;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -58,6 +65,20 @@ public class AuthenticationService {
 
         if (personal_info != null) {
             tbl_personal_infoRepo.save(personal_info);
+        }
+
+        var currentDate = new Date();
+        var regDateTimestamp = new Timestamp(currentDate.getTime());
+
+        var user_project = tbl_user_project.builder()
+                .emp_id(empId)
+                .proj_id(1)
+                .reg_id(1)
+                .reg_date(regDateTimestamp) // Assuming you have a default project ID
+                .build();
+        
+        if (user_project != null) {
+            tbl_user_projectRepo.save(user_project);
         }
 
         var jwtToken = jwtService.generateToken(user);

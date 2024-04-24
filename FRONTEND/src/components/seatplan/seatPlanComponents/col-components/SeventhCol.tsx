@@ -1,3 +1,5 @@
+import SeColStyle from "./columns.module.css";
+
 const SeventhCol: React.FC = ({
   seatPlan,
   getUserInfo,
@@ -51,7 +53,7 @@ const SeventhCol: React.FC = ({
                 setShowTimeTablePage(true);
                 setSeatId(seat_id);
               }}
-              className={`w-[6rem] h-[6rem] border-[.1rem] drop-shadow-sm shadow-sm cursor-pointer px-1 relative ${
+              className={`${SeColStyle.returnValueContainer} ${
                 (available &&
                   !userInfoToDisplay &&
                   seat_status !== "repairing") ||
@@ -60,15 +62,15 @@ const SeventhCol: React.FC = ({
                   ? ""
                   : "opacity-50"
               }`}>
-              <span className="border-[.1rem]  px-1 text-[.8rem]">
+              <span className={SeColStyle.seatIdContainer}>
                 {seat_id}
               </span>
-              <span className="text-[.8rem]  w-full left-0  text-center absolute h-full ">
+              <span className={SeColStyle.displayReservationContainer}>
                 {displayReservation ? (
                   <>
                     {userInfoToDisplay ? (
-                      <div className="relative flex flex-col justify-between h-full py-1">
-                        <span className="h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"></span>
+                      <div className={SeColStyle.userInfoTrueContainer}>
+                        <span className={SeColStyle.occupiedSeat}></span>
 
                         <div>{userInfoToDisplay.position}</div>
                         <div>
@@ -77,15 +79,15 @@ const SeventhCol: React.FC = ({
                         <div className="h-[1rem]"></div>
                       </div>
                     ) : (
-                      <div className="relative flex items-center justify-center h-full">
+                      <div className={SeColStyle.userInfoFalseContainer}>
                         <span
                           className={
                             seat_status === "available"
-                              ? "h-[.5rem] w-[.5rem]  rounded-full absolute right-[.5rem] top-[.5rem] bg-green-400"
+                              ? SeColStyle.availableSeat
                               : userInfoToDisplay
-                              ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"
+                              ? SeColStyle.occupiedSeat
                               : seat_status === "repairing"
-                              ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
+                              ? SeColStyle.underRepairSeat
                               : ""
                           }></span>
                         {todayReservations ? seat_status : "available"}
@@ -94,15 +96,15 @@ const SeventhCol: React.FC = ({
                   </>
                 ) : (
                   <>
-                    <div className="relative flex flex-col items-center justify-center h-full">
+                    <div className={SeColStyle.displayReservationFalseContainer}>
                       <span
                         className={
                           seat_status === "available"
-                            ? "h-[.5rem] w-[.5rem]  rounded-full absolute right-[.5rem] top-[.5rem] bg-green-400"
+                            ? SeColStyle.availableSeat
                             : userInfoToDisplay
-                            ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"
+                            ? SeColStyle.occupiedSeat
                             : seat_status === "repairing"
-                            ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
+                            ? SeColStyle.underRepairSeat
                             : ""
                         }></span>
                       {todayReservations ? seat_status : "available"}
@@ -110,7 +112,7 @@ const SeventhCol: React.FC = ({
                   </>
                 )}
               </span>
-              <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
+              <span className={SeColStyle.userInfoClientContainer}>
                 {userInfoToDisplay ? userInfoToDisplay.client : null}
               </span>
             </div>
@@ -156,7 +158,7 @@ const SeventhCol: React.FC = ({
                 setShowTimeTablePage(true);
                 setSeatId(seat_id);
               }}
-              className={`w-[6rem] h-[6rem] border-[.1rem] drop-shadow-sm shadow-sm cursor-pointer px-1 relative ${
+              className={`${SeColStyle.returnValueContainer} ${
                 (available &&
                   !userInfoToDisplay &&
                   seat_status !== "repairing") ||
@@ -165,15 +167,15 @@ const SeventhCol: React.FC = ({
                   ? ""
                   : "opacity-50"
               }`}>
-              <span className="border-[.1rem]  px-1 text-[.8rem]">
+              <span className={SeColStyle.seatIdContainer}>
                 {seat_id}
               </span>
-              <span className="text-[.8rem]  w-full left-0  text-center absolute h-full ">
+              <span className={SeColStyle.displayReservationContainer}>
                 {displayReservation ? (
                   <>
                     {userInfoToDisplay ? (
-                      <div className="relative flex flex-col justify-between h-full py-1">
-                        <span className="h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"></span>
+                      <div className={SeColStyle.userInfoTrueContainer}>
+                        <span className={SeColStyle.occupiedSeat}></span>
 
                         <div>{userInfoToDisplay.position}</div>
                         <div>
@@ -182,15 +184,15 @@ const SeventhCol: React.FC = ({
                         <div className="h-[1rem]"></div>
                       </div>
                     ) : (
-                      <div className="relative flex items-center justify-center h-full">
+                      <div className={SeColStyle.userInfoFalseContainer}>
                         <span
                           className={
                             seat_status === "available"
-                              ? "h-[.5rem] w-[.5rem]  rounded-full absolute right-[.5rem] top-[.5rem] bg-green-400"
+                              ? SeColStyle.availableSeat
                               : userInfoToDisplay
-                              ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"
+                              ? SeColStyle.occupiedSeat
                               : seat_status === "repairing"
-                              ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
+                              ? SeColStyle.underRepairSeat
                               : ""
                           }></span>
                         {todayReservations ? seat_status : "available"}
@@ -199,15 +201,15 @@ const SeventhCol: React.FC = ({
                   </>
                 ) : (
                   <>
-                    <div className="relative flex flex-col items-center justify-center h-full">
+                    <div className={SeColStyle.displayReservationFalseContainer}>
                       <span
                         className={
                           seat_status === "available"
-                            ? "h-[.5rem] w-[.5rem]  rounded-full absolute right-[.5rem] top-[.5rem] bg-green-400"
+                            ? SeColStyle.availableSeat
                             : userInfoToDisplay
-                            ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-yellow-400"
+                            ? SeColStyle.occupiedSeat
                             : seat_status === "repairing"
-                            ? "h-[.5rem] w-[.5rem] rounded-full absolute right-[.5rem] top-[.5rem] bg-red-500"
+                            ? SeColStyle.underRepairSeat
                             : ""
                         }></span>
                       {todayReservations ? seat_status : "available"}
@@ -215,7 +217,7 @@ const SeventhCol: React.FC = ({
                   </>
                 )}
               </span>
-              <span className="border-[.1rem] px-1 text-[.8rem] w-full absolute bottom-0 left-0 text-center">
+              <span className={SeColStyle.userInfoClientContainer}>
                 {userInfoToDisplay ? userInfoToDisplay.client : null}
               </span>
             </div>
