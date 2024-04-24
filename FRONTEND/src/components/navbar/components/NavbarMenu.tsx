@@ -44,7 +44,7 @@ export default function NavbarMenu() {
                 pageViewAppointments();
             }}
         >
-            <Typography textAlign="center">View Appointments</Typography>
+            <Typography textAlign="center">My Seat Reservations</Typography>
         </MenuItem>
         <MenuItem
             onClick={() => {
