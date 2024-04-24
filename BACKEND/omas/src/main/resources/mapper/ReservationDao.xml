@@ -155,7 +155,7 @@
     LEFT JOIN 
         tbl_clients_mst AS client
         ON project.client_id = client.client_id
-    <!-- WHERE del_flag = 0 -->
+    WHERE del_flag = 0
     ORDER BY reservation_id ASC;
 </select>
 
