@@ -60,4 +60,30 @@
         INSERT INTO tbl_user_project (emp_id, proj_id, reg_id, reg_date)
         VALUES (#{emp_id}, #{proj_id}, #{reg_id}, #{reg_date})
     </insert>
+
+
+
+    
+<!-- fetch data from personal info table  -->
+ <!-- <select id="getPrincipalInfo" parameterType="java.lang.String" resultType="com.omasystem.omas.Model.PrincipalModel">
+        SELECT 
+            personal_info.emp_id AS emp_id,
+            account.username AS username,
+            personal_info.fname AS first_name,
+            personal_info.mname AS middle_name,
+            personal_info.lname AS last_name,
+            position.position_name AS position_name,
+            account.img_src AS img_src
+        FROM
+            tbl_personal_info AS personal_info
+        INNER JOIN 
+            tbl_user AS account
+            ON personal_info.emp_id = account.emp_id
+        LEFT JOIN 
+            tbl_position_mst AS position
+            ON personal_info.position_id = position.position_id
+        WHERE
+            account.username = #{username};
+    </select> -->
+
 </mapper>

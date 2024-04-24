@@ -145,7 +145,7 @@ export default function DashboardStatusBoxed() {
         <Paper
           elevation={6}
           sx={{
-            m: 1,
+            mt:1,
             p: 2,
             display: "flex",
             flexDirection: "column",
@@ -166,7 +166,7 @@ export default function DashboardStatusBoxed() {
         <Paper
           elevation={6}
           sx={{
-            m: 1,
+            mt: 2.4,
             p: 2,
             display: "flex",
             flexDirection: "column",
@@ -189,7 +189,7 @@ export default function DashboardStatusBoxed() {
         <Paper
           elevation={6}
           sx={{
-            m: 1,
+            mt: 1,
             p: 2,
             display: "flex",
             flexDirection: "column",
@@ -210,7 +210,7 @@ export default function DashboardStatusBoxed() {
         <Paper
           elevation={6}
           sx={{
-            m: 1,
+            mt: 2.4,
             p: 2,
             display: "flex",
             flexDirection: "column",
@@ -233,7 +233,7 @@ export default function DashboardStatusBoxed() {
         <Paper
           elevation={6}
           sx={{
-            m: 1,
+            mt: 1,
             p: 2,
             display: "flex",
             flexDirection: "column",
@@ -254,7 +254,7 @@ export default function DashboardStatusBoxed() {
         <Paper
           elevation={6}
           sx={{
-            m: 1,
+            mt: 2.4,
             p: 2,
             display: "flex",
             flexDirection: "column",

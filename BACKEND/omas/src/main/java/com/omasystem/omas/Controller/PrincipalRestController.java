@@ -67,6 +67,22 @@ public class PrincipalRestController {
     //     return principalService.getPrincipalInfo();
     // }
 
+    
+     //GET Principal info inside tbl_personal_mst
+    // @GetMapping("/info")
+    // public ResponseEntity<PrincipalModel> getPrincipalInfo() {
+    //     // Retrieve the authenticated user's username
+    //     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    //     String username = authentication.getName();
+    
+    //     // Use the PrincipalService to fetch the principal information
+    //     PrincipalModel principalInfo = principalService.getPrincipalInfo(username);
+    
+    //     // Return the principal information as a ResponseEntity
+    //     return ResponseEntity.ok(principalInfo);
+    // }
+
+
 
     /* Gets the list of users *For admin* */
     @GetMapping("/all")
