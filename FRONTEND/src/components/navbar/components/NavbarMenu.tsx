@@ -46,14 +46,14 @@ export default function NavbarMenu() {
         >
             <Typography textAlign="center">My Seat Reservations</Typography>
         </MenuItem>
-        <MenuItem
+        {/* <MenuItem
             onClick={() => {
                 handleCloseUserMenu();
                 navigate("/testpage")
             }}
         >
             <Typography textAlign="center">Test Page</Typography>
-        </MenuItem>
+        </MenuItem> */}
     </>
     );
 }
