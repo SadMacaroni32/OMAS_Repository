@@ -475,7 +475,7 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
 
         <Grid container item xs={12} spacing={1} justifyContent="center">
           {daysOfWeek.map((day) => (
-            <Grid item key={day} xs={1} marginLeft={1}>
+            <Grid item key={day} xs={1.3} marginLeft={1}>
               <Typography align="center">{day}</Typography>
             </Grid>
           ))}
