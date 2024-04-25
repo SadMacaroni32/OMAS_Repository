@@ -113,44 +113,44 @@ public class PrincipalRestController {
         return reservationService.getReservationByEmpId(empId);
     }
 
-    /* Gets the logged in user's reservation by reservation id */
-    @PutMapping("/reservation/{reservationId}")
-    public ResponseEntity<Map<String, Object>> updateReservation(@PathVariable Long reservationId,
-            @RequestBody ReservationInputBodyModel body) {
-        // Updates the reservation details
+    /* Gets the logged in user's reservation by reservation id (there is no update reservation in frontend) */
+    // @PutMapping("/reservation/{reservationId}")
+    // public ResponseEntity<Map<String, Object>> updateReservation(@PathVariable Long reservationId,
+    //         @RequestBody ReservationInputBodyModel body) {
+    //     // Updates the reservation details
         
-        // Retrieve the current user based on the session
-        UserModel currentUser = userDao.getPrincipal(getCurrentSession());
+    //     // Retrieve the current user based on the session
+    //     UserModel currentUser = userDao.getPrincipal(getCurrentSession());
 
-        if (currentUser == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(Collections.singletonMap("error", "User not authenticated"));
-        }
+    //     if (currentUser == null) {
+    //         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+    //                 .body(Collections.singletonMap("error", "User not authenticated"));
+    //     }
 
-        // Retrieve the reservation to be updated
-        ReservationModel reservation = reservationService.getReservationById(reservationId);
+    //     // Retrieve the reservation to be updated
+    //     ReservationModel reservation = reservationService.getReservationById(reservationId);
 
-        if (reservation == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(Collections.singletonMap("error", "Reservation not found"));
-        }
+    //     if (reservation == null) {
+    //         return ResponseEntity.status(HttpStatus.NOT_FOUND)
+    //                 .body(Collections.singletonMap("error", "Reservation not found"));
+    //     }
 
-        // Check if the reservation belongs to the current user
-        if (!reservation.getEmp_id().equals(currentUser.getEmp_id())) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body(Collections.singletonMap("error", "You are not authorized to update this reservation"));
-        }
+    //     // Check if the reservation belongs to the current user
+    //     if (!reservation.getEmp_id().equals(currentUser.getEmp_id())) {
+    //         return ResponseEntity.status(HttpStatus.FORBIDDEN)
+    //                 .body(Collections.singletonMap("error", "You are not authorized to update this reservation"));
+    //     }
 
-        // Update the reservation
-        Map<String, Object> updateResult = reservationService.updateReservation(reservationId, body);
+    //     // Update the reservation
+    //     Map<String, Object> updateResult = reservationService.updateReservation(reservationId, body);
 
-        if (updateResult.containsKey("error")) {
-            // If there's an error during the update operation
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(updateResult);
-        }
+    //     if (updateResult.containsKey("error")) {
+    //         // If there's an error during the update operation
+    //         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(updateResult);
+    //     }
 
-        // Return success response
-        return ResponseEntity.ok(updateResult);
-    }
+    //     // Return success response
+    //     return ResponseEntity.ok(updateResult);
+    // }
 
 }
