@@ -75,44 +75,28 @@ export default function DashboardSummary() {
     (state: RootState) => state.reservationReducer.reservationWithUserInfo
   );
 
-  useEffect(() => {
-    dispatch(getReservationsWithUserInfoFetch());
-  }, [dispatch]);
-
-  useEffect(() => {
-    const storedState = localStorage.getItem("tableState");
-    if (storedState) {
-      const { order, orderBy, page, rowsPerPage } = JSON.parse(storedState);
-      setOrder(order);
-      setOrderBy(orderBy);
-      setPage(page);
-      setRowsPerPage(rowsPerPage);
-    }
-  }, []);
-
   const rowsByDept: {
-  [key: string]: { client_sn: string; seat_count: number };
-} = {};
+    [key: string]: { client_sn: string; seat_count: number };
+  } = {};
 
-if (Array.isArray(seatData)) {
-  const uniqueEmpIds = new Set<number>(); // To store unique emp_id values
-  seatData.forEach((item) => {
-    // Check if emp_id already counted
-    if (!uniqueEmpIds.has(item.emp_id)) {
-      // If emp_id is unique, add it to the set
-      uniqueEmpIds.add(item.emp_id);
-      // Increment seat count for the corresponding client_sn
-      if (!rowsByDept[item.client_sn]) {
-        rowsByDept[item.client_sn] = {
-          client_sn: item.client_sn,
-          seat_count: 0,
-        };
+  if (Array.isArray(seatData)) {
+    const uniqueEmpIds = new Set<number>(); // To store unique emp_id values
+    seatData.forEach((item) => {
+      // Check if emp_id already counted
+      if (!uniqueEmpIds.has(item.emp_id)) {
+        // If emp_id is unique, add it to the set
+        uniqueEmpIds.add(item.emp_id);
+        // Increment seat count for the corresponding client_sn
+        if (!rowsByDept[item.client_sn]) {
+          rowsByDept[item.client_sn] = {
+            client_sn: item.client_sn,
+            seat_count: 0,
+          };
+        }
+        rowsByDept[item.client_sn].seat_count++;
       }
-      rowsByDept[item.client_sn].seat_count++;
-    }
-  });
-}
-
+    });
+  }
 
   const rows: any = Object.values(rowsByDept).map((row) =>
     createData(-1, row.client_sn, row.seat_count)
@@ -151,54 +135,64 @@ if (Array.isArray(seatData)) {
   );
 
   useEffect(() => {
+    dispatch(getReservationsWithUserInfoFetch());
+
+    const storedState = localStorage.getItem("tableState");
+    if (storedState) {
+      const { order, orderBy, page, rowsPerPage } = JSON.parse(storedState);
+      setOrder(order);
+      setOrderBy(orderBy);
+      setPage(page);
+      setRowsPerPage(rowsPerPage);
+    }
+
     localStorage.setItem(
       "tableState",
       JSON.stringify({ order, orderBy, page, rowsPerPage, rows })
     );
-  }, [order, orderBy, page, rowsPerPage, rows]);
-
-  // console.log("Summary", seatData)
+  }, [dispatch, order, orderBy, page, rowsPerPage, rows]);
 
   return (
     <Box sx={{ width: "38rem", height: "26.4rem", borderRadius: "5px", ...shadowStyle }}>
       <Paper sx={{ display: "flex", flexDirection: "column", width: "38rem", height: "26.4rem", borderRadius: "5px" }}>
-        <TableContainer component={Box} sx={{ flexGrow: 1 }}>
-          <Table aria-labelledby="tableTitle" size="medium">
-            <TableHead>
-              <Typography sx={{ m: 1 }} variant="h6" id="tableTitle" component="div">
+        <Typography sx={{ m: 1 }} variant="h6" id="tableTitle" component="div">
                 Summary
               </Typography>
-              <TableRow>
-                <TableCell>
-                  <TableSortLabel
-                    active={orderBy === "client_sn"}
-                    direction={orderBy === "client_sn" ? order : "asc"}
-                    onClick={(event) => handleRequestSort(event, "client_sn")}
-                  >
-                    Project Name
-                    {orderBy === "client_sn" ? (
-                      <Box component="span" sx={visuallyHidden}>
-                        {order === "desc" ? "sorted descending" : "sorted ascending"}
-                      </Box>
-                    ) : null}
-                  </TableSortLabel>
-                </TableCell>
-                <TableCell>
-                  <TableSortLabel
-                    active={orderBy === "seat_id"}
-                    direction={orderBy === "seat_id" ? order : "asc"}
-                    onClick={(event) => handleRequestSort(event, "seat_id")}
-                  >
-                    Seats
-                    {orderBy === "seat_id" ? (
-                      <Box component="span" sx={visuallyHidden}>
-                        {order === "desc" ? "sorted descending" : "sorted ascending"}
-                      </Box>
-                    ) : null}
-                  </TableSortLabel>
-                </TableCell>
-              </TableRow>
-            </TableHead>
+              <TableContainer component={Box} sx={{ flexGrow: 1 }}>
+          <Table aria-labelledby="tableTitle" size="medium">
+          <TableHead>
+  <TableRow>
+    <TableCell>
+      <TableSortLabel
+        active={orderBy === "client_sn"}
+        direction={orderBy === "client_sn" ? order : "asc"}
+        onClick={(event) => handleRequestSort(event, "client_sn")}
+      >
+        Project Name
+        {orderBy === "client_sn" ? (
+          <Box component="span" sx={visuallyHidden}>
+            {order === "desc" ? "sorted descending" : "sorted ascending"}
+          </Box>
+        ) : null}
+      </TableSortLabel>
+    </TableCell>
+    <TableCell>
+      <TableSortLabel
+        active={orderBy === "seat_id"}
+        direction={orderBy === "seat_id" ? order : "asc"}
+        onClick={(event) => handleRequestSort(event, "seat_id")}
+      >
+        Seats
+        {orderBy === "seat_id" ? (
+          <Box component="span" sx={visuallyHidden}>
+            {order === "desc" ? "sorted descending" : "sorted ascending"}
+          </Box>
+        ) : null}
+      </TableSortLabel>
+    </TableCell>
+  </TableRow>
+</TableHead>
+
             <TableBody>
               {visibleRows.map((row) => (
                 <TableRow key={row.client_sn}>

@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
 import { useEffect } from "react";
 import { getUserProfileFetch } from "../../../redux/state/Dashboard_State/userProfileState";
-import { getUsersFetch } from "../../../redux/state/userState";
 
 export default function DashboardUserProfile() {
   const shadowStyle = { boxShadow: "0px 4px 10px #25476A" };
@@ -21,9 +20,6 @@ export default function DashboardUserProfile() {
     dispatch(getUserProfileFetch());
   }, [dispatch]);
 
-  {
-    /* FOR CHECKING API DATA CONSOLE */
-  }
   // console.log("Logged User", loggedUser);
 
   return (
