@@ -78,7 +78,7 @@ export default function DashboardSummary() {
   const rowsByDept: {
     [key: string]: { client_sn: string; seat_count: number };
   } = {};
-
+  
   if (Array.isArray(seatData)) {
     const uniqueEmpIds = new Set<number>(); // To store unique emp_id values
     seatData.forEach((item) => {
@@ -86,17 +86,26 @@ export default function DashboardSummary() {
       if (!uniqueEmpIds.has(item.emp_id)) {
         // If emp_id is unique, add it to the set
         uniqueEmpIds.add(item.emp_id);
-        // Increment seat count for the corresponding client_sn
-        if (!rowsByDept[item.client_sn]) {
+        // Check if the reservation matches the current time period (AM or PM)
+        const startTimeUTC = new Date(item.start_date);
+        const currentHour = startTimeUTC.getUTCHours();
+        const isAM = currentHour === 6 && startTimeUTC.getUTCMinutes() === 0;
+        const isPM = currentHour >= 12 && currentHour < 24;
+  
+        // Increment seat count for the corresponding client_sn only if it matches the current time period
+        if ((isAM || isPM) && !rowsByDept[item.client_sn]) {
           rowsByDept[item.client_sn] = {
             client_sn: item.client_sn,
             seat_count: 0,
           };
         }
-        rowsByDept[item.client_sn].seat_count++;
+        if (isAM || isPM) {
+          rowsByDept[item.client_sn].seat_count++;
+        }
       }
     });
   }
+  
 
   const rows: any = Object.values(rowsByDept).map((row) =>
     createData(-1, row.client_sn, row.seat_count)
@@ -137,21 +146,6 @@ export default function DashboardSummary() {
   useEffect(() => {
     dispatch(getReservationsWithUserInfoFetch());
   }, [dispatch]);
-
-  useEffect(() => {
-    const storedState = localStorage.getItem("tableState");
-    if (storedState) {
-      const { order, orderBy, page, rowsPerPage } = JSON.parse(storedState);
-      setOrder(order);
-      setOrderBy(orderBy);
-      setPage(page);
-      setRowsPerPage(rowsPerPage);
-    }
-    localStorage.setItem(
-      "tableState",
-      JSON.stringify({ order, orderBy, page, rowsPerPage, rows })
-    );
-  }, [order, orderBy, page, rowsPerPage, rows]);
 
   return (
     <Box sx={{ width: "38rem", height: "26.4rem", borderRadius: "5px", ...shadowStyle }}>
