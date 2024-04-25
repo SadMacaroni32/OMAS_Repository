@@ -1,6 +1,6 @@
 // tailwind.config.js
 
-export const content = [ "./index.html", "./src/**/*.{js,ts,jsx,tsx}" ];
+export const content = ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"];
 export const theme = {
   fontFamily: {
     primary: "Inter",
@@ -22,9 +22,8 @@ export const theme = {
 export const plugins = [
   function ({ addUtilities }) {
     const newUtilities = {
-      ".custom-scrollbar::-webkit-scrollbar": {
-        backgroundColor: "transparent",
-        width: "0.4rem",
+      ".no-scrollbar::-webkit-scrollbar": {
+        display: "none",
       },
       ".custom-scrollbar::-webkit-scrollbar-thumb": {
         background: "#24288a",
@@ -32,6 +31,6 @@ export const plugins = [
         cursor: "pointer",
       },
     };
-    addUtilities(newUtilities, [ "responsive", "hover" ]);
+    addUtilities(newUtilities, ["responsive", "hover"]);
   },
 ];
