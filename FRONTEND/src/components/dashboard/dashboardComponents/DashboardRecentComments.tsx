@@ -35,7 +35,9 @@ export default function DashboardRecentComments() {
 
   useEffect(() => {
     dispatch(getRecentCommentsFetch());
+  }, [dispatch]);
 
+  useEffect(() => {
     if (commentData.message) {
       const currentDate = new Date();
       const twoDaysAgo = new Date(currentDate);
@@ -50,7 +52,7 @@ export default function DashboardRecentComments() {
       });
       setRecentComments(filteredComments);
     }
-  }, [dispatch, commentData.message]);
+  }, [commentData.message]);
 
   return (<>
     <Paper

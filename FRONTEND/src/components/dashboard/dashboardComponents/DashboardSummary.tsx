@@ -136,7 +136,9 @@ export default function DashboardSummary() {
 
   useEffect(() => {
     dispatch(getReservationsWithUserInfoFetch());
+  }, [dispatch]);
 
+  useEffect(() => {
     const storedState = localStorage.getItem("tableState");
     if (storedState) {
       const { order, orderBy, page, rowsPerPage } = JSON.parse(storedState);
@@ -145,12 +147,11 @@ export default function DashboardSummary() {
       setPage(page);
       setRowsPerPage(rowsPerPage);
     }
-
     localStorage.setItem(
       "tableState",
       JSON.stringify({ order, orderBy, page, rowsPerPage, rows })
     );
-  }, [dispatch, order, orderBy, page, rowsPerPage, rows]);
+  }, [order, orderBy, page, rowsPerPage, rows]);
 
   return (
     <Box sx={{ width: "38rem", height: "26.4rem", borderRadius: "5px", ...shadowStyle }}>
