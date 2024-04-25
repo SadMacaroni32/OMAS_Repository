@@ -256,7 +256,7 @@ const handleStartTimeChange = (event) => {
   const selectedStartTime = event.target.value;
   setStartTime(selectedStartTime);
 
-  if (selectedStartTime === "12:30" && formattedStartDate === formattedEndDate) {
+  if (selectedStartTime === "12:30" && isEndDateEqualToStartDate) {
     setEndTime("19:30");
   }
 };
@@ -264,6 +264,7 @@ const handleEndTimeChange = (event) => {
   setEndTime(event.target.value);
 };
 
+const isEndDateEqualToStartDate = formattedStartDate === formattedEndDate;
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Grid container spacing={3}>
@@ -473,7 +474,7 @@ const handleEndTimeChange = (event) => {
                 value="12:30"
                 control={<Radio />}
                 label="12:30 PM"
-                disabled={startTime === "12:30" && startDate === endDate} // Disable if start time is '12:30'
+                disabled={startTime === "12:30" && isEndDateEqualToStartDate} // Disable if start time is '12:30'
               />
               <FormControlLabel
                 value="19:30"
@@ -491,7 +492,7 @@ const handleEndTimeChange = (event) => {
             onChange={handleNoteChange}
             fullWidth
             inputProps={{
-              maxLength: 75, // Set the maximum character limit to 255
+              maxLength: 75, // Set the maximum character limit to 75
             }}
           />
           <Typography
