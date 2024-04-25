@@ -92,14 +92,7 @@ const AddAppointment = ({ seat_id }) => {
     console.log("Selected Start Date:", selectedDate);
   };
 
-  const handleStartTimeChange = (event, newStartDate: any) => {
-    const selectedStartTime = event.target.value;
-    setStartTime(selectedStartTime);
-
-    if (selectedStartTime === "12:30" && newStartDate === endDate) {
-      setEndTime("19:30");
-    }
-  };
+  
 
   // const handleEndDateChange = (event) => {
   //   const selectedEndDate = event.target.value;
@@ -111,9 +104,7 @@ const AddAppointment = ({ seat_id }) => {
     setEndDate(selectedEndDate);
   };
 
-  const handleEndTimeChange = (event) => {
-    setEndTime(event.target.value);
-  };
+
 
   const handleNoteChange = (event) => {
     setNote(event.target.value);
@@ -211,7 +202,7 @@ const AddAppointment = ({ seat_id }) => {
     setStartTime("06:00");
     setEndTime("12:30");
   };
-
+  
   // Function to format date to "YYYY-MM-DD"
   const formatDate = (date) => {
     const year = date.getFullYear();
@@ -256,6 +247,23 @@ const AddAppointment = ({ seat_id }) => {
     });
 
   console.log("TRY", reservedDates);
+
+  const formattedStartDate = startDate ? formatDate(startDate.$d) : null;
+  const formattedEndDate = endDate ? formatDate(endDate.$d) : null;
+console.log("S",formattedStartDate, "E",formattedEndDate);
+
+const handleStartTimeChange = (event) => {
+  const selectedStartTime = event.target.value;
+  setStartTime(selectedStartTime);
+
+  if (selectedStartTime === "12:30" && formattedStartDate === formattedEndDate) {
+    setEndTime("19:30");
+  }
+};
+const handleEndTimeChange = (event) => {
+  setEndTime(event.target.value);
+};
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Grid container spacing={3}>
