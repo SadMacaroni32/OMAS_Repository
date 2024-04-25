@@ -23,6 +23,7 @@ import {
 } from "../../redux/state/reservationState";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+
 const AddAppointment = ({ seat_id }) => {
   const [startDate, setStartDate] = useState(null);
   const [startTime, setStartTime] = useState("06:00");
@@ -78,21 +79,24 @@ const AddAppointment = ({ seat_id }) => {
   //   }
   // };
 
-  const handleStartDateChange = (event) => {
-    const selectedStartDate = new Date(event.target.value); // Convert string to Date object
-    setStartDate(selectedStartDate);
+  const handleStartDateChange = (newStartDate: any) => {
+    setStartDate(newStartDate);
 
     // Update end date if it's empty or earlier than the start date
-    if (!endDate || endDate < selectedStartDate) {
-      setEndDate(selectedStartDate);
+    if (!endDate || endDate < newStartDate) {
+      setEndDate(newStartDate);
     }
+
+    // Get the date value picked in the start time field
+    const selectedDate = newStartDate ? newStartDate.$d : null;
+    console.log("Selected Start Date:", selectedDate);
   };
 
-  const handleStartTimeChange = (event) => {
+  const handleStartTimeChange = (event, newStartDate: any) => {
     const selectedStartTime = event.target.value;
     setStartTime(selectedStartTime);
 
-    if (selectedStartTime === "12:30" && startDate === endDate) {
+    if (selectedStartTime === "12:30" && newStartDate === endDate) {
       setEndTime("19:30");
     }
   };
@@ -293,10 +297,10 @@ const AddAppointment = ({ seat_id }) => {
           /> */}
           <DatePicker
             label="Start Date"
-            renderInput={(props) => <TextField {...props} />}
+     
             value={startDate}
-            onChange={(newValue) => {
-              setStartDate(newValue);
+            onChange={(newStartDate) => {
+              handleStartDateChange(newStartDate);
             }}
             adapter={AdapterDayjs} // Use the Dayjs adapter
             shouldDisableDate={(date) => {
