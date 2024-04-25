@@ -16,7 +16,8 @@
             pi.lname AS last_name,
             reservation.note AS note,
             reservation.reg_date AS noted_at,
-            reservation.seat_id AS seat_id
+            reservation.seat_id AS seat_id,
+            reservation.del_flag AS del_flag
         FROM 
             tbl_reservation AS reservation
         INNER JOIN
@@ -25,6 +26,8 @@
         LEFT JOIN
             tbl_personal_info AS pi
             ON reservation.emp_id = pi.emp_id
+        WHERE 
+            reservation.del_flag = 0
         ORDER BY reservation.reg_date DESC
     </select>
     
