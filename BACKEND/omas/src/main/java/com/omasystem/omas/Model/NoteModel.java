@@ -18,4 +18,5 @@ public class NoteModel {
     private String note; // Note content
     private Timestamp noted_at; // Timestamp when note was made
     private int seat_id; // Seat ID associated with the note
+    private int del_flag;
 }

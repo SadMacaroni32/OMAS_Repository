@@ -3,7 +3,7 @@
 @layer base {
 
     .mainContainer{
-        @apply flex flex-col w-full h-[100vh] items-center
+        @apply flex flex-col w-full h-[100vh] items-center overflow-auto no-scrollbar
     }
     
     .SignInDiv{

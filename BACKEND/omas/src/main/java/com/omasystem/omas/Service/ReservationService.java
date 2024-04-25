@@ -86,44 +86,45 @@ public class ReservationService {
         return reservationDao.findById(reservationId); // Calling DAO method to fetch reservation by ID
     }
 
-    // Updates reservation details
-    public Map<String, Object> updateReservation(Long reservationId, ReservationInputBodyModel body) {
-        Map<String, Object> response = new HashMap<>(); // Initializing response map
+    ///FOR ADMIN
+    // Updates reservation details (there is no update reservation in frontend)
+    // public Map<String, Object> updateReservation(Long reservationId, ReservationInputBodyModel body) {
+    //     Map<String, Object> response = new HashMap<>(); // Initializing response map
 
-        try {
-            // Retrieve the reservation to update
-            ReservationModel reservation = reservationDao.findById(reservationId); // Fetching reservation from DAO
+    //     try {
+    //         // Retrieve the reservation to update
+    //         ReservationModel reservation = reservationDao.findById(reservationId); // Fetching reservation from DAO
 
-            if (reservation == null) { // Checking if reservation exists
-                response.put("message", "Reservation not found"); // Setting error message in response
-                return response; // Returning response
-            }
+    //         if (reservation == null) { // Checking if reservation exists
+    //             response.put("message", "Reservation not found"); // Setting error message in response
+    //             return response; // Returning response
+    //         }
 
-            // Retrieve the currently logged-in user's emp_id
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); // Getting authentication information
-            UserModel currentUser = userDao.getPrincipal(authentication.getName()); // Retrieving current user details
-            String loggedInEmpId = currentUser.getEmp_id(); // Getting current user's employee ID
+    //         // Retrieve the currently logged-in user's emp_id
+    //         Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); // Getting authentication information
+    //         UserModel currentUser = userDao.getPrincipal(authentication.getName()); // Retrieving current user details
+    //         String loggedInEmpId = currentUser.getEmp_id(); // Getting current user's employee ID
 
-            // Check if the reservation belongs to the current user
-            if (!reservation.getEmp_id().equals(loggedInEmpId)) { // Checking ownership of reservation
-                response.put("message", "You are not authorized to update this reservation"); // Setting error message in response
-                return response; // Returning response
-            }
+    //         // Check if the reservation belongs to the current user
+    //         if (!reservation.getEmp_id().equals(loggedInEmpId)) { // Checking ownership of reservation
+    //             response.put("message", "You are not authorized to update this reservation"); // Setting error message in response
+    //             return response; // Returning response
+    //         }
 
-            // Update reservation details
-            reservation.setStart_date(body.getStart_date()); // Updating start date
-            reservation.setEnd_date(body.getEnd_date()); // Updating end date
-            reservation.setNote(body.getNote()); // Updating note
+    //         // Update reservation details
+    //         reservation.setStart_date(body.getStart_date()); // Updating start date
+    //         reservation.setEnd_date(body.getEnd_date()); // Updating end date
+    //         reservation.setNote(body.getNote()); // Updating note
 
-            // Call the DAO to update the reservation
-            reservationDao.updateReservation(reservation); // Updating reservation in DAO
+    //         // Call the DAO to update the reservation
+    //         reservationDao.updateReservation(reservation); // Updating reservation in DAO
 
-            response.put("message", "Reservation updated successfully"); // Setting success message in response
-        } catch (Exception e) { // Catching any exceptions
-            response.put("message", e.getMessage()); // Setting error message in response
-        }
-        return response; // Returning response
-    }
+    //         response.put("message", "Reservation updated successfully"); // Setting success message in response
+    //     } catch (Exception e) { // Catching any exceptions
+    //         response.put("message", e.getMessage()); // Setting error message in response
+    //     }
+    //     return response; // Returning response
+    // }
 
     // Inserts a new reservation
     public Map<String, Object> insertReservation(Long seat_id, ReservationInputBodyModel body) {
@@ -161,42 +162,42 @@ public class ReservationService {
         return response; // Returning response
     }
 
-      // Seats under restoration
-      public Map<String, Object> ReservedToOccupied (Long seat_id, ReservationInputBodyModel body) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); // Getting authentication information
+    //   // Seats OCCUPIED FOR ADMIN
+    //   public Map<String, Object> ReservedToOccupied (Long seat_id, ReservationInputBodyModel body) {
+    //     Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); // Getting authentication information
 
-        ReservationInputBodyModel bodyContainer = new ReservationInputBodyModel(); // Initializing reservation body container
+    //     ReservationInputBodyModel bodyContainer = new ReservationInputBodyModel(); // Initializing reservation body container
 
-        UserModel principal = userDao.getPrincipal(authentication.getName()); // Retrieving current user details
+    //     UserModel principal = userDao.getPrincipal(authentication.getName()); // Retrieving current user details
 
-        UserProjectModel currentProjectOfUser = userProjectDao.getProjectInvolvedOfUser(String.valueOf(principal.getEmp_id())); // Retrieving current user's project
+    //     UserProjectModel currentProjectOfUser = userProjectDao.getProjectInvolvedOfUser(String.valueOf(principal.getEmp_id())); // Retrieving current user's project
 
-        if (currentProjectOfUser != null) { // Checking if user is associated with a project
-            bodyContainer.setProj_id(currentProjectOfUser.getProj_id()); // Setting project ID in body container
-        } else {
-            bodyContainer.setProj_id(1); // Setting default project ID
-        }
+    //     if (currentProjectOfUser != null) { // Checking if user is associated with a project
+    //         bodyContainer.setProj_id(currentProjectOfUser.getProj_id()); // Setting project ID in body container
+    //     } else {
+    //         bodyContainer.setProj_id(1); // Setting default project ID
+    //     }
 
-        try {
-            bodyContainer.setEmp_id(String.valueOf(principal.getEmp_id())); // Setting employee ID in body container
-            bodyContainer.setSeat_id(Integer.parseInt(seat_id.toString())); // Setting seat ID in body container
-            bodyContainer.setStart_date(body.getStart_date()); // Setting start date in body container
-            bodyContainer.setEnd_date(body.getEnd_date()); // Setting end date in body container
-            bodyContainer.setNote(body.getNote()); // Setting note in body container
+    //     try {
+    //         bodyContainer.setEmp_id(String.valueOf(principal.getEmp_id())); // Setting employee ID in body container
+    //         bodyContainer.setSeat_id(Integer.parseInt(seat_id.toString())); // Setting seat ID in body container
+    //         bodyContainer.setStart_date(body.getStart_date()); // Setting start date in body container
+    //         bodyContainer.setEnd_date(body.getEnd_date()); // Setting end date in body container
+    //         bodyContainer.setNote(body.getNote()); // Setting note in body container
 
-            reservationDao.insertReservation(bodyContainer); // Inserting reservation into database
+    //         reservationDao.insertReservation(bodyContainer); // Inserting reservation into database
 
-            // Update seat status to "repairing"
-            seatDao.updateSeatStatus(seat_id, SeatStatus.occupied); // Updating seat status in DAO
+    //         // Update seat status to "repairing"
+    //         seatDao.updateSeatStatus(seat_id, SeatStatus.occupied); // Updating seat status in DAO
 
-            response.put("message", "Seat is occupied"); // Setting success message in response
-        } catch (Exception e) { // Catching any exceptions
-            response.put("message", e.getMessage()); // Setting error message in response
-        }
-        return response; // Returning response
-    }
+    //         response.put("message", "Seat is occupied"); // Setting success message in response
+    //     } catch (Exception e) { // Catching any exceptions
+    //         response.put("message", e.getMessage()); // Setting error message in response
+    //     }
+    //     return response; // Returning response
+    // }
 
-    // Seats under restoration
+    // Seats under restoration FOR ADMIN
     public Map<String, Object> underRepairing(Long seat_id, ReservationInputBodyModel body) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); // Getting authentication information
 
@@ -231,7 +232,7 @@ public class ReservationService {
         return response; // Returning response
     }
 
-    // Repaired seats into available
+    // Repaired seats into available FOR ADMIN
     public Map<String, Object> FixedSeat(Long seat_id, ReservationInputBodyModel body) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); // Getting authentication information
 

@@ -19,7 +19,7 @@ public interface ReservationDao {
     //get reservation using reservationId
     ReservationModel findById(Long reservationId);
     //update seatreservation
-    void updateReservation(ReservationModel reservation);
+    // void updateReservation(ReservationModel reservation); (there is no update reservation in frontend)
 
     List<ReservationModel>getAllReservation();
 
