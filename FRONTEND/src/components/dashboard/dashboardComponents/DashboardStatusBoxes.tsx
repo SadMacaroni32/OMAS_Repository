@@ -6,32 +6,23 @@ import ChairAltIcon from "@mui/icons-material/ChairAlt";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../redux/store/store";
-import { createContext, useContext, useEffect, useState } from "react";
-import { getTotalSeatsFetch } from "../../../redux/state/Dashboard_State/seatConditionStates/Total_Seats";
-import { getAssignedSeatsFetch } from "../../../redux/state/Dashboard_State/seatConditionStates/Assigned_Seats";
-import { getTotalAssociatesFetch } from "../../../redux/state/Dashboard_State/statusBoxesStates/Total_Associates";
-import { getReservedAssociatesFetch } from "../../../redux/state/Dashboard_State/statusBoxesStates/Reserved_Associates";
-import { getUnreservedAssociatesFetch } from "../../../redux/state/Dashboard_State/statusBoxesStates/Unreserved_Associates";
-import DashboardSeatCondition from "./DashboardSeatCondition";
 
 interface Props{
-  data: {
+  statusBoxesData: {
   totalSeatsCount: number;
   currentReservationCount: number;
   totalAssociatesCount: number;
   }
 }
 
-export default function DashboardStatusBoxed(props:Props) {
+export default function DashboardStatusBoxed(props: Props) {
   const shadowStyle = { boxShadow: "0px 4px 10px #25476A" };
   const iconStyle = { width: "2.5vw", height: "2.5vw", color: "#25476A" };
   const paperStyle = { width: "100%", height: "10.5vw" };
   const numberStyle = { fontSize: "2vw" };
   const textStyle = { fontSize: "0.6vw", fontWeight: "bold" };
   
-  const {totalSeatsCount, currentReservationCount, totalAssociatesCount} = props.data;
+  const {totalSeatsCount, currentReservationCount, totalAssociatesCount} = props.statusBoxesData;
 
   // console.log("Total Seat Count", totalSeatsCount);
   // console.log("Total Current Seat", currentReservationCount);
