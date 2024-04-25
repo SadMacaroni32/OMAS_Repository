@@ -491,15 +491,15 @@ const handleEndTimeChange = (event) => {
             onChange={handleNoteChange}
             fullWidth
             inputProps={{
-              maxLength: 255, // Set the maximum character limit to 255
+              maxLength: 75, // Set the maximum character limit to 255
             }}
           />
           <Typography
             variant="body2"
             sx={{ fontSize: "small", color: "gray" }}
-            color={note.length > 255 ? "error" : "inherit"}
+            color={note.length > 75 ? "error" : "inherit"}
           >
-            {note.length}/255
+            {note.length}/75
           </Typography>
         </Grid>
         <Grid item xs={12}>
