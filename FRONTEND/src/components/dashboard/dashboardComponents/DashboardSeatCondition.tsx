@@ -22,10 +22,6 @@ const DashboardSeatCondition = (props: Props) => {
 
   const totalRepairSeats = useSelector((state: RootState) => state.repairSeatsReducer.repairSeats)
 
-  useEffect(() => {
-    dispatch(getRepairSeatsFetch());
-  }, [dispatch]);
-
   const { totalSeatsCount, currentReservationCount } = props.seatConditionData;
 
   // Initialize data state with default values
@@ -34,6 +30,10 @@ const DashboardSeatCondition = (props: Props) => {
     occupied: 0,
     underRepair: 0,
   });
+  
+  useEffect(() => {
+    dispatch(getRepairSeatsFetch());
+  }, [dispatch]);
 
   useEffect(() => {
     setData({

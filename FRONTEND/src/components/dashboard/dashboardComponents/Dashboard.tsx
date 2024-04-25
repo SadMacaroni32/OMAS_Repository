@@ -33,65 +33,66 @@ export default function Dashboard() {
   const [currentReservationCount, setCurrentReservationCount] = useState<number>(0);
   const [totalSeatsCount, setTotalSeatsCount ] = useState<number>(0);
   const [totalAssociatesCount, setTotalAssociatesCount ] = useState<number>(0);
-
-  // Filter reservations for today
-  const todayReservations = assignedSeats.filter((reservation: any) => {
-    const reservationDate = new Date(reservation.start_date);
-    const today = new Date();
-    return (
-      reservationDate.getDate() === today.getDate() &&
-      reservationDate.getMonth() === today.getMonth() &&
-      reservationDate.getFullYear() === today.getFullYear()
-    );
-  });   
-  
-  // Filter reservations starting at 6:00 AM
-  const reservationsAM = todayReservations.filter((reservation: any) => {
-    const startTimeUTC = new Date(reservation.start_date); // Convert UTC start time to Date object
-    return (
-      startTimeUTC.getUTCHours() === 6 && startTimeUTC.getUTCMinutes() === 0
-    ); // Check if hours and minutes match 6:00 AM
-  });
-
-  // Filter reservations starting after 6:00 PM but before midnight
-  const reservationsPM = todayReservations.filter((reservation: any) => {
-    const startTimeUTC = new Date(reservation.start_date); // Convert UTC start time to Date object
-    return startTimeUTC.getUTCHours() >= 12 && startTimeUTC.getUTCHours() < 24; // Check if hours are between 18 (6:00 PM) and 23 (11:59 PM)
-  });
-
-  // Function to determine if it's currently AM or PM and set the currentReservationCount accordingly
-  const setCurrentReservationCountBasedOnTime = () => {
-    const currentHour = new Date().getHours();
-    if (currentHour < 12) {
-      // It's AM
-      setCurrentReservationCount(reservationsAMCount);
-    } else {
-      // It's PM
-      setCurrentReservationCount(reservationsPMCount);
-    }
-  };  
   
   const data = { totalSeatsCount, currentReservationCount, totalAssociatesCount };
   
-  //   useEffect(() => {
-  //   dispatch(getTotalSeatsFetch());
-  //   dispatch(getAssignedSeatsFetch());
-  //   dispatch(getTotalAssociatesFetch());
-  //   dispatch(getReservedAssociatesFetch());
-  //   dispatch(getUnreservedAssociatesFetch());    
-    
-  //   setReservationsAMCount(reservationsAM.length);
-  //   setReservationsPMCount(reservationsPM.length);    
-    
-  //   setCurrentReservationCountBasedOnTime();
+  useEffect(() => {
+    dispatch(getTotalSeatsFetch());
+  }, [dispatch]); 
 
-  //   setTotalSeatsCount(totalSeats.length);
-  //   setTotalAssociatesCount(totalAssociates["Total Associates"]);
-  // }, [dispatch, reservationsAM, reservationsPM, totalSeats, totalAssociates]); 
+  useEffect(() => {
+    dispatch(getAssignedSeatsFetch());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getTotalAssociatesFetch());
+  }, [dispatch]);
+
+  useEffect(() => {
+    // Filter reservations for today
+    const todayReservations = assignedSeats.filter((reservation: any) => {
+      const reservationDate = new Date(reservation.start_date);
+      const today = new Date();
+      return (
+        reservationDate.getDate() === today.getDate() &&
+        reservationDate.getMonth() === today.getMonth() &&
+        reservationDate.getFullYear() === today.getFullYear()
+      );
+    });
+
+    // Filter reservations starting at 6:00 AM
+    const reservationsAM = todayReservations.filter((reservation: any) => {
+      const startTimeUTC = new Date(reservation.start_date);
+      return (
+        startTimeUTC.getUTCHours() === 6 && startTimeUTC.getUTCMinutes() === 0
+      );
+    });
+
+    // Filter reservations starting after 6:00 PM but before midnight
+    const reservationsPM = todayReservations.filter((reservation: any) => {
+      const startTimeUTC = new Date(reservation.start_date);
+      return (
+        startTimeUTC.getUTCHours() >= 12 && startTimeUTC.getUTCHours() < 24
+      );
+    });
+
+    const currentHour = new Date().getHours();
+    if (currentHour < 12) {
+      // It's AM
+      setCurrentReservationCount(reservationsAM.length);
+    } else {
+      // It's PM
+      setCurrentReservationCount(reservationsPM.length);
+    }
+
+    setReservationsAMCount(reservationsAM.length);
+    setReservationsPMCount(reservationsPM.length);
+    setTotalSeatsCount(totalSeats.length);
+    setTotalAssociatesCount(totalAssociates["Total Associates"]);
+  }, [assignedSeats, totalSeats, totalAssociates]);
 
   // console.log("Total Seats", totalSeatsCount);
   // console.log("Total Assigned Seats", currentReservationCount);
-  // console.log("Total Repair Seats", totalRepairSeats);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
