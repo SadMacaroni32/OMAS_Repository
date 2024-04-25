@@ -12,6 +12,8 @@ export default function DashboardRecentComments() {
     (state: RootState) => state.recentCommentsReducer.recentComments
   );
 
+  console.log("CommentData", commentData);
+  
   const getAvatarLetter = (name: string | string[]) => {
     if (!name) return "";
     return name[0].toUpperCase();

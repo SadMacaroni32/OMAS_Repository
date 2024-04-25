@@ -12,8 +12,6 @@ import { RootState } from "../../../redux/store/store";
 import { getTotalSeatsFetch } from "../../../redux/state/Dashboard_State/seatConditionStates/Total_Seats";
 import { getAssignedSeatsFetch } from "../../../redux/state/Dashboard_State/seatConditionStates/Assigned_Seats";
 import { getTotalAssociatesFetch } from "../../../redux/state/Dashboard_State/statusBoxesStates/Total_Associates";
-import { getReservedAssociatesFetch } from "../../../redux/state/Dashboard_State/statusBoxesStates/Reserved_Associates";
-import { getUnreservedAssociatesFetch } from "../../../redux/state/Dashboard_State/statusBoxesStates/Unreserved_Associates";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -34,7 +32,7 @@ export default function Dashboard() {
   const [totalSeatsCount, setTotalSeatsCount ] = useState<number>(0);
   const [totalAssociatesCount, setTotalAssociatesCount ] = useState<number>(0);
   
-  const data = { totalSeatsCount, currentReservationCount, totalAssociatesCount };
+  const propData = { totalSeatsCount, currentReservationCount, totalAssociatesCount };
   
   useEffect(() => {
     dispatch(getTotalSeatsFetch());
@@ -104,12 +102,12 @@ export default function Dashboard() {
 
         {/* STATUS */}
         <Grid item xs={3}>
-          <DashboardStatusBoxes statusBoxesData={data}/>
+          <DashboardStatusBoxes statusBoxesData={propData}/>
         </Grid>
 
         {/* SEAT GRAPH CHART */}
         <Grid item xs={4}>
-          <DashboardSeatCondition seatConditionData={data}/>
+          <DashboardSeatCondition seatConditionData={propData}/>
         </Grid>
 
         {/* 2ND ROW */}

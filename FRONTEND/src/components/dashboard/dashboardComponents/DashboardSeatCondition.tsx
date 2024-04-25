@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
 import { getRepairSeatsFetch } from "../../../redux/state/Dashboard_State/seatConditionStates/Repair_Seats";
 
-
 interface Props {
   seatConditionData: {
     totalSeatsCount: number;
