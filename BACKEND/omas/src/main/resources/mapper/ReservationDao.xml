@@ -104,14 +104,14 @@
         SELECT * FROM tbl_reservation WHERE reservation_id = #{reservationId} 
     </select>
 
-    <!-- updateReservation statement -->
-    <update id="updateReservation" parameterType="com.omasystem.omas.Model.ReservationModel">
+    <!-- updateReservation statement (there is no update reservation in frontend) --> 
+    <!-- <update id="updateReservation" parameterType="com.omasystem.omas.Model.ReservationModel">
         UPDATE tbl_reservation
         SET start_date = #{start_date},
             end_date = #{end_date},
             note = #{note}
         WHERE reservation_id = #{reservation_id}
-    </update>
+    </update> -->
 
 <!-- get all reservation -->
 
