@@ -73,21 +73,25 @@ export default function Dashboard() {
   
   const data = { totalSeatsCount, currentReservationCount, totalAssociatesCount };
   
-  useEffect(() => {
-    dispatch(getTotalSeatsFetch());
-    dispatch(getAssignedSeatsFetch());
-    dispatch(getTotalAssociatesFetch());
-    dispatch(getReservedAssociatesFetch());
-    dispatch(getUnreservedAssociatesFetch());    
+  //   useEffect(() => {
+  //   dispatch(getTotalSeatsFetch());
+  //   dispatch(getAssignedSeatsFetch());
+  //   dispatch(getTotalAssociatesFetch());
+  //   dispatch(getReservedAssociatesFetch());
+  //   dispatch(getUnreservedAssociatesFetch());    
     
-    setReservationsAMCount(reservationsAM.length);
-    setReservationsPMCount(reservationsPM.length);    
+  //   setReservationsAMCount(reservationsAM.length);
+  //   setReservationsPMCount(reservationsPM.length);    
     
-    setCurrentReservationCountBasedOnTime();
+  //   setCurrentReservationCountBasedOnTime();
 
-    setTotalSeatsCount(totalSeats.length);
-    setTotalAssociatesCount(totalAssociates["Total Associates"]);
-  }, [dispatch, reservationsAM, reservationsPM, totalSeats, totalAssociates]);
+  //   setTotalSeatsCount(totalSeats.length);
+  //   setTotalAssociatesCount(totalAssociates["Total Associates"]);
+  // }, [dispatch, reservationsAM, reservationsPM, totalSeats, totalAssociates]); 
+
+  // console.log("Total Seats", totalSeatsCount);
+  // console.log("Total Assigned Seats", currentReservationCount);
+  // console.log("Total Repair Seats", totalRepairSeats);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -99,12 +103,12 @@ export default function Dashboard() {
 
         {/* STATUS */}
         <Grid item xs={3}>
-          <DashboardStatusBoxes data={data}/>
+          <DashboardStatusBoxes statusBoxesData={data}/>
         </Grid>
 
         {/* SEAT GRAPH CHART */}
         <Grid item xs={4}>
-          <DashboardSeatCondition propdata={data}/>
+          <DashboardSeatCondition seatConditionData={data}/>
         </Grid>
 
         {/* 2ND ROW */}

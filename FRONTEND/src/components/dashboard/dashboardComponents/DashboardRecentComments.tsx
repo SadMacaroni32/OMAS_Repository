@@ -1,12 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  Avatar,
-  Grid,
-  Table,
-  TableBody,
-  TableContainer,
-  Typography,
-} from "@mui/material";
+import { Avatar, Grid, Table, TableBody, TableCell, TableContainer, TableRow, Typography,} from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
@@ -37,14 +30,12 @@ export default function DashboardRecentComments() {
     ).padStart(2, "0")}`;
     return `${formattedDate} at ${formattedTime} ${meridiem}`;
   };
-  
-  useEffect(() => {
-    dispatch(getRecentCommentsFetch());
-  }, [dispatch]);
 
   const [recentComments, setRecentComments] = useState<any[]>([]);
 
   useEffect(() => {
+    dispatch(getRecentCommentsFetch());
+
     if (commentData.message) {
       const currentDate = new Date();
       const twoDaysAgo = new Date(currentDate);
@@ -59,10 +50,9 @@ export default function DashboardRecentComments() {
       });
       setRecentComments(filteredComments);
     }
-  }, [commentData.message]);
-  
+  }, [dispatch, commentData.message]);
 
-  return (
+  return (<>
     <Paper
       elevation={6}
       sx={{ height: "26.4rem", width: "45.5rem", borderRadius: "8px", ml: 1, ...shadowStyle }}
@@ -89,53 +79,62 @@ export default function DashboardRecentComments() {
           Recent Comments 
         </Typography>
         <Table>
-          <TableBody id="commentContainer" component="div">
-            {Array.isArray(recentComments) && recentComments.length > 0 ? (
-              recentComments.map((comment: any, index: number) => (
-                <Grid
-                  container
-                  alignItems="flex-start"
-                  key={`${comment.emp_id}-${index}`} // Ensure unique key by appending index
-                  spacing={1}
-                  sx={{ m: 1, width: "35rem" }}
-                >
-                  {/* Set alignItems to "flex-start" */}
-                  <Grid item>
-                    <Avatar>{getAvatarLetter(comment.first_name)}</Avatar>{" "}
-                    {/* Use comment.first_name instead of first_name */}
-                  </Grid>
-                  <Grid item>
-                    <Typography
-                      variant="button"
-                      id="recentComTitle"
-                      component="div"
-                      sx={{ fontWeight: "bold" }}
-                    >
-                      {comment.first_name} {comment.middle_name}{" "}
-                      {comment.last_name} {/* Use comment properties */}
-                    </Typography>
-                    <Typography variant="caption">
-                      {formatDateTime(comment.noted_at)} Located at Seat No.{" "}
-                      {comment.seat_id}
-                    </Typography>{" "}
-                    {/* Use comment.noted_at */}
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Grid container direction="column" spacing={1}>
-                      <Grid item sx={{ ml: 6 }}>
-                        <Typography variant="body2">{comment.note}</Typography>{" "}
-                        {/* Use comment.note */}
-                      </Grid>
-                    </Grid>
-                  </Grid>
+        <TableBody id="commentContainer">
+  {Array.isArray(recentComments) && recentComments.length > 0 ? (
+    recentComments.map((comment: any, index: number) => (
+      <TableRow key={`${comment.emp_id}-${index}`}>
+        <TableCell>
+          <Grid
+            container
+            alignItems="flex-start"
+            spacing={1}
+            sx={{ m: 1, width: "35rem" }}
+          >
+            <Grid item>
+              <Avatar>{getAvatarLetter(comment.first_name)}</Avatar>{" "}
+              {/* Use comment.first_name instead of first_name */}
+            </Grid>
+            <Grid item>
+              <Typography
+                variant="button"
+                id="recentComTitle"
+                component="div"
+                sx={{ fontWeight: "bold" }}
+              >
+                {comment.first_name} {comment.middle_name}{" "}
+                {comment.last_name} {/* Use comment properties */}
+              </Typography>
+              <Typography variant="caption">
+                {formatDateTime(comment.noted_at)} Located at Seat No.{" "}
+                {comment.seat_id}
+              </Typography>{" "}
+              {/* Use comment.noted_at */}
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container direction="column" spacing={1}>
+                <Grid item sx={{ ml: 6 }}>
+                  <Typography variant="body2">{comment.note}</Typography>{" "}
+                  {/* Use comment.note */}
                 </Grid>
-              ))
-            ) : (
-              <Typography sx={{m:1, fontWeight: "bold", fontSize: "2rem"}}>No recent comments</Typography>
-            )}
-          </TableBody>
+              </Grid>
+            </Grid>
+          </Grid>
+        </TableCell>
+      </TableRow>
+    ))
+  ) : (
+    <TableRow>
+      <TableCell colSpan={3}>
+        <Typography sx={{ m: 1, fontWeight: "bold", fontSize: "2rem" }}>
+          No recent comments
+        </Typography>
+      </TableCell>
+    </TableRow>
+  )}
+</TableBody>
+
         </Table>
       </TableContainer>
     </Paper>
-  );
+  </>);
 }

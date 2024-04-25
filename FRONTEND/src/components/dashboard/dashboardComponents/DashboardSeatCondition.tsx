@@ -1,16 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BarChart } from "@mui/x-charts/BarChart";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
-import { getTotalSeatsFetch } from "../../../redux/state/Dashboard_State/seatConditionStates/Total_Seats";
-import { getAssignedSeatsFetch } from "../../../redux/state/Dashboard_State/seatConditionStates/Assigned_Seats";
 import { getRepairSeatsFetch } from "../../../redux/state/Dashboard_State/seatConditionStates/Repair_Seats";
-import { DataContext } from "./DashboardStatusBoxes";
+
 
 interface Props {
-  propdata: {
+  seatConditionData: {
     totalSeatsCount: number;
     currentReservationCount: number;
     totalAssociatesCount: number;
@@ -28,7 +26,7 @@ const DashboardSeatCondition = (props: Props) => {
     dispatch(getRepairSeatsFetch());
   }, [dispatch]);
 
-  const { totalSeatsCount, currentReservationCount } = props.propdata;
+  const { totalSeatsCount, currentReservationCount } = props.seatConditionData;
 
   // Initialize data state with default values
   const [data, setData] = useState({
@@ -45,9 +43,9 @@ const DashboardSeatCondition = (props: Props) => {
     });
   }, [totalSeatsCount, currentReservationCount, totalRepairSeats]);
 
-  console.log("Total Seats", totalSeatsCount);
-  console.log("Total Assigned Seats", currentReservationCount);
-  console.log("Total Repair Seats", totalRepairSeats);
+  // console.log("Total Seats", totalSeatsCount);
+  // console.log("Total Assigned Seats", currentReservationCount);
+  // console.log("Total Repair Seats", totalRepairSeats);
 
   return (
     <Paper elevation={6} style={{ margin: 8, padding: 16, ...shadowStyle }}>
