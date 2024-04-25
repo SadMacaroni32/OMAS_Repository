@@ -41,6 +41,7 @@ public class NoteService {
                     noteMap.put("note", note.getNote()); // Adding note content to the note map
                     noteMap.put("noted_at", note.getNoted_at()); // Adding noted at timestamp to the note map
                     noteMap.put("seat_id", String.valueOf(note.getSeat_id())); // Adding seat ID to the note map as a string
+                    noteMap.put("del_flag", note.getDel_flag()); // Adding seat ID to the note map as a string
     
                     stringList.add(noteMap); // Adding note map to the list
                 }
