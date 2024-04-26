@@ -15,7 +15,7 @@ export default function NavbarBody() {
   const { anchorElNav, handleOpenNavMenu, handleCloseNavMenu } = ScriptsNav();
 
   return (
-    <AppBar position="sticky">
+    <AppBar position="sticky" sx={{zIndex:3}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box
