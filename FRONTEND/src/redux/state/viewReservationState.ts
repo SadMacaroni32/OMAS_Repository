@@ -16,7 +16,7 @@ const initialState: ViewState = {
   viewReservationValue: [],
   isLoading: false,
   isdeleteSuccess: false,
-  error: "mayerro",
+  error: "may error",
 };
 
 const viewReservationSlice = createSlice({
