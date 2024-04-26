@@ -221,6 +221,7 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
             display="flex"
             flexDirection="column"
             sx={{
+              zIndex:3,
               borderRadius: 4,
               marginLeft: 1,
               border: 1,
@@ -323,6 +324,7 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
         spacing={1}
         m={1}
         sx={{
+          zIndex:3,
           overflow: "auto",
           width: "95%",
           height: "100%",
@@ -347,7 +349,7 @@ const Calendar = ({ seat_id, setShowTimeTablePage }) => {
             position: "absolute",
             top: 0,
             right: 0,
-          }}
+          }} 
           onClick={handleClose}
         >
           <CloseIcon width={150} />

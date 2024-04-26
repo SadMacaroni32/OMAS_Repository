@@ -46,6 +46,7 @@ export default function viewReservation() {
     };
 
     return (
+        
         <Paper sx={{ overflow: 'auto', ...shadowStyle, height: '100vh', display: 'absolute'  }}>
             <TableContainer sx={{ flex: '1 1 auto' }}> {/* Allow TableContainer to grow */}
                 <Table stickyHeader aria-label="sticky table">
