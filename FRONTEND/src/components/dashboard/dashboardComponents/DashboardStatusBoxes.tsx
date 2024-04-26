@@ -4,8 +4,8 @@ import EventSeatIcon from "@mui/icons-material/EventSeat";
 import AirlineSeatReclineNormalIcon from "@mui/icons-material/AirlineSeatReclineNormal";
 import ChairAltIcon from "@mui/icons-material/ChairAlt";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
-import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
-import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
+import CoPresentIcon from '@mui/icons-material/CoPresent';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
 
 interface Props{
   statusBoxesData: {
@@ -28,7 +28,7 @@ export default function DashboardStatusBoxed(props: Props) {
   // console.log("Total Current Seat", currentReservationCount);
   // console.log("Total Associate", totalAssociatesCount);
 
-  return (<div>
+  return (<>
     <Grid container spacing={1}>
       <Grid item xs={4}>
         <Paper
@@ -109,7 +109,7 @@ export default function DashboardStatusBoxed(props: Props) {
             ...paperStyle, // Applying paperStyle
           }}
         >
-          <InsertEmoticonIcon sx={{ ...iconStyle }} />
+          <HowToRegIcon sx={{ ...iconStyle }} />
           <Typography variant="h6" gutterBottom m={1} sx={{ ...numberStyle }}>
           {currentReservationCount}  {/* Count of unique employee IDs */}
           </Typography>
@@ -153,7 +153,7 @@ export default function DashboardStatusBoxed(props: Props) {
             ...paperStyle, // Applying paperStyle
           }}
         >
-          <SentimentVeryDissatisfiedIcon sx={{ ...iconStyle }} />
+          <CoPresentIcon sx={{ ...iconStyle }} />
           <Typography variant="h6" gutterBottom m={1} sx={{ ...numberStyle }}>
             {totalAssociatesCount - currentReservationCount}  {/* MOCK DATA */}
           </Typography>
@@ -163,5 +163,5 @@ export default function DashboardStatusBoxed(props: Props) {
         </Paper>
       </Grid>
     </Grid>
-  </div>);
+  </>);
 }
