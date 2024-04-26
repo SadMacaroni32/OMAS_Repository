@@ -12,7 +12,8 @@ export default function DashboardRecentComments() {
     (state: RootState) => state.recentCommentsReducer.recentComments
   );
 
-
+  // console.log("CommentData", commentData);
+  
   const getAvatarLetter = (name: string | string[]) => {
     if (!name) return "";
     return name[0].toUpperCase();
@@ -39,11 +40,11 @@ export default function DashboardRecentComments() {
   }, [dispatch]);
 
   useEffect(() => {
-    if (commentData.message) {
+    if (commentData && Array.isArray(commentData.message)) { // Check if commentData.message is defined and an array
       const currentDate = new Date();
       const twoDaysAgo = new Date(currentDate);
       twoDaysAgo.setDate(currentDate.getDate() - 2);
-  
+    
       const filteredComments = commentData.message.filter((comment: any) => {
         const commentDate = new Date(comment.noted_at); // Assuming comment.noted_at is the date of the comment
         return (
@@ -53,7 +54,8 @@ export default function DashboardRecentComments() {
       });
       setRecentComments(filteredComments);
     }
-  }, [commentData.message]);
+  }, [commentData]);
+  
 
   return (<>
     <Paper
